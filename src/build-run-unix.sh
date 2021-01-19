@@ -1,4 +1,4 @@
 #!/bin/sh
 
 javac *.java
-javac -d 
+java EchoServer
