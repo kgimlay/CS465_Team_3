@@ -11,7 +11,7 @@ import java.io.*;
  */
 public class EchoThread implements Runnable {
 	// Class attributes
-	private QuitStateMachine;
+	//private QuitStateMachine;
 
 	/*
 	 * Constructor
@@ -20,7 +20,7 @@ public class EchoThread implements Runnable {
 		 // new state machine
 
 		 // socket object
-		 
+
 	 }
 
 	/*
