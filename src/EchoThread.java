@@ -11,14 +11,14 @@ import java.io.*;
  */
 public class EchoThread implements Runnable {
 	// Class attributes
-	private QuitStateMachine;
+	private QuitStateMachine stateMachine;
 
 	/*
 	 * Constructor
 	 */
 	 public EchoThread( /*something here, socket object?*/ ) {
 		 // new state machine
-
+		stateMachine = new QuitStateMachine();
 		 // socket object
 		 
 	 }
@@ -40,8 +40,11 @@ public class EchoThread implements Runnable {
    				// check if its an alphabet character
 
    					// update state machine accordingly
-
-     				// echo back the character
+					System.out.println(stateMachine.updateState('q'));
+					System.out.println(stateMachine.updateState('u'));
+					System.out.println(stateMachine.updateState('i'));
+					System.out.println(stateMachine.updateState('t'));
+					// echo back the character
 
 		// deinitialize?
 
