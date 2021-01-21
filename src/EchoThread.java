@@ -54,15 +54,18 @@ public class EchoThread implements Runnable {
 			while (true) {
 				// get character from input buffer
 						charFromClient = (char)fromClient.read();
-						System.out.println( charFromClient);
 	   				// check if its an alphabet character
+						if ( Character.isLetter( charFromClient))
+						{
+		   					// update state machine accordingly
+							quitFlag = stateMachine.updateState( charFromClient );
 
-	   					// update state machine accordingly
-						quitFlag = stateMachine.updateState( charFromClient );
-						if (quitFlag) {
-							break;
-						}
-						// echo back the character
+							if (quitFlag) {
+								break;
+							}
+							// echo back the character
+							toClient.print( charFromClient);
+					}
 			}
 		}
 		catch( IOException ioE)
