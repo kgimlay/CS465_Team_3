@@ -13,7 +13,9 @@ import java.net.*;
 public class EchoThread implements Runnable {
 	// Class attributes
 	private QuitStateMachine stateMachine;
-	//private QuitStateMachine;
+	private Socket socket;
+	BufferedReader fromClient;
+	PrintWriter toClient;
 
 	/*
 	 * Constructor
@@ -22,7 +24,16 @@ public class EchoThread implements Runnable {
 		 // new state machine
 		stateMachine = new QuitStateMachine();
 		 // socket object
-
+		 this.socket = socket;
+		 try{
+		 fromClient = new BufferedReader( new InputStreamReader( socket.getInputStream()));
+		 toClient = new PrintWriter( socket.getOutputStream(), true);
+	 	 }
+		 catch( IOException ioE)
+		 {
+			 System.out.println( "An i/o exception has occured when creating either abstract"+
+			 "an input or output stream");
+		 }
 	 }
 
 	/*
@@ -39,17 +50,24 @@ public class EchoThread implements Runnable {
 
 		// enter infinite loop (terminates with state machine on "quit")
 		// TODO: put in try to catch IOException if connection is closed improperly
-		while (true) {
-			// get character from input buffer
+		try{
+			while (true) {
+				// get character from input buffer
+						charFromClient = (char)fromClient.read();
+						System.out.println( charFromClient);
+	   				// check if its an alphabet character
 
-   				// check if its an alphabet character
-
-   					// update state machine accordingly
-					quitFlag = stateMachine.updateState( charFromClient );
-					if (quitFlag) {
-						break;
-					}
-					// echo back the character
+	   					// update state machine accordingly
+						quitFlag = stateMachine.updateState( charFromClient );
+						if (quitFlag) {
+							break;
+						}
+						// echo back the character
+			}
+		}
+		catch( IOException ioE)
+		{
+			System.out.println("An i/o error has occured.");
 		}
 
 		// deinitialize
