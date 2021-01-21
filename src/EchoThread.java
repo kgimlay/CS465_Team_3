@@ -65,6 +65,7 @@ public class EchoThread implements Runnable {
 							}
 							// echo back the character
 							toClient.print( charFromClient);
+							toClient.flush();
 					}
 			}
 		}
@@ -75,6 +76,13 @@ public class EchoThread implements Runnable {
 
 		// deinitialize
 		System.out.println("Connection closed!");
+		try{
+		socket.close();
+		}
+		catch( IOException ioE)
+		{
+			System.out.println( "An error occured closing the connection.");
+		}
 	}
 
 }
