@@ -4,6 +4,7 @@
 
 import java.lang.Runnable;
 import java.io.*;
+import java.net.*;
 
 
 /*
@@ -17,7 +18,7 @@ public class EchoThread implements Runnable {
 	/*
 	 * Constructor
 	 */
-	 public EchoThread( /*something here, socket object?*/ ) {
+	 public EchoThread( Socket socket ) {
 		 // new state machine
 		stateMachine = new QuitStateMachine();
 		 // socket object
@@ -30,25 +31,29 @@ public class EchoThread implements Runnable {
 	public void run() {
 		// initialize buffers for reading, echoing, and var for character
 		// being looked at, server socket
+		char charFromClient = '\0'; // TODO: remove initialization
+		boolean quitFlag = false;
 
 		// print new connection was made
 		System.out.println("New connection made!");
 
 		// enter infinite loop (terminates with state machine on "quit")
-
+		// TODO: put in try to catch IOException if connection is closed improperly
+		while (true) {
 			// get character from input buffer
 
    				// check if its an alphabet character
 
    					// update state machine accordingly
-					System.out.println(stateMachine.updateState('q'));
-					System.out.println(stateMachine.updateState('u'));
-					System.out.println(stateMachine.updateState('i'));
-					System.out.println(stateMachine.updateState('t'));
+					quitFlag = stateMachine.updateState( charFromClient );
+					if (quitFlag) {
+						break;
+					}
 					// echo back the character
+		}
 
-		// deinitialize?
-
+		// deinitialize
+		System.out.println("Connection closed!");
 	}
 
 }

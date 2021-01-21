@@ -1,4 +1,4 @@
 #!/bin/sh
 
 javac *.java
-java EchoServer
+java EchoServer 1000
