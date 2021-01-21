@@ -57,15 +57,14 @@ public class EchoThread implements Runnable {
 	   				// check if its an alphabet character
 						if ( Character.isLetter( charFromClient))
 						{
-		   					// update state machine accordingly
-							quitFlag = stateMachine.updateState( charFromClient );
-
-							if (quitFlag) {
-								break;
-							}
 							// echo back the character
 							toClient.print( charFromClient);
 							toClient.flush();
+		   				// update state machine accordingly
+							quitFlag = stateMachine.updateState( charFromClient );
+							if (quitFlag) {
+								break;
+							}
 					}
 			}
 		}
