@@ -14,8 +14,8 @@ public class EchoThread implements Runnable {
 	// Class attributes
 	private QuitStateMachine stateMachine;
 	private Socket socket;
-	BufferedReader fromClient;
-	PrintWriter toClient;
+	DataInputStream fromClient;
+	DataOutputStream toClient;
 
 	/*
 	 * Constructor
@@ -27,10 +27,9 @@ public class EchoThread implements Runnable {
 		this.socket = socket;
 
 		try {
-			fromClient = new BufferedReader( new InputStreamReader( socket.getInputStream()));
-			toClient = new PrintWriter( socket.getOutputStream(), true);
+			fromClient = new DataInputStream( socket.getInputStream() );
+			toClient = new DataOutputStream( socket.getOutputStream() );
 		}
-
 		catch( IOException ioE) {
 			System.out.println( "An i/o exception has occured when creating either abstract"+
 			"an input or output stream");
@@ -54,18 +53,27 @@ public class EchoThread implements Runnable {
 		try {
 			while (true) {
 				// get character from input buffer
-				charFromClient = (char)fromClient.read();
-	   				// check if its an alphabet character
-					if ( Character.isLetter( charFromClient)) {
-						// echo back the character
-						toClient.print( charFromClient);
-						toClient.flush();
-	   					// update state machine accordingly
-						quitFlag = stateMachine.updateState( charFromClient );
-						if (quitFlag) {
-							break;
-						}
+				try {
+					charFromClient = (char)fromClient.readByte();
+				}
+				catch ( EOFException eofE ) {
+					System.out.println("An end of file exception has occured"
+					+ " while reading the input buffer!");
+					break;
+				}
+
+   				// check if its an alphabet character
+				if ( Character.isLetter( charFromClient ) ) {
+					// echo back the character
+					toClient.write( charFromClient );
+					toClient.flush();
+
+   					// update state machine accordingly
+					quitFlag = stateMachine.updateState( charFromClient );
+					if (quitFlag) {
+						break;
 					}
+				}
 			}
 		}
 		catch ( IOException ioE) {
@@ -80,6 +88,7 @@ public class EchoThread implements Runnable {
 		catch ( IOException ioE) {
 			System.out.println( "An error occured closing the connection.");
 		}
+		
 		System.out.println("Connection closed!");
 	}
 
