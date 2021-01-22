@@ -11,6 +11,7 @@ public class EchoServer {
 		// initialize variables
 		int portNum = 0;
 		ServerSocket serverSocket = null;
+		Thread thread;
 
 		// Check for correct number of parameters
 		if (args.length != 1) {
@@ -53,7 +54,7 @@ public class EchoServer {
 			// spawn a thread
 			try {
 				// create thread (blocking on accept)
-				Thread thread = new Thread(
+				thread = new Thread(
 					new EchoThread( serverSocket.accept() ) );
 				// start thread
 				thread.start();

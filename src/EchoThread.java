@@ -30,7 +30,7 @@ public class EchoThread implements Runnable {
 			fromClient = new BufferedReader( new InputStreamReader( socket.getInputStream()));
 			toClient = new PrintWriter( socket.getOutputStream(), true);
 		}
-		  
+
 		catch( IOException ioE) {
 			System.out.println( "An i/o exception has occured when creating either abstract"+
 			"an input or output stream");
@@ -43,7 +43,7 @@ public class EchoThread implements Runnable {
 	public void run() {
 		// initialize buffers for reading, echoing, and var for character
 		// being looked at, server socket
-		char charFromClient = '\0'; // TODO: remove initialization
+		char charFromClient;
 		boolean quitFlag = false;
 
 		// print new connection was made
@@ -54,18 +54,18 @@ public class EchoThread implements Runnable {
 		try {
 			while (true) {
 				// get character from input buffer
-						charFromClient = (char)fromClient.read();
+				charFromClient = (char)fromClient.read();
 	   				// check if its an alphabet character
-						if ( Character.isLetter( charFromClient)) {
-							// echo back the character
-							toClient.print( charFromClient);
-							toClient.flush();
-		   					// update state machine accordingly
-							quitFlag = stateMachine.updateState( charFromClient );
-							if (quitFlag) {
-								break;
-							}
+					if ( Character.isLetter( charFromClient)) {
+						// echo back the character
+						toClient.print( charFromClient);
+						toClient.flush();
+	   					// update state machine accordingly
+						quitFlag = stateMachine.updateState( charFromClient );
+						if (quitFlag) {
+							break;
 						}
+					}
 			}
 		}
 		catch ( IOException ioE) {
@@ -73,8 +73,6 @@ public class EchoThread implements Runnable {
 		}
 
 		// deinitialize
-		System.out.println("Connection closed!");
-
 		try {
 			socket.close();
 		}
@@ -82,6 +80,7 @@ public class EchoThread implements Runnable {
 		catch ( IOException ioE) {
 			System.out.println( "An error occured closing the connection.");
 		}
+		System.out.println("Connection closed!");
 	}
 
 }
