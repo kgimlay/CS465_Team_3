@@ -6,7 +6,7 @@
 
 	Purpose: Defines what the thread does, implements Runnable
 	it recieves input string and calls to a character to update the stateMachine
-  
+
 
  *
  */
@@ -61,6 +61,7 @@ public class EchoThread implements Runnable {
 		// enter infinite loop (terminates with state machine on "quit")
 		// TODO: put in try to catch IOException if connection is closed improperly
 		try {
+			toClient.flush();
 			while (true) {
 				// get character from input buffer
 				try {
