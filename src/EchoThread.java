@@ -6,11 +6,10 @@
 
 	Purpose: Defines what the thread does, implements Runnable
 	it recieves input string and calls to a character to update the stateMachine
-
-
  *
  */
 
+// import of required libraries
 import java.lang.Runnable;
 import java.io.*;
 import java.net.*;
@@ -28,7 +27,6 @@ public class EchoThread implements Runnable {
 
 	/*
 	 * Constructor for QuitStateMachine
-
 	 */
 	 public EchoThread( Socket socket ) {
 		// new state machine
@@ -36,10 +34,12 @@ public class EchoThread implements Runnable {
 		// socket object
 		this.socket = socket;
 
+		// try to create data streams
 		try {
 			fromClient = new DataInputStream( socket.getInputStream() );
 			toClient = new DataOutputStream( socket.getOutputStream() );
 		}
+		// error during creation of data streams
 		catch( IOException ioE) {
 			System.out.println( "An i/o exception has occured when creating either abstract"+
 			"an input or output stream");
@@ -76,6 +76,7 @@ public class EchoThread implements Runnable {
 				if ( Character.isLetter( charFromClient ) ) {
 					// echo back the character
 					toClient.write( charFromClient );
+					// empty buffer stream
 					toClient.flush();
 
    					// update state machine accordingly

@@ -1,5 +1,5 @@
 /*Authors: Randy Duerinck, Kevin Imlay, Yasmin Vega, Matt Flanders
-  Course: CS465: Distributed Systems
+	Course: CS465: Distributed Systems
 	Section: 1
 	Assignment Name: EchoServer
 	Last Modification Date: 1-22-21
@@ -9,10 +9,14 @@
  *
  */
 
+// import of required libraries
 import java.net.*;
 import java.io.*;
 import java.lang.Thread;
 
+/*
+ *
+ */
 public class EchoServer {
 	public static void main( String[] args ){
 		// initialize variables
