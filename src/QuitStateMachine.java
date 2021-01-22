@@ -26,20 +26,20 @@ public class QuitStateMachine {
 	   state of 4 is reached, at which point true will be returned.
 	 */
 	 public boolean updateState( char character ) {
-		 if(character == 'q'){
+		 if(character == 'q') {
 			 state = 1;
 		 }
-		 else if (character == 'u' && state == 1){
+		 else if (character == 'u' && state == 1) {
 			 state = 2;
 		 }
-		 else if( character == 'i' && state == 2){
+		 else if( character == 'i' && state == 2) {
 			 state = 3;
 		 }
-		 else if(character == 't' && state == 3){
+		 else if(character == 't' && state == 3) {
 			 state = 4;
 			 return true;
 		 }
-		 else{
+		 else {
 			 state = 0;
 		 }
 		 return false;

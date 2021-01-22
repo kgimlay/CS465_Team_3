@@ -22,8 +22,9 @@ public class EchoServer {
 		try {
 			portNum = Integer.parseInt(args[0]);
 		}
+
 		// not a valid number format
-	     catch (NumberFormatException numberFormatE) {
+	    catch (NumberFormatException numberFormatE) {
 			System.out.println("ERR: Port number not in right format");
 			System.exit(1);
 		}
@@ -32,11 +33,13 @@ public class EchoServer {
 		try {
 			serverSocket = new ServerSocket( portNum );
 		}
+
 		// throws an IOException if the socket cannot be opened
 		catch (IOException ioE) {
 			System.out.println("An error occured while opening the socket!");
 			System.exit(1);
 		}
+
 		// throws and IllegalArgumentException if the port number is out
 		// of range (0 <= port number <= 65535)
 		catch (IllegalArgumentException illArgE) {
@@ -55,6 +58,7 @@ public class EchoServer {
 				// start thread
 				thread.start();
 			}
+
 			// throws an IOException if an error occurs while waiting for
 			// a connetion
 			catch (IOException ioE) {
