@@ -1,4 +1,13 @@
-/*
+/*Authors: Randy Duerinck, Kevin Imlay, Yasmin Vega, Matt Flanders
+  Course: CS465: Distributed Systems
+	Section: 1
+	Assignment Name: EchoServer
+	Last Modification Date: 1-22-21
+
+	Purpose: the QuitStateMachine class starts at state 0 and when given a 'q', it
+	goes to state 1 and 'u' it goes to state 2 etc. When it hits state 4 upon
+	receiving a 't', it will quit the program. This does not allow characters
+	other than 'q', 'u', 'i', 't', interspersed between.
  *
  */
 

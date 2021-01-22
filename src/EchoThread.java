@@ -1,4 +1,13 @@
-/*
+/*Authors: Randy Duerinck, Kevin Imlay, Yasmin Vega, Matt Flanders
+  Course: CS465: Distributed Systems
+	Section: 1
+	Assignment Name: EchoServer
+	Last Modification Date: 1-22-21
+
+	Purpose: Defines what the thread does, implements Runnable
+	it recieves input string and calls to a character to update the stateMachine
+  
+
  *
  */
 
@@ -18,7 +27,8 @@ public class EchoThread implements Runnable {
 	DataOutputStream toClient;
 
 	/*
-	 * Constructor
+	 * Constructor for QuitStateMachine
+
 	 */
 	 public EchoThread( Socket socket ) {
 		// new state machine
@@ -63,6 +73,7 @@ public class EchoThread implements Runnable {
 				}
 
    				// check if its an alphabet character
+					System.out.print(charFromClient);
 				if ( Character.isLetter( charFromClient ) ) {
 					// echo back the character
 					toClient.write( charFromClient );
@@ -88,7 +99,7 @@ public class EchoThread implements Runnable {
 		catch ( IOException ioE) {
 			System.out.println( "An error occured closing the connection.");
 		}
-		
+
 		System.out.println("Connection closed!");
 	}
 

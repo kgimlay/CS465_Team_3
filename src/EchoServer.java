@@ -1,4 +1,11 @@
-/*
+/*Authors: Randy Duerinck, Kevin Imlay, Yasmin Vega, Matt Flanders
+  Course: CS465: Distributed Systems
+	Section: 1
+	Assignment Name: EchoServer
+	Last Modification Date: 1-22-21
+
+	Purpose: Sever that simply echoes back what a client sends
+	         character by character and creates threads.
  *
  */
 
