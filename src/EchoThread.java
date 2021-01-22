@@ -59,9 +59,7 @@ public class EchoThread implements Runnable {
 		System.out.println("New connection made!");
 
 		// enter infinite loop (terminates with state machine on "quit")
-		// TODO: put in try to catch IOException if connection is closed improperly
 		try {
-			toClient.flush();
 			while (true) {
 				// get character from input buffer
 				try {
