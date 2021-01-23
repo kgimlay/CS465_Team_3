@@ -1,14 +1,13 @@
-/*Authors: Randy Duerinck, Kevin Imlay, Yasmin Vega, Matt Flanders
-  Course: CS465: Distributed Systems
-	Section: 1
-	Assignment Name: EchoServer
-	Last Modification Date: 1-22-21
-
-	Purpose: the QuitStateMachine class starts at state 0 and when given a 'q', it
-	goes to state 1 and 'u' it goes to state 2 etc. When it hits state 4 upon
-	receiving a 't', it will quit the program. This does not allow characters
-	other than 'q', 'u', 'i', 't', interspersed between.
+/* Authors: Randy Duerinck, Kevin Imlay, Yasmin Vega, Matt Flanders
+ * Course: CS465: Distributed Systems
+ * Section: 1
+ * Assignment Name: EchoServer
+ * Last Modification Date: 1-22-21
  *
+ * Purpose: the QuitStateMachine class starts at state 0 and when given a 'q', it
+ * 	goes to state 1 and 'u' it goes to state 2 etc. When it hits state 4 upon
+ * 	receiving a 't', it will quit the program. This does not allow characters
+ * 	other than 'q', 'u', 'i', 't', interspersed between.
  */
 
 public class QuitStateMachine {
@@ -30,9 +29,9 @@ public class QuitStateMachine {
 	/*
 	 * Update state
 	 * General algorithm: all letters that are not 'q', 'u', 'i', 't' will result in
-	   the 0 state. If a 'q' is detected, the state will be changed to 1. If the next
-	   character is a 'u', the state will be changed to 2, and so on till the final
-	   state of 4 is reached, at which point true will be returned.
+	 * the 0 state. If a 'q' is detected, the state will be changed to 1. If the next
+	 * character is a 'u', the state will be changed to 2, and so on till the final
+	 * state of 4 is reached, at which point true will be returned.
 	 */
 	 public boolean updateState( char character ) {
 		 if(character == 'q') {

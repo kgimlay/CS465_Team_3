@@ -1,12 +1,11 @@
-/*Authors: Randy Duerinck, Kevin Imlay, Yasmin Vega, Matt Flanders
-	Course: CS465: Distributed Systems
-	Section: 1
-	Assignment Name: EchoServer
-	Last Modification Date: 1-22-21
-
-	Purpose: Sever that simply echoes back what a client sends
-	         character by character and creates threads.
+/* Authors: Randy Duerinck, Kevin Imlay, Yasmin Vega, Matt Flanders
+ * Course: CS465: Distributed Systems
+ * Section: 1
+ * Assignment Name: EchoServer
+ * Last Modification Date: 1-22-21
  *
+ * Purpose: Sever that simply echoes back what a client sends
+ * 	character by character and creates threads.
  */
 
 // import of required libraries
@@ -14,10 +13,14 @@ import java.net.*;
 import java.io.*;
 import java.lang.Thread;
 
-/*
- *
- */
+
+
 public class EchoServer {
+
+	/*
+	 * Main server loop. Waits for connections and spawns a new thread for each
+	 * 	connection.
+	 */
 	public static void main( String[] args ){
 		// initialize variables
 		int portNum = 0;
@@ -34,9 +37,8 @@ public class EchoServer {
 		try {
 			portNum = Integer.parseInt(args[0]);
 		}
-
 		// not a valid number format
-	    catch (NumberFormatException numberFormatE) {
+	    	catch (NumberFormatException numberFormatE) {
 			System.out.println("ERR: Port number not in right format");
 			System.exit(1);
 		}
@@ -45,13 +47,11 @@ public class EchoServer {
 		try {
 			serverSocket = new ServerSocket( portNum );
 		}
-
 		// throws an IOException if the socket cannot be opened
 		catch (IOException ioE) {
 			System.out.println("An error occured while opening the socket!");
 			System.exit(1);
 		}
-
 		// throws and IllegalArgumentException if the port number is out
 		// of range (0 <= port number <= 65535)
 		catch (IllegalArgumentException illArgE) {
@@ -70,7 +70,6 @@ public class EchoServer {
 				// start thread
 				thread.start();
 			}
-
 			// throws an IOException if an error occurs while waiting for
 			// a connetion
 			catch (IOException ioE) {
