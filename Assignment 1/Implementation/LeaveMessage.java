@@ -1,18 +1,18 @@
 /**
- *
- */
+*
+*/
 
 
- /**
-  *
-  */
-  public class LeaveMessage
-  {
-	  /**
-	   *
-	   */
-	   public LeaveMessage()
-	   {
-		   
-	   }
-  }
+/**
+*
+*/
+public class LeaveMessage extents Message
+{
+     /**
+     *
+     */
+     public LeaveMessage()
+     {
+
+     }
+}
