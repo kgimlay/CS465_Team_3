@@ -1,4 +1,15 @@
+/**
+ *
+ */
+
+
+/**
+*
+*/
 public class ChatMessage
 {
-String message;
+	/**
+	*
+	*/
+	String message;
 }
