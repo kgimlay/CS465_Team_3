@@ -16,11 +16,6 @@ public abstract class Message
     /**
     *
     */
-    long timeStamp;
-
-    /**
-    *
-    */
     public Message()
     {
 		//do something

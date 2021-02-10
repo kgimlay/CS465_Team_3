@@ -2,11 +2,18 @@
 *
 */
 
+import java.net.Socket;
+
 /**
 *
 */
 public class ConnectionThread
 {
+	/**
+	*
+	*/
+	private Socket connection;
+
 	/**
 	*
 	*/

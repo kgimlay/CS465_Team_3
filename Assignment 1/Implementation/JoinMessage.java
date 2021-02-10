@@ -1,18 +1,24 @@
 /**
- *
- */
+*
+*/
 
+import java.util.ArrayList;
 
- /**
-  *
-  */
-  public class JoinedMessage
-  {
-	  /**
-	   *
-	   */
-	   public JoinedMessage()
-	   {
-		   
-	   }
-  }
+/**
+*
+*/
+public class JoinedMessage
+{
+     /**
+     *
+     */
+     ArrayList<Participant> participantList;
+
+     /**
+     *
+     */
+     public JoinedMessage()
+     {
+
+     }
+}
