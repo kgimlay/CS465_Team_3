@@ -1,18 +1,18 @@
 /**
- *
- */
+*
+*/
 
 
- /**
-  *
-  */
-  public class JoinedMessage
-  {
-	  /**
-	   *
-	   */
-	   public JoinedMessage()
-	   {
-		   
-	   }
-  }
+/**
+*
+*/
+public class JoinedMessage extents Message
+{
+     /**
+     *
+     */
+     public JoinedMessage()
+     {
+
+     }
+}

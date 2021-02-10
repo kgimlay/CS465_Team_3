@@ -6,7 +6,7 @@
 /**
 *
 */
-public class ChatMessage
+public class ChatMessage extents Message
 {
 	/**
 	*
