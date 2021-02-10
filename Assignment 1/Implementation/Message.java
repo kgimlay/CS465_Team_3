@@ -1,0 +1,2 @@
+String senderID;
+long timeStamp;
