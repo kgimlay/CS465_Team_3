@@ -3,19 +3,19 @@ public class ConnectionThread
 {
 
 
-Boolean acceptConnection()
-{
+	Boolean acceptConnection()
+	{
 
-}
+	}
 
-Boolean openConnection()
-{
+	Boolean openConnection()
+	{
 
-}
+	}
 
-Boolean closeConnection()
-{
+	Boolean closeConnection()
+	{
 
-}
+	}
 
 }
