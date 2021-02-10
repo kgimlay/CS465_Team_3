@@ -1,10 +1,29 @@
-public class Message {
+/**
+*
+*/
 
+
+/**
+*
+*/
+public abstract class Message
+{
+     /**
+     *
+     */
     String senderID;
+
+    /**
+    *
+    */
     long timeStamp;
 
-    public Message() {
+    /**
+    *
+    */
+    public Message()
+    {
 		//do something
-	}
+    }
 
 }

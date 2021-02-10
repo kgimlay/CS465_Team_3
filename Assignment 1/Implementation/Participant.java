@@ -1,9 +1,33 @@
-public class Participant{
+/**
+*
+*/
+
+
+/**
+*
+*/
+public class Participant
+{
+     /**
+     *
+     */
     String name;
+
+    /**
+    *
+    */
     int port;
+
+    /**
+    *
+    */
     InetAddress ip;
 
-    public Participant(){
+    /**
+    *
+    */
+    public Participant()
+    {
         // do something
     }
-} 
+}
