@@ -1,4 +1,10 @@
 
+// ConnectionThread constructor
+public ConnectionThread()
+{
+
+}
+
 public class ConnectionThread
 {
 
