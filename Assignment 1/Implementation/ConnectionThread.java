@@ -19,7 +19,7 @@ public class ConnectionThread
 	*/
 	public ConnectionThread()
 	{
-
+	 Socket connection = null;
 	}
 
 	/**
@@ -27,6 +27,15 @@ public class ConnectionThread
 	*/
 	Boolean acceptConnection()
 	{
+		if(connection == null)
+		{
+			connection = new ConnectionThread();
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 
 	}
 
