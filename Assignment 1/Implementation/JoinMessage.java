@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
 *
 */
-public class JoinedMessage extents Message
+public class JoinMessage extents Message
 {
      /**
      *
@@ -17,7 +17,7 @@ public class JoinedMessage extents Message
      /**
      *
      */
-     public JoinedMessage()
+     public JoinMessage()
      {
 
      }
