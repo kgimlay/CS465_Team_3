@@ -26,8 +26,10 @@ public class Participant
     /**
     *
     */
-    public Participant()
+    public Participant(String userName, int portNum)
     {
-        // do something
+        name = userName;
+        ip = InetAddress.getLocalHost();
+        port = portNum;
     }
 }
