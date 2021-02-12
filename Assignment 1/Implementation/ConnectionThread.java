@@ -7,7 +7,7 @@ import java.net.Socket;
 /**
 *
 */
-public class ConnectionThread
+public class ConnectionThread implements runnable
 {
 	/**
 	*
