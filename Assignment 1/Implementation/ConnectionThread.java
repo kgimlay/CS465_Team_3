@@ -17,7 +17,7 @@ public class ConnectionThread
 	/**
 	*
 	*/
-	publid ConnectionThread()
+	public ConnectionThread()
 	{
 
 	}
