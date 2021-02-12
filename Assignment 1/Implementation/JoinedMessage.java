@@ -11,8 +11,8 @@ public class JoinedMessage extents Message
      /**
      *
      */
-     public JoinedMessage()
+     public JoinedMessage(String senderID)
      {
-
+          super.senderID = senderID;
      }
 }

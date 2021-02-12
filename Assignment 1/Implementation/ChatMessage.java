@@ -6,10 +6,18 @@
 /**
 *
 */
-public class ChatMessage extents Message
+public class ChatMessage extends Message
 {
 	/**
 	*
 	*/
 	String message;
+
+	/**
+	*
+	*/
+	public ChatMessage(String senderID)
+	{
+		super.senderID = senderID;
+	}
 }

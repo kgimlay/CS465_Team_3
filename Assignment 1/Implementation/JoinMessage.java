@@ -17,8 +17,9 @@ public class JoinMessage extents Message
      /**
      *
      */
-     public JoinMessage()
+     public JoinMessage(String senderID, ArrayList<Participant> participantList)
      {
-
+          super.senderID = senderID;
+          this.participantList = participantList;
      }
 }
