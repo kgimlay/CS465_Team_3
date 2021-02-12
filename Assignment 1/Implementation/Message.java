@@ -16,9 +16,9 @@ public abstract class Message
     /**
     *
     */
-    public Message()
+    public Message(String senderID)
     {
-		//do something
+      self.senderID = senderID;
     }
 
 }
