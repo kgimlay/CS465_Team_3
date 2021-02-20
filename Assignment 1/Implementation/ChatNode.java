@@ -9,20 +9,26 @@ import java.util.ArrayList;
  */
 public class ChatNode
 {
-	/**
-	 *
-	 */
-	private ArrayList<Message> chatLog;
 
 	/**
 	 *
 	 */
-	private ArrayList<ConnectionThread> connectionList;
+	private Thread<ReceiveThread> receiveManager;
+
+	/**
+	 *
+	 */
+	private Thread<SendThread> sendManager;
 
 	/**
 	 *
 	 */
 	private ArrayList<Participant> participantList;
+
+	/**
+	 *
+	 */
+	private ServerSocket serverSocket;
 
 	/**
 	 *
@@ -43,7 +49,7 @@ public class ChatNode
 	/**
 	 *
 	 */
-	public void joinChat()
+	public void joinChat(InetAddress ipAdress)
 	{
 
 	}
@@ -51,7 +57,7 @@ public class ChatNode
 	/**
 	 *
 	 */
-	public void sendMessage()
+	public void sendMessage(Message messageObj)
 	{
 
 	}
@@ -67,7 +73,7 @@ public class ChatNode
 	/**
 	 *
 	 */
-	private void addParticipant()
+	private void addParticipant(Participant participant)
 	{
 
 	}
@@ -75,7 +81,15 @@ public class ChatNode
 	/**
 	 *
 	 */
-	private void removeParticipant()
+	private void removeParticipant(Participant participant)
+	{
+
+	}
+
+	/**
+	 *
+	 */
+	public void main(String args[])
 	{
 
 	}
