@@ -6,7 +6,7 @@
 /**
 *
 */
-public class JoinedMessage extents Message
+public class JoinedMessage extends Message
 {
      /**
      *

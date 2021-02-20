@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
 *
 */
-public class JoinMessage extents Message
+public class JoinMessage extends Message
 {
      /**
      *

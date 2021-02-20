@@ -2,7 +2,7 @@
  *
  */
 
-import java.util.ArrayList
+import java.util.ArrayList;
 
 /**
  *
@@ -35,7 +35,7 @@ public class Client
 	/**
 	 *
 	 */
-	public startClient()
+	public void startClient()
 	{
 
 	}
@@ -43,7 +43,7 @@ public class Client
 	/**
 	 *
 	 */
-	public joinChat()
+	public void joinChat()
 	{
 
 	}
@@ -51,7 +51,7 @@ public class Client
 	/**
 	 *
 	 */
-	public sendMessage()
+	public void sendMessage()
 	{
 
 	}
@@ -59,7 +59,7 @@ public class Client
 	/**
 	 *
 	 */
-	public leaveChat()
+	public void leaveChat()
 	{
 
 	}
@@ -67,7 +67,7 @@ public class Client
 	/**
 	 *
 	 */
-	private addParticipant()
+	private void addParticipant()
 	{
 
 	}
@@ -75,7 +75,7 @@ public class Client
 	/**
 	 *
 	 */
-	private removeParticipant()
+	private void removeParticipant()
 	{
 
 	}

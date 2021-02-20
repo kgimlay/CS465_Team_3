@@ -6,7 +6,7 @@
 /**
 *
 */
-public class LeaveMessage extents Message
+public class LeaveMessage extends Message
 {
      /**
      *
