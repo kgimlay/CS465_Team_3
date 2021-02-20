@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  *
  */
-public class Client
+public class ChatNode
 {
 	/**
 	 *
@@ -27,7 +27,7 @@ public class Client
 	/**
 	 *
 	 */
-	Client ()
+	ChatNode ()
 	{
 
 	}
@@ -35,7 +35,7 @@ public class Client
 	/**
 	 *
 	 */
-	public void startClient()
+	public void startChatNode()
 	{
 
 	}
