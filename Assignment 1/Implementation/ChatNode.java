@@ -33,14 +33,6 @@ public class ChatNode
 	/**
 	 *
 	 */
-	ChatNode ()
-	{
-
-	}
-
-	/**
-	 *
-	 */
 	public void startChatNode()
 	{
 
@@ -49,7 +41,7 @@ public class ChatNode
 	/**
 	 *
 	 */
-	public void joinChat(InetAddress ipAdress)
+	public void joinChat(InetAddress ip, int port)
 	{
 
 	}
@@ -57,7 +49,7 @@ public class ChatNode
 	/**
 	 *
 	 */
-	public void sendMessage(Message messageObj)
+	public void sendMessage(String message)
 	{
 
 	}
@@ -74,6 +66,14 @@ public class ChatNode
 	 *
 	 */
 	private void addParticipant(Participant participant)
+	{
+
+	}
+
+	/**
+	 *
+	 */
+	private void addParticipants(ArrayList<Participant> participants)
 	{
 
 	}
