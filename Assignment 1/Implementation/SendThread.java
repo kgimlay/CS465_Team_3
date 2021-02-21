@@ -3,6 +3,7 @@
 */
 
 import java.util.ArrayList;
+import java.net.InetAddress;
 
 /**
 *
@@ -23,17 +24,17 @@ public class SendThread {
    */
    public SendThread()
    {
-      self.message = null;
-      self.recipients = null;
+      this.message = null;
+      this.recipients = null;
    }
 
    /**
    *
    */
-   public stageMessage( Message message, ArrayList<Participant> recipients )
+   public void stageMessage( Message message, ArrayList<Participant> recipients )
    {
-      self.message = message;
-      self.recipients = recipients;
+      this.message = message;
+      this.recipients = recipients;
    }
 
    /**

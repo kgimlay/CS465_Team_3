@@ -2,6 +2,8 @@
 *
 */
 
+import java.net.ServerSocket;
+
 /**
 *
 */
@@ -16,7 +18,7 @@ public class ReceiveThread {
    */
    public ReceiveThread( ServerSocket serverSocket )
    {
-      self.serverSocket = serverSocket;
+      this.serverSocket = serverSocket;
    }
 
    /**
