@@ -4,6 +4,7 @@
 
 import java.util.ArrayList;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.lang.Thread;
 
 /**
@@ -15,12 +16,12 @@ public class ChatNode
 	/**
 	 *
 	 */
-	private Thread<ReceiveThread> receiveManager;
+	private ReceiveThread receiveManager;
 
 	/**
 	 *
 	 */
-	private Thread<SendThread> sendManager;
+	private SendThread sendManager;
 
 	/**
 	 *

@@ -26,10 +26,10 @@ public class Participant
     /**
     *
     */
-    public Participant(String userName, int portNum)
+    public Participant(String userName, InetAddress ipAddress,  int portNum)
     {
         name = userName;
-        ip = InetAddress.getLocalHost();
+        ip = ipAddress;
         port = portNum;
     }
 }
