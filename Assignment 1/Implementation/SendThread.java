@@ -4,11 +4,12 @@
 
 import java.util.ArrayList;
 import java.net.InetAddress;
+import java.lang.Runnable;
 
 /**
 *
 */
-public class SendThread {
+public class SendThread implements Runnable{
    /**
    *
    */

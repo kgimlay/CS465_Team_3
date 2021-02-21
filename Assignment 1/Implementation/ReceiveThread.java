@@ -3,11 +3,12 @@
 */
 
 import java.net.ServerSocket;
+import java.lang.Runnable;
 
 /**
 *
 */
-public class ReceiveThread {
+public class ReceiveThread implements Runnable{
    /**
    *
    */
