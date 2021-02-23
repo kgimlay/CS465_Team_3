@@ -21,7 +21,7 @@ public class ChatNode
 	/**
 	 *
 	 */
-	private ReceiveThread receiveManager;
+	private ReceiveManager receiveManager;
 
 	/**
 	 *
@@ -105,12 +105,12 @@ public class ChatNode
 		InetAddress ipAddress = null;
 
 		// try to read command line args
-		try 
-		{				
+		try
+		{
 			// get the port number as an int
-			portNum = Integer.parseInt(args[1]);	
+			portNum = Integer.parseInt(args[1]);
 
-			// if first argument passed is "-n" we are creating a new chat  
+			// if first argument passed is "-n" we are creating a new chat
 			if (args[0].equals("-n"))
 			{
 				// set flag to starting a chat
@@ -124,16 +124,16 @@ public class ChatNode
 				isStartingNew = false;
 
 				// try and get ip address passed in args
-				try 
+				try
 				{
-					ipAddress = InetAddress.getByName(args[2]);	
-				} 
-				catch (UnknownHostException e) 
+					ipAddress = InetAddress.getByName(args[2]);
+				}
+				catch (UnknownHostException e)
 				{
 					System.out.println("Unkown host or malformed ip address.\n");
 					System.exit(1);
 				}
-				
+
 			}
 
 			// something went wrong in the command line arg
@@ -152,8 +152,8 @@ public class ChatNode
 			}
 
 		}
-			
-		catch (Exception e) 
+
+		catch (Exception e)
 		{
 			System.out.println("usage for chat application: -j  <port> <ip> | -n <port> ");
 		}
@@ -161,7 +161,7 @@ public class ChatNode
 		// command line args pass up to here, begin join/create chat
 		if (isStartingNew)
 		{
-			startChat( portNum);	
+			startChat( portNum);
 		}
 		else
 		{
@@ -181,6 +181,6 @@ public class ChatNode
 			System.out.println(input);
 		}
 		scanner.close();
-		
+
 	}
 }
