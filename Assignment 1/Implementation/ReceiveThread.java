@@ -2,7 +2,7 @@
 *
 */
 
-import java.net.ServerSocket;
+import java.net.Socket;
 import java.lang.Runnable;
 
 /**
@@ -12,14 +12,14 @@ public class ReceiveThread implements Runnable{
    /**
    *
    */
-   private ServerSocket serverSocket;
+   private Socket connection;
 
    /**
    *
    */
-   public ReceiveThread( ServerSocket serverSocket )
+   public ReceiveThread( Socket socket )
    {
-      this.serverSocket = serverSocket;
+      this.connection = socket;
    }
 
    /**
