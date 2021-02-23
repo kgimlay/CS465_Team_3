@@ -23,16 +23,7 @@ public class SendThread implements Runnable{
    /**
    *
    */
-   public SendThread()
-   {
-      this.message = null;
-      this.recipients = null;
-   }
-
-   /**
-   *
-   */
-   public void stageMessage( Message message, ArrayList<Participant> recipients )
+   public SendThread( Message message, ArrayList<Participant> recipients )
    {
       this.message = message;
       this.recipients = recipients;
