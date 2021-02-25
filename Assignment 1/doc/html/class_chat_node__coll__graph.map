@@ -1,0 +1,9 @@
+<map id="ChatNode" name="ChatNode">
+<area shape="rect" id="node1" title="Main class for peer to peer chat application. Implements the top&#45;level logic of the application: star..." alt="" coords="293,329,491,627"/>
+<area shape="rect" id="node2" href="$class_receive_manager.html" title="ReceiveManager Implements Runnable to run as a seperate thread from the rest of the program...." alt="" coords="378,153,569,259"/>
+<area shape="rect" id="node3" title=" " alt="" coords="385,5,463,83"/>
+<area shape="rect" id="node6" href="$class_send_thread.html" title="SendThread handles sending a message to all other nodes in the topology. Once started,..." alt="" coords="182,145,354,267"/>
+<area shape="rect" id="node4" title=" " alt="" coords="527,5,628,83"/>
+<area shape="rect" id="node5" title=" " alt="" coords="5,5,165,83"/>
+<area shape="rect" id="node7" href="$class_message.html" title="Message class as parent type for all message objects to be sent between peers. Not implementable beca..." alt="" coords="205,5,331,83"/>
+</map>

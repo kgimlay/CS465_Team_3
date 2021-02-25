@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_message.html" title="Message class as parent type for all message objects to be sent between peers. Not implementable beca..." alt="" coords="5,81,80,108"/>
+<area shape="rect" id="node2" href="$class_chat_message.html" title="ChatMessage is the subtype that carries a message string between peers. This is the &#39;message&#39; you wou..." alt="" coords="133,5,236,32"/>
+<area shape="rect" id="node3" href="$class_join_message.html" title="JoinMessage is the subtype of Message that is sent from a node that wants to join the chat,..." alt="" coords="135,56,234,83"/>
+<area shape="rect" id="node4" href="$class_joined_message.html" title="JoinedMessage is the subtype of message that is used to signal to a receiving node that the sending n..." alt="" coords="128,107,241,133"/>
+<area shape="rect" id="node5" href="$class_leave_message.html" title="LeaveMessage is the message subtype that is used to signal to nodes that the sending node is leaving ..." alt="" coords="129,157,240,184"/>
+</map>
