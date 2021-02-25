@@ -1,4 +1,4 @@
 <map id="ReceiveManager" name="ReceiveManager">
-<area shape="rect" id="node1" title="ReceiveManager Implements Runnable to run as a seperate thread from the rest of the program...." alt="" coords="5,131,196,237"/>
-<area shape="rect" id="node2" title=" " alt="" coords="62,5,139,83"/>
+<area shape="rect" id="node1" title="ReceiveManager Implements Runnable to run as a seperate thread from the rest of the program...." alt="" coords="5,131,220,311"/>
+<area shape="rect" id="node2" title=" " alt="" coords="74,5,151,83"/>
 </map>

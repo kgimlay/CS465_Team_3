@@ -1,9 +1,11 @@
 <map id="ChatNode" name="ChatNode">
-<area shape="rect" id="node1" title="Main class for peer to peer chat application. Implements the top&#45;level logic of the application: star..." alt="" coords="293,329,491,627"/>
-<area shape="rect" id="node2" href="$class_receive_manager.html" title="ReceiveManager Implements Runnable to run as a seperate thread from the rest of the program...." alt="" coords="378,153,569,259"/>
-<area shape="rect" id="node3" title=" " alt="" coords="385,5,463,83"/>
-<area shape="rect" id="node6" href="$class_send_thread.html" title="SendThread handles sending a message to all other nodes in the topology. Once started,..." alt="" coords="182,145,354,267"/>
-<area shape="rect" id="node4" title=" " alt="" coords="527,5,628,83"/>
-<area shape="rect" id="node5" title=" " alt="" coords="5,5,165,83"/>
-<area shape="rect" id="node7" href="$class_message.html" title="Message class as parent type for all message objects to be sent between peers. Not implementable beca..." alt="" coords="205,5,331,83"/>
+<area shape="rect" id="node1" title="Main class for peer to peer chat application. Implements the top&#45;level logic of the application: star..." alt="" coords="398,528,573,825"/>
+<area shape="rect" id="node2" href="$class_receive_manager.html" title="ReceiveManager Implements Runnable to run as a seperate thread from the rest of the program...." alt="" coords="378,329,593,465"/>
+<area shape="rect" id="node3" title=" " alt="" coords="423,167,500,245"/>
+<area shape="rect" id="node8" href="$class_send_thread.html" title="SendThread handles sending a message to all other nodes in the topology. Once started,..." alt="" coords="182,337,354,458"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,167,165,245"/>
+<area shape="rect" id="node5" title=" " alt="" coords="561,167,663,245"/>
+<area shape="rect" id="node6" href="$class_participant.html" title="Participant stores the public name, port, and ip address of a single connection within the chat topol..." alt="" coords="706,145,870,267"/>
+<area shape="rect" id="node7" title=" " alt="" coords="742,5,834,83"/>
+<area shape="rect" id="node9" href="$class_message.html" title="Message class as parent type for all message objects to be sent between peers. Not implementable beca..." alt="" coords="189,167,315,245"/>
 </map>

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['addparticipant_0',['addParticipant',['../class_chat_node.html#a07775de1c443ce09de47eab902dbf8da',1,'ChatNode']]],
-  ['addparticipants_1',['addParticipants',['../class_chat_node.html#a7c4b103e7b8d97b7d6b55c4ad18fa11d',1,'ChatNode']]]
+  ['addparticipant_0',['addParticipant',['../class_chat_node.html#a11c3d43012682827720dea532ed09b71',1,'ChatNode']]],
+  ['addparticipants_1',['addParticipants',['../class_chat_node.html#a9b3cfe9edcbee83b454a354a2dbfbe7f',1,'ChatNode']]]
 ];

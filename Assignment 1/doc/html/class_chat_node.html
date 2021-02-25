@@ -83,8 +83,9 @@ $(document).ready(function(){initNavTree('class_chat_node.html',''); initResizab
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-static-methods">Static Private Member Functions</a> &#124;
-<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_chat_node-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ChatNode Class Reference</div>  </div>
@@ -98,13 +99,15 @@ Collaboration diagram for ChatNode:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_chat_node__coll__graph.png" border="0" usemap="#a_chat_node_coll__map" alt="Collaboration graph"/></div>
 <map name="a_chat_node_coll__map" id="a_chat_node_coll__map">
-<area shape="rect" title="Main class for peer to peer chat application. Implements the top&#45;level logic of the application: star..." alt="" coords="293,329,491,627"/>
-<area shape="rect" href="class_receive_manager.html" title="ReceiveManager Implements Runnable to run as a seperate thread from the rest of the program...." alt="" coords="378,153,569,259"/>
-<area shape="rect" title=" " alt="" coords="385,5,463,83"/>
-<area shape="rect" href="class_send_thread.html" title="SendThread handles sending a message to all other nodes in the topology. Once started,..." alt="" coords="182,145,354,267"/>
-<area shape="rect" title=" " alt="" coords="527,5,628,83"/>
-<area shape="rect" title=" " alt="" coords="5,5,165,83"/>
-<area shape="rect" href="class_message.html" title="Message class as parent type for all message objects to be sent between peers. Not implementable beca..." alt="" coords="205,5,331,83"/>
+<area shape="rect" title="Main class for peer to peer chat application. Implements the top&#45;level logic of the application: star..." alt="" coords="398,528,573,825"/>
+<area shape="rect" href="class_receive_manager.html" title="ReceiveManager Implements Runnable to run as a seperate thread from the rest of the program...." alt="" coords="378,329,593,465"/>
+<area shape="rect" title=" " alt="" coords="423,167,500,245"/>
+<area shape="rect" href="class_send_thread.html" title="SendThread handles sending a message to all other nodes in the topology. Once started,..." alt="" coords="182,337,354,458"/>
+<area shape="rect" title=" " alt="" coords="5,167,165,245"/>
+<area shape="rect" title=" " alt="" coords="561,167,663,245"/>
+<area shape="rect" href="class_participant.html" title="Participant stores the public name, port, and ip address of a single connection within the chat topol..." alt="" coords="706,145,870,267"/>
+<area shape="rect" title=" " alt="" coords="742,5,834,83"/>
+<area shape="rect" href="class_message.html" title="Message class as parent type for all message objects to be sent between peers. Not implementable beca..." alt="" coords="189,167,315,245"/>
 </map>
 </div>
 <table class="memberdecls">
@@ -113,6 +116,18 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a7f81d802867274d9f367ff8161bb609a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#a7f81d802867274d9f367ff8161bb609a">main</a> (String args[])</td></tr>
 <tr class="memdesc:a7f81d802867274d9f367ff8161bb609a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main entrance to program. Parses the command line arguments and starts a new chat or joins and existing chat, whichever is specified. Then falls into a loop for accepting user input from the command line as messages to send or commands such as to leave the chat.  <a href="class_chat_node.html#a7f81d802867274d9f367ff8161bb609a">More...</a><br /></td></tr>
 <tr class="separator:a7f81d802867274d9f367ff8161bb609a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a11c3d43012682827720dea532ed09b71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#a11c3d43012682827720dea532ed09b71">addParticipant</a> (<a class="el" href="class_participant.html">Participant</a> participant)</td></tr>
+<tr class="memdesc:a11c3d43012682827720dea532ed09b71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a participant to the participant list.  <a href="class_chat_node.html#a11c3d43012682827720dea532ed09b71">More...</a><br /></td></tr>
+<tr class="separator:a11c3d43012682827720dea532ed09b71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b3cfe9edcbee83b454a354a2dbfbe7f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#a9b3cfe9edcbee83b454a354a2dbfbe7f">addParticipants</a> (ArrayList&lt; <a class="el" href="class_participant.html">Participant</a> &gt; participants)</td></tr>
+<tr class="memdesc:a9b3cfe9edcbee83b454a354a2dbfbe7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a participant list. Used when joining a chat to take the contained participant list in the returned <a class="el" href="class_join_message.html" title="JoinMessage is the subtype of Message that is sent from a node that wants to join the chat,...">JoinMessage</a> object and insert it as this node's participant list.  <a href="class_chat_node.html#a9b3cfe9edcbee83b454a354a2dbfbe7f">More...</a><br /></td></tr>
+<tr class="separator:a9b3cfe9edcbee83b454a354a2dbfbe7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad60f0758b0692f0207cf05152300e513"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#ad60f0758b0692f0207cf05152300e513">removeParticipant</a> (<a class="el" href="class_participant.html">Participant</a> participant)</td></tr>
+<tr class="memdesc:ad60f0758b0692f0207cf05152300e513"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a participant from the participant list. Used when a <a class="el" href="class_leave_message.html" title="LeaveMessage is the message subtype that is used to signal to nodes that the sending node is leaving ...">LeaveMessage</a> is received to remove the leaving node from the participant list.  <a href="class_chat_node.html#ad60f0758b0692f0207cf05152300e513">More...</a><br /></td></tr>
+<tr class="separator:ad60f0758b0692f0207cf05152300e513"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
@@ -128,28 +143,22 @@ Static Private Member Functions</h2></td></tr>
 <tr class="memitem:a16ca6094bd1f911c17b3be77f5304788"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#a16ca6094bd1f911c17b3be77f5304788">leaveChat</a> ()</td></tr>
 <tr class="memdesc:a16ca6094bd1f911c17b3be77f5304788"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leaves the chat. Gracefully disconnects from all members of the topology by sending them <a class="el" href="class_leave_message.html" title="LeaveMessage is the message subtype that is used to signal to nodes that the sending node is leaving ...">LeaveMessage</a> objects so they can remove the sending node from their participant lists.  <a href="class_chat_node.html#a16ca6094bd1f911c17b3be77f5304788">More...</a><br /></td></tr>
 <tr class="separator:a16ca6094bd1f911c17b3be77f5304788"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07775de1c443ce09de47eab902dbf8da"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#a07775de1c443ce09de47eab902dbf8da">addParticipant</a> (<a class="el" href="class_participant.html">Participant</a> participant)</td></tr>
-<tr class="memdesc:a07775de1c443ce09de47eab902dbf8da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a participant to the participant list.  <a href="class_chat_node.html#a07775de1c443ce09de47eab902dbf8da">More...</a><br /></td></tr>
-<tr class="separator:a07775de1c443ce09de47eab902dbf8da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c4b103e7b8d97b7d6b55c4ad18fa11d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#a7c4b103e7b8d97b7d6b55c4ad18fa11d">addParticipants</a> (ArrayList&lt; <a class="el" href="class_participant.html">Participant</a> &gt; participants)</td></tr>
-<tr class="memdesc:a7c4b103e7b8d97b7d6b55c4ad18fa11d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a participant list. Used when joining a chat to take the contained participant list in the returned <a class="el" href="class_join_message.html" title="JoinMessage is the subtype of Message that is sent from a node that wants to join the chat,...">JoinMessage</a> object and insert it as this node's participant list.  <a href="class_chat_node.html#a7c4b103e7b8d97b7d6b55c4ad18fa11d">More...</a><br /></td></tr>
-<tr class="separator:a7c4b103e7b8d97b7d6b55c4ad18fa11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a530718619d92c999c1c331e35e94024c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#a530718619d92c999c1c331e35e94024c">removeParticipant</a> (<a class="el" href="class_participant.html">Participant</a> participant)</td></tr>
-<tr class="memdesc:a530718619d92c999c1c331e35e94024c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a participant from the participant list. Used when a <a class="el" href="class_leave_message.html" title="LeaveMessage is the message subtype that is used to signal to nodes that the sending node is leaving ...">LeaveMessage</a> is received to remove the leaving node from the participant list.  <a href="class_chat_node.html#a530718619d92c999c1c331e35e94024c">More...</a><br /></td></tr>
-<tr class="separator:a530718619d92c999c1c331e35e94024c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
-Private Attributes</h2></td></tr>
-<tr class="memitem:aeac6b0dd3efe6c3ba35997c92c1c9eda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_receive_manager.html">ReceiveManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#aeac6b0dd3efe6c3ba35997c92c1c9eda">receiveManager</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:aeac6b0dd3efe6c3ba35997c92c1c9eda"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_receive_manager.html">ReceiveManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#aeac6b0dd3efe6c3ba35997c92c1c9eda">receiveManager</a></td></tr>
 <tr class="memdesc:aeac6b0dd3efe6c3ba35997c92c1c9eda"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_receive_manager.html" title="ReceiveManager Implements Runnable to run as a seperate thread from the rest of the program....">ReceiveManager</a> to handle incomming messages.  <a href="class_chat_node.html#aeac6b0dd3efe6c3ba35997c92c1c9eda">More...</a><br /></td></tr>
 <tr class="separator:aeac6b0dd3efe6c3ba35997c92c1c9eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d549d1129a022a1c844889bf3efeabf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_send_thread.html">SendThread</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#a0d549d1129a022a1c844889bf3efeabf">sendManager</a></td></tr>
+<tr class="memitem:a0d549d1129a022a1c844889bf3efeabf"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_send_thread.html">SendThread</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#a0d549d1129a022a1c844889bf3efeabf">sendManager</a></td></tr>
 <tr class="memdesc:a0d549d1129a022a1c844889bf3efeabf"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_send_thread.html" title="SendThread handles sending a message to all other nodes in the topology. Once started,...">SendThread</a> to send outgoing messages.  <a href="class_chat_node.html#a0d549d1129a022a1c844889bf3efeabf">More...</a><br /></td></tr>
 <tr class="separator:a0d549d1129a022a1c844889bf3efeabf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af078099797a968d02b1a3dfae675a91d"><td class="memItemLeft" align="right" valign="top">ArrayList&lt; <a class="el" href="class_participant.html">Participant</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#af078099797a968d02b1a3dfae675a91d">participantList</a></td></tr>
-<tr class="memdesc:af078099797a968d02b1a3dfae675a91d"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of participants to send messages to.  <a href="class_chat_node.html#af078099797a968d02b1a3dfae675a91d">More...</a><br /></td></tr>
+<tr class="memitem:af078099797a968d02b1a3dfae675a91d"><td class="memItemLeft" align="right" valign="top">static ArrayList&lt; <a class="el" href="class_participant.html">Participant</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#af078099797a968d02b1a3dfae675a91d">participantList</a></td></tr>
+<tr class="memdesc:af078099797a968d02b1a3dfae675a91d"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of participants to send messages to. Excludes one's self.  <a href="class_chat_node.html#af078099797a968d02b1a3dfae675a91d">More...</a><br /></td></tr>
 <tr class="separator:af078099797a968d02b1a3dfae675a91d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3a330ed5c6a907cc0b3cfc5db40ef04"><td class="memItemLeft" align="right" valign="top">ServerSocket&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#ae3a330ed5c6a907cc0b3cfc5db40ef04">serverSocket</a></td></tr>
+<tr class="memitem:aaee4f8b9dd6235faec2d0980f7ff0c8e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_participant.html">Participant</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#aaee4f8b9dd6235faec2d0980f7ff0c8e">selfParticipant</a></td></tr>
+<tr class="memdesc:aaee4f8b9dd6235faec2d0980f7ff0c8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Self as a participant. This is kept separate from the participant list to prevent sending to self.  <a href="class_chat_node.html#aaee4f8b9dd6235faec2d0980f7ff0c8e">More...</a><br /></td></tr>
+<tr class="separator:aaee4f8b9dd6235faec2d0980f7ff0c8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3a330ed5c6a907cc0b3cfc5db40ef04"><td class="memItemLeft" align="right" valign="top">static ServerSocket&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_node.html#ae3a330ed5c6a907cc0b3cfc5db40ef04">serverSocket</a></td></tr>
 <tr class="memdesc:ae3a330ed5c6a907cc0b3cfc5db40ef04"><td class="mdescLeft">&#160;</td><td class="mdescRight">ServerSocket for spawning Sockets from for connections.  <a href="class_chat_node.html#ae3a330ed5c6a907cc0b3cfc5db40ef04">More...</a><br /></td></tr>
 <tr class="separator:ae3a330ed5c6a907cc0b3cfc5db40ef04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -158,8 +167,8 @@ Private Attributes</h2></td></tr>
 <dl class="section author"><dt>Authors</dt><dd>Matt Flanders (add more names here if you edit) </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2-22-21 </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a07775de1c443ce09de47eab902dbf8da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a07775de1c443ce09de47eab902dbf8da">&#9670;&nbsp;</a></span>addParticipant()</h2>
+<a id="a11c3d43012682827720dea532ed09b71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11c3d43012682827720dea532ed09b71">&#9670;&nbsp;</a></span>addParticipant()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -168,7 +177,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void ChatNode.addParticipant </td>
+          <td class="memname">void ChatNode.addParticipant </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_participant.html">Participant</a>&#160;</td>
           <td class="paramname"><em>participant</em></td><td>)</td>
@@ -177,7 +186,7 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -189,11 +198,20 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_chat_node_a11c3d43012682827720dea532ed09b71_icgraph.png" border="0" usemap="#aclass_chat_node_a11c3d43012682827720dea532ed09b71_icgraph" alt=""/></div>
+<map name="aclass_chat_node_a11c3d43012682827720dea532ed09b71_icgraph" id="aclass_chat_node_a11c3d43012682827720dea532ed09b71_icgraph">
+<area shape="rect" title="Add a participant to the participant list." alt="" coords="228,5,396,32"/>
+<area shape="rect" href="class_chat_node.html#a9b3cfe9edcbee83b454a354a2dbfbe7f" title="Add a participant list. Used when joining a chat to take the contained participant list in the return..." alt="" coords="5,5,180,32"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="a7c4b103e7b8d97b7d6b55c4ad18fa11d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c4b103e7b8d97b7d6b55c4ad18fa11d">&#9670;&nbsp;</a></span>addParticipants()</h2>
+<a id="a9b3cfe9edcbee83b454a354a2dbfbe7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b3cfe9edcbee83b454a354a2dbfbe7f">&#9670;&nbsp;</a></span>addParticipants()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -202,7 +220,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void ChatNode.addParticipants </td>
+          <td class="memname">void ChatNode.addParticipants </td>
           <td>(</td>
           <td class="paramtype">ArrayList&lt; <a class="el" href="class_participant.html">Participant</a> &gt;&#160;</td>
           <td class="paramname"><em>participants</em></td><td>)</td>
@@ -211,7 +229,7 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -223,6 +241,15 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_chat_node_a9b3cfe9edcbee83b454a354a2dbfbe7f_cgraph.png" border="0" usemap="#aclass_chat_node_a9b3cfe9edcbee83b454a354a2dbfbe7f_cgraph" alt=""/></div>
+<map name="aclass_chat_node_a9b3cfe9edcbee83b454a354a2dbfbe7f_cgraph" id="aclass_chat_node_a9b3cfe9edcbee83b454a354a2dbfbe7f_cgraph">
+<area shape="rect" title="Add a participant list. Used when joining a chat to take the contained participant list in the return..." alt="" coords="5,5,180,32"/>
+<area shape="rect" href="class_chat_node.html#a11c3d43012682827720dea532ed09b71" title="Add a participant to the participant list." alt="" coords="228,5,396,32"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -351,8 +378,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a530718619d92c999c1c331e35e94024c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a530718619d92c999c1c331e35e94024c">&#9670;&nbsp;</a></span>removeParticipant()</h2>
+<a id="ad60f0758b0692f0207cf05152300e513"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad60f0758b0692f0207cf05152300e513">&#9670;&nbsp;</a></span>removeParticipant()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -361,7 +388,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void ChatNode.removeParticipant </td>
+          <td class="memname">void ChatNode.removeParticipant </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_participant.html">Participant</a>&#160;</td>
           <td class="paramname"><em>participant</em></td><td>)</td>
@@ -370,7 +397,7 @@ Here is the call graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -478,12 +505,12 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>List of participants to send messages to. </p>
+<p>List of participants to send messages to. Excludes one's self. </p>
 
 </div>
 </div>
@@ -502,12 +529,36 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p><a class="el" href="class_receive_manager.html" title="ReceiveManager Implements Runnable to run as a seperate thread from the rest of the program....">ReceiveManager</a> to handle incomming messages. </p>
+
+</div>
+</div>
+<a id="aaee4f8b9dd6235faec2d0980f7ff0c8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaee4f8b9dd6235faec2d0980f7ff0c8e">&#9670;&nbsp;</a></span>selfParticipant</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_participant.html">Participant</a> ChatNode.selfParticipant</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Self as a participant. This is kept separate from the participant list to prevent sending to self. </p>
 
 </div>
 </div>
@@ -526,7 +577,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -550,7 +601,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

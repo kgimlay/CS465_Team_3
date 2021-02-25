@@ -40,9 +40,9 @@ public class ReceiveManager implements Runnable
    *  @param selfParticipant - The participant that represents this particular
    *  node. Used for responding to a "JoinMessage".
    */
-   public void ReceiveManager( ServerSocket serverSocket,
-                                 ArrayList<Participant> participantList,
-                                 Participant selfParticipant )
+   public ReceiveManager( ServerSocket serverSocket,
+                           ArrayList<Participant> participantList,
+                           Participant selfParticipant )
    {
      this.serverSocket = serverSocket;
      this.participantList = participantList;

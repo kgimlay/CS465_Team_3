@@ -18,7 +18,6 @@ import java.io.*;
 */
 public class ChatNode
 {
-
    /** @brief ReceiveManager to handle incomming messages.
    */
    private static ReceiveManager receiveManager;
@@ -46,6 +45,13 @@ public class ChatNode
    */
    private static void startChat(int portNumber)
    {
+      // initialize other attributes
+      participantList = new ArrayList<Participant>();
+      receiveManager = new ReceiveManager(serverSocket, participantList,
+                                          selfParticipant);
+      // Note that sendManager is initialized for every message sent, therefore
+      // we don't initialize it here.
+
       // Initialize serverSocket
       try {
          serverSocket = new ServerSocket( portNumber );
@@ -57,14 +63,7 @@ public class ChatNode
       // initialize one's self as a participant
       selfParticipant = new Participant("Implement get username!",
                                           serverSocket.getInetAddress(),
-                                          portNumber );
-
-      // initialize other attributes
-      participantList = new ArrayList<Participant>();
-      //receiveManager = new ReceiveManager(serverSocket, participantList,
-                                          //selfParticipant);
-      // Note that sendManager is initialized for every message sent, therefore
-      // we don't initialize it here.
+                                          serverSocket.getLocalPort() );
    }
 
    /** @brief Joins an already existing chat topology.
@@ -103,7 +102,7 @@ public class ChatNode
    */
    private void addParticipant(Participant participant)
    {
-      this.participantList.add(participant);
+      participantList.add(participant);
    }
 
    /** @brief Add a participant list. Used when joining a chat to take the
@@ -129,7 +128,7 @@ public class ChatNode
    */
    private void removeParticipant(Participant participant)
    {
-      this.participants.remove(participant);
+      participantList.remove(participant);
    }
 
    /** @brief Main entrance to program.
