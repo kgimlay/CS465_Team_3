@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.UnknownHostException;
 import java.lang.Thread;
+import java.io.*;
 
 /** @brief Main class for peer to peer chat application. Implements the
 *  top-level logic of the application: starting a chat, joining a chat, leaving
@@ -20,27 +21,50 @@ public class ChatNode
 
    /** @brief ReceiveManager to handle incomming messages.
    */
-   private ReceiveManager receiveManager;
+   private static ReceiveManager receiveManager;
 
    /** @brief SendThread to send outgoing messages.
    */
-   private SendThread sendManager;
+   private static SendThread sendManager;
 
-   /** @brief List of participants to send messages to.
+   /** @brief List of participants to send messages to. Excludes one's self.
    */
-   private ArrayList<Participant> participantList;
+   private static ArrayList<Participant> participantList;
+
+   /** @brief Self as a participant. This is kept separate from the participant
+   * list to prevent sending to self.
+   */
+   private static Participant selfParticipant;
 
    /** @brief ServerSocket for spawning Sockets from for connections.
    */
-   private ServerSocket serverSocket;
+   private static ServerSocket serverSocket;
 
    /** @brief Starts a new chat topology with just the one node (self).
    *  @param portNumber - Integer port number for opening connections on,
    *  between 0 and 65535 inclusive.
    */
-   private static void startChat( int portNumber)
+   private static void startChat(int portNumber)
    {
+      // Initialize serverSocket
+      try {
+         serverSocket = new ServerSocket( portNumber );
+      } catch (IOException ioE) {
+         System.out.println("An error occured while opening the socket!");
+			System.exit(1);
+      }
 
+      // initialize one's self as a participant
+      selfParticipant = new Participant("Implement get username!",
+                                          serverSocket.getInetAddress(),
+                                          portNumber );
+
+      // initialize other attributes
+      participantList = new ArrayList<Participant>();
+      //receiveManager = new ReceiveManager(serverSocket, participantList,
+                                          //selfParticipant);
+      // Note that sendManager is initialized for every message sent, therefore
+      // we don't initialize it here.
    }
 
    /** @brief Joins an already existing chat topology.

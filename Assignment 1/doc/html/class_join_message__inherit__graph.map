@@ -1,0 +1,4 @@
+<map id="JoinMessage" name="JoinMessage">
+<area shape="rect" id="node1" title="JoinMessage is the subtype of Message that is sent from a node that wants to join the chat,..." alt="" coords="5,131,177,267"/>
+<area shape="rect" id="node2" href="$class_message.html" title="Message class as parent type for all message objects to be sent between peers. Not implementable beca..." alt="" coords="29,5,154,83"/>
+</map>

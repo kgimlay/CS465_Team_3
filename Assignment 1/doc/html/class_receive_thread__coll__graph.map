@@ -1,0 +1,5 @@
+<map id="ReceiveThread" name="ReceiveThread">
+<area shape="rect" id="node1" title="ReceiveThread handles receiving a message from a single connection in the topology...." alt="" coords="7,145,174,252"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,83,83"/>
+<area shape="rect" id="node3" title=" " alt="" coords="107,5,170,83"/>
+</map>
