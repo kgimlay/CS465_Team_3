@@ -1,4 +1,5 @@
-/** @authors Kevin Imlay, <put your name here if you edit anything>
+/** @class ReceiveManager
+*  @authors Kevin Imlay
 *  @date 2-23-21
 */
 
@@ -19,7 +20,7 @@ public class ReceiveManager implements Runnable
    private ServerSocket serverSocket;
 
    /** @brief Constructor.
-   *  Takes in a server socket for spawning new connections on sockets.
+   *  @param serverSocket - ServerSocket for spawning new connections on sockets.
    */
    public void ReceiveManager( ServerSocket serverSocket )
    {
