@@ -101,9 +101,9 @@ public class ChatNode
    *  @param participant - A Participant object to add to the list of
    *  participants.
    */
-   private static void addParticipant(Participant participant)
+   private void addParticipant(Participant participant)
    {
-
+      this.participantList.add(participant);
    }
 
    /** @brief Add a participant list. Used when joining a chat to take the
@@ -112,9 +112,14 @@ public class ChatNode
    *  @param participants - An ArrayList of Participants to set as the new
    *  participant list.
    */
-   private static void addParticipants(ArrayList<Participant> participants)
+   private void addParticipants(ArrayList<Participant> participants)
    {
-
+      // iterate over given participants list and add each participant
+      // to this object's own participant list
+      for (int i = 0; i < participants.size(); i++)
+      {
+         this.addParticipant(participants.get(i));
+      }
    }
 
    /** @brief Remove a participant from the participant list. Used when a
@@ -122,9 +127,9 @@ public class ChatNode
    *  list.
    *  @param participant - Participant object of the participant to remove.
    */
-   private static void removeParticipant(Participant participant)
+   private void removeParticipant(Participant participant)
    {
-
+      this.participants.remove(participant);
    }
 
    /** @brief Main entrance to program.
