@@ -74,7 +74,7 @@ public class ChatNode
    */
    private static void joinChat(InetAddress ip, int port)
    {
-
+      // create a join message to join the existing chat
    }
 
    /** @brief Sends a message to the other participants in the chat. Creates a
@@ -84,6 +84,12 @@ public class ChatNode
    */
    private static void sendMessage(String message)
    {
+      // create a message to send
+      ChatMessage sendMessage = new ChatMessage("placeholder", message);
+      // pass the created message and participant list to the sendd manager
+      sendManager = new SendThread(sendMessage, participantList);
+      // start the thread in order to send the message to all participants
+      sendManager.run();
 
    }
 
@@ -93,7 +99,13 @@ public class ChatNode
    */
    private static void leaveChat()
    {
-
+      // create a leave message to signal departure from the chat
+      LeaveMessage leaveMessage = new LeaveMessage("placeholder");
+      // pass the created leave message and participant list to the send manager
+      sendManager = new SendThread(leaveMessage, participantList);
+      // start the thread in order to have all participants remove the departing
+      // participant from their participant lists
+      sendManager.run();
    }
 
    /** @brief Add a participant to the participant list.
@@ -117,7 +129,7 @@ public class ChatNode
       // to this object's own participant list
       for (int i = 0; i < participants.size(); i++)
       {
-         this.addParticipant(participants.get(i));
+         addParticipant(participants.get(i));
       }
    }
 
