@@ -41,8 +41,8 @@ public class ReceiveManager implements Runnable
    *  node. Used for responding to a "JoinMessage".
    */
    public ReceiveManager( ServerSocket serverSocket,
-                           ArrayList<Participant> participantList,
-                           Participant selfParticipant )
+                                 ArrayList<Participant> participantList,
+                                 Participant selfParticipant )
    {
      this.serverSocket = serverSocket;
      this.participantList = participantList;
