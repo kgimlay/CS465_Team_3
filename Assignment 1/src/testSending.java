@@ -15,7 +15,7 @@ import java.net.*;
 *  Participant list and sends the message to them. Terminates once the message
 *  has been sent to every node on the participant list.
 */
-public class SendThread implements Runnable{
+public class SendThread {
    /** @brief Message object to send.
    */
    private Message message;
@@ -24,18 +24,6 @@ public class SendThread implements Runnable{
    */
    private ArrayList<Participant> recipients;
 
-   /** @brief Constructor.
-   *  @param message - Message object of the message to send.
-   *  @param recipients - ArrayList of Participant as the participant list to
-   *  send the message to.
-   *  @param selfParticipant - Participant in participant list that is
-      self
-   */
-   public SendThread( Message message, ArrayList<Participant> recipients )
-   {
-      this.message = message;
-      this.recipients = recipients;
-   }
 
    /** @brief Interface method from Runnable - starts the thread.
    *  Once started, iterates over each participant in the participant list. For
@@ -44,7 +32,7 @@ public class SendThread implements Runnable{
    *  Once all the message has been sent to all participants, the
    *  thread terminates.
    */
-   public void run()
+   public static void main()
    {
     Socket socketObject;
     int index;
