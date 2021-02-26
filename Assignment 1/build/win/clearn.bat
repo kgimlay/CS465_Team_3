@@ -1,2 +1,2 @@
 del ../../bin/*
-rm ../../doc/html/*
+del ../../doc/html/*

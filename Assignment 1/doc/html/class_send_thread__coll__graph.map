@@ -1,6 +1,0 @@
-<map id="SendThread" name="SendThread">
-<area shape="rect" id="node1" title="SendThread handles sending a message to all other nodes in the topology. Once started,..." alt="" coords="101,145,273,267"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,5,83,83"/>
-<area shape="rect" id="node3" title=" " alt="" coords="107,5,267,83"/>
-<area shape="rect" id="node4" href="$class_message.html" title="Message class as parent type for all message objects to be sent between peers. Not implementable beca..." alt="" coords="291,5,416,83"/>
-</map>

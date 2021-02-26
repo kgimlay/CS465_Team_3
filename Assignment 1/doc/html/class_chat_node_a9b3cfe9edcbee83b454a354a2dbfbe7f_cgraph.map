@@ -1,4 +1,0 @@
-<map id="ChatNode.addParticipants" name="ChatNode.addParticipants">
-<area shape="rect" id="node1" title="Add a participant list. Used when joining a chat to take the contained participant list in the return..." alt="" coords="5,5,180,32"/>
-<area shape="rect" id="node2" href="$class_chat_node.html#a11c3d43012682827720dea532ed09b71" title="Add a participant to the participant list." alt="" coords="228,5,396,32"/>
-</map>

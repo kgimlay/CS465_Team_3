@@ -1,5 +1,0 @@
-<map id="ChatNode.main" name="ChatNode.main">
-<area shape="rect" id="node1" title="Main entrance to program. Parses the command line arguments and starts a new chat or joins and existi..." alt="" coords="5,31,119,57"/>
-<area shape="rect" id="node2" href="$class_chat_node.html#a923ae9be7c8ce5d6aeae36749f934fe1" title="Joins an already existing chat topology." alt="" coords="169,5,303,32"/>
-<area shape="rect" id="node3" href="$class_chat_node.html#a2cfbfec51e9bd7fbf778abcfcd182881" title="Starts a new chat topology with just the one node (self)." alt="" coords="167,56,305,83"/>
-</map>

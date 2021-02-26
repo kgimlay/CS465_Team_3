@@ -1,4 +1,0 @@
-<map id="JoinedMessage" name="JoinedMessage">
-<area shape="rect" id="node1" title="JoinedMessage is the subtype of message that is used to signal to a receiving node that the sending n..." alt="" coords="5,131,168,223"/>
-<area shape="rect" id="node2" href="$class_message.html" title="Message class as parent type for all message objects to be sent between peers. Not implementable beca..." alt="" coords="24,5,149,83"/>
-</map>

@@ -39,11 +39,11 @@ public class ChatNode
    */
    private static ServerSocket serverSocket;
 
-   /** @brief Starts a new chat topology with just the one node (self).
-   *  @param portNumber - Integer port number for opening connections on,
+   /** @brief Initialize the attribute needed for operation.
+   *  @param portNum - Integer port number for opening connections on,
    *  between 0 and 65535 inclusive.
    */
-   private static void startChat(int portNumber)
+   private static void initSelf( int portNum )
    {
       // initialize other attributes
       participantList = new ArrayList<Participant>();
@@ -54,7 +54,7 @@ public class ChatNode
 
       // Initialize serverSocket
       try {
-         serverSocket = new ServerSocket( portNumber );
+         serverSocket = new ServerSocket( portNum );
       } catch (IOException ioE) {
          System.out.println("An error occured while opening the socket!");
 			System.exit(1);
@@ -64,17 +64,42 @@ public class ChatNode
       selfParticipant = new Participant("Implement get username!",
                                           serverSocket.getInetAddress(),
                                           serverSocket.getLocalPort() );
+
+      System.out.println(serverSocket);
+      System.out.println(selfParticipant);
+   }
+
+   /** @brief Starts a new chat topology with just the one node (self).
+   *  @param selfPort - Integer port number for opening connections on,
+   *  between 0 and 65535 inclusive.
+   */
+   private static void startChat(int selfPort)
+   {
+      // initialize the attributes needed for operation
+      initSelf( selfPort );
    }
 
    /** @brief Joins an already existing chat topology.
+   *  @param selfPort - Integer port number for opening connections on,
+   *  between 0 and 65535 inclusive.
    *  @param ip - InetAddress of a node known to be in the chat topology to
    *  to connect to.
-   *  @param port - Integer port number of the known node, between 0 and 65535
-   *  inclusive.
+   *  @param joinPort - Integer port number of the known node, between 0 and
+   *  65535 inclusive.
    */
-   private static void joinChat(InetAddress ip, int port)
+   private static void joinChat(int selfPort, InetAddress ip, int joinPort)
    {
+      // initialize the attributes needed for operation
+      initSelf( selfPort );
+
       // create a join message to join the existing chat
+      // create a participant of the node to connect to
+      Message joinRequest = new JoinMessage("placeholder", null);
+      addParticipant(new Participant("placeholder", ip, joinPort));
+
+      // send request
+      sendManager = new SendThread(joinRequest, participantList);
+      sendManager.run();
    }
 
    /** @brief Sends a message to the other participants in the chat. Creates a
@@ -112,7 +137,7 @@ public class ChatNode
    *  @param participant - A Participant object to add to the list of
    *  participants.
    */
-   private void addParticipant(Participant participant)
+   private static void addParticipant(Participant participant)
    {
       participantList.add(participant);
    }
@@ -123,7 +148,7 @@ public class ChatNode
    *  @param participants - An ArrayList of Participants to set as the new
    *  participant list.
    */
-   private void addParticipants(ArrayList<Participant> participants)
+   private static void addParticipants(ArrayList<Participant> participants)
    {
       // iterate over given participants list and add each participant
       // to this object's own participant list
@@ -138,7 +163,7 @@ public class ChatNode
    *  list.
    *  @param participant - Participant object of the participant to remove.
    */
-   private void removeParticipant(Participant participant)
+   private static void removeParticipant(Participant participant)
    {
       participantList.remove(participant);
    }
@@ -153,75 +178,101 @@ public class ChatNode
    */
    public static void main(String args[])
    {
-      // flag for starting new chat or joining an existing chat
-      boolean isStartingNew = true;
-      int portNum = 0;
-      InetAddress ipAddress = null;
+      /** Command line arguemnts are structed as such:
+      *  -n <port to open>  |
+      *  -j <port to open> <ip to conenct to> <port to connect to>
+      *//*
+      *  Algorithm:
+      *  If number of command line arguments != 2 or != 4:
+      *    print usage and abort
+      *  Else:
+      *    If flag == -n:
+      *      get port to open on
+      *      If port < 0 or > 65535:
+      *        print error message and abort
+      *    Else if flag == -j:
+      *      get port to open on, ip to connect to, port to connect to
+      *      If either port < 0 or > 65535:
+      *        print error message and abort
+      *      If ip is not valid:
+      *        print error message and abort
+      *    Else:
+      *      print usage and abort
+      */
+      int openPort = 0;          // port to open your own connection on
+      int joinPort = 0;          // port to connect to for joining
+      InetAddress joinIp = null; // IP address to connect to for joining
+      boolean isJoining = false; // default to starting a new chat
 
-      // try to read command line args
-      try
+      // check for correct number of parameters and
+      // check for correct flags
+      if (!(args.length == 2 && args[0].equals("-n"))
+         && !(args.length == 4 && args[0].equals("-j") ))
       {
-         // get the port number as an int
-         portNum = Integer.parseInt(args[1]);
-
-         // if first argument passed is "-n" we are creating a new chat
-         if (args[0].equals("-n"))
+         System.out.println("\nUsage: -n <port to open>  | -j <port to open> "
+            + "<ip to conenct to> <port to connect to>\n");
+         System.exit(1);
+      }
+      // flags are correct, good to get next arguemnts
+      try {
+         openPort = Integer.parseInt(args[1]);
+         // report if port out of range
+         if (openPort < 0 || openPort > 65535)
          {
-            // set flag to starting a chat
-            isStartingNew = true;
-         }
-
-         // if first argument is "-j" we join an existing chat
-         else if(args[0].equals("-j"))
-         {
-         // set flag to join chat
-            isStartingNew = false;
-
-         // try and get ip address passed in args
-         try
-         {
-            ipAddress = InetAddress.getByName(args[2]);
-         }
-         catch (UnknownHostException e)
-         {
-            System.out.println("Unkown host or malformed ip address.\n");
+            System.out.println("Opening port must be between 0 and 65535 "
+               + "inclusive");
             System.exit(1);
          }
+      }
+      catch(NumberFormatException nfException) {
+         System.out.println("Error parsing open port to an integer");
+         System.exit(1);
+      }
+      if (args[0].equals("-j"))
+      {
+         // set flag to join
+         isJoining = true;
 
+         // catch exceptions for parsing port to an integer and
+         // from trying to make an InetAddress object on the IP given
+         try {
+            joinIp = InetAddress.getByName(args[2]);
+            joinPort = Integer.parseInt(args[3]);
+            // report if port out of range
+            if (joinPort < 0 || joinPort > 65535)
+            {
+               System.out.println("Joining port must be between 0 and 65535 "
+                  + "inclusive");
+               System.exit(1);
+            }
          }
-
-         // something went wrong in the command line arg
-         else
-         {
-            System.out.println("Command line args given to start chat incorrect.\n");
-            System.out.println("Arg 0 : \"" + args[0] + "\" should be \"-n\" or \"-j\".");
+         catch(NumberFormatException nfException) {
+            System.out.println("Error parsing connecting port to an integer");
             System.exit(1);
          }
-
-         // test to see if a valid ip address has been given
-         if (portNum < 0 || portNum > 65535)
-         {
-            System.out.println("Incorrect port number given, port numbers must be between 0 and 65535.\n");
+         catch(UnknownHostException uhException) {
+            System.out.println("Error parsing IP address");
             System.exit(1);
          }
-
       }
 
-      catch (Exception e)
+      // start a new chat or join a chat, whichever was specified in command
+      // line arguments
+      if (isJoining)
       {
-      System.out.println("usage for chat application: -j  <port> <ip> | -n <port> ");
-      }
-
-      // command line args pass up to here, begin join/create chat
-      if (isStartingNew)
-      {
-         startChat( portNum);
+         // join a chat
+         joinChat(openPort, joinIp, joinPort);
       }
       else
       {
-         joinChat(ipAddress, portNum);
+         // start a chat
+         startChat(openPort);
       }
 
+      /** @todo Implement getting from cl and sending message, and any other
+      *  logic needed for handling unsuccessful join request.
+      */
+      
       // set up loop to be taking in messages
       // CURRENTLY TEST LOOP
       Scanner scanner = new Scanner(System.in);

@@ -1,4 +1,0 @@
-<map id="LeaveMessage" name="LeaveMessage">
-<area shape="rect" id="node1" title="LeaveMessage is the message subtype that is used to signal to nodes that the sending node is leaving ..." alt="" coords="5,131,165,223"/>
-<area shape="rect" id="node2" href="$class_message.html" title="Message class as parent type for all message objects to be sent between peers. Not implementable beca..." alt="" coords="23,5,148,83"/>
-</map>

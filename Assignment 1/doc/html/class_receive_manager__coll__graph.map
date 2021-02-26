@@ -1,8 +1,0 @@
-<map id="ReceiveManager" name="ReceiveManager">
-<area shape="rect" id="node1" title="ReceiveManager Implements Runnable to run as a seperate thread from the rest of the program...." alt="" coords="157,329,371,465"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,167,83,245"/>
-<area shape="rect" id="node3" title=" " alt="" coords="107,167,267,245"/>
-<area shape="rect" id="node4" title=" " alt="" coords="291,167,392,245"/>
-<area shape="rect" id="node5" href="$class_participant.html" title="Participant stores the public name, port, and ip address of a single connection within the chat topol..." alt="" coords="417,145,581,267"/>
-<area shape="rect" id="node6" title=" " alt="" coords="453,5,545,83"/>
-</map>
