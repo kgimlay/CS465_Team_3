@@ -60,40 +60,40 @@ public class ReceiveThread implements Runnable{
       {
          // set up connections
          fromClient = new ObjectInputStream( connection.getInputStream() );
-         toClient = new ObjectOutputStream( connection.getOutputStream() );
+         toClient = new ObjectOutputStream( connection.getOutputStream() );   // possibly not work? might need to spawn a new SendThread instead for responding
 
          // get the message class type
-         Object messageClass = fromClient.readObject();
+         Object messageClass = fromClient.readObject();  // is this blocking? We want it to be blocking
 
          // check if message was a chat message
          if ( messageClass instanceof ChatMessage )
          {
             // print the message to the console
-            String message = ( String ) fromClient.readObject();
+            String message = ( String ) fromClient.readObject();  // I think you ment to put messageClass instead of .readObject()
             System.out.println( message );
          }
 
          // check if message equal to a joinMessage
          if ( messageClass instanceof JoinMessage )
          {
-            // clean toClient onject
+            // clean toClient object
             toClient.reset();
             // send back threadList
-            toClient.writeObject( threadList );
+            toClient.writeObject( threadList ); // copy the Participant list and add your selfParticipant to is, then send that
          }
 
          // check if message equal to a joinedMessage
          if ( messageClass instanceof JoinedMessage )
          {
             // add the new node to the list
-            threadList.add( ( Participant ) fromClient.readObject());
+            threadList.add( ( Participant ) fromClient.readObject());   // messageClass instead of .readObject()
          }
 
          // check if message equal to leave message
          if ( messageClass instanceof LeaveMessage )
          {
             // remove node from list
-            threadList.remove(fromClient.readObject());
+            threadList.remove(fromClient.readObject());  // get the sending Participant and remove them from the Participant list
          }
 
          // close connection
@@ -101,7 +101,7 @@ public class ReceiveThread implements Runnable{
       }
       catch (Exception ioE)
       {
-         System.out.println("Error in recieving incomming message.");
+         System.out.println("Error in recieving incoming message.");
       }
 
    }

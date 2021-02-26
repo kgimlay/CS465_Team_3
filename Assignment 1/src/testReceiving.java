@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.Runnable;
+import java.net.InetAddress;
 
 /** @brief ReceiveThread handles receiving a message from a single connection
 *  in the topology. A ReceiveThread is spawned on the acceptance of an incomming
@@ -41,11 +42,12 @@ public class testReceiving {
    *  Receives the incomming message object and handles it appropriately.
    *  Terminates once the connection is closed by the sending node.
    */
-   public static void main()
+   public static void main(String[] args)
    {
       try
       {
-         ServerSocket serverSocket = new ServerSocket(5000);
+         ServerSocket serverSocket = new ServerSocket(5000, -1, InetAddress.getByName("localhost"));
+         System.out.println(serverSocket);
          connection = serverSocket.accept();
          fromClient = new ObjectInputStream( connection.getInputStream() );
          toClient = new ObjectOutputStream( connection.getOutputStream() );
@@ -53,12 +55,11 @@ public class testReceiving {
          while(true)
          {
             // set up connections
-            
+
 
             // get the message class type
             Object messageClass = fromClient.readObject();
             System.out.println(messageClass);
-            connection.close();
          }
 
          // // check if message was a chat message

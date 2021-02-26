@@ -37,23 +37,21 @@ public class testSending {
     Socket socketObject;
     int index;
     // for(index = 0; index < recipients.size(); index ++)
-    while(true)
-    {
       try
       {
        //Participant recipient = recipients.get(index);
        socketObject = new Socket( InetAddress.getByName("localhost"), 5000);
        ObjectOutputStream outputStream = new ObjectOutputStream( socketObject.getOutputStream() );
-       
-       outputStream.writeObject(new ChatMessage("aaaa", "bbbb"));
-       socketObject.close();
+
+       while (true)
+       {
+          outputStream.writeObject(new ChatMessage("aaaa", "bbbb"));
+          //outputStream.flush();
+       }
       }
       catch( IOException ioE )
       {
- 			 System.out.println( "In SendThread an i/o exception has occured"+
-                               "while trying to open connection socket object");
+ 			 System.out.println( ioE );
       }
-
-    }
    }
  }
