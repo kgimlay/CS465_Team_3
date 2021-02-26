@@ -6,16 +6,20 @@
 */
 
 import java.net.Socket;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.Runnable;
 
 /** @brief ReceiveThread handles receiving a message from a single connection
 *  in the topology. A ReceiveThread is spawned on the acceptance of an incomming
 *  connection request, it reads in the incomming message, and reacts to that
-*  message however is appropriate: ChatMessage - print to print stream (console)
-*  JoinMessage, responds with a Participant list, JoinedMessage - adds the
-*  sending node to the Participant list, LeaveMessage - removes the node from
-*  the Participant list. The thread terminates once the sending side of the
+*  message however is appropriate: 
+*  ChatMessage    -  print to print stream (console)
+*  JoinMessage    -  responds with a Participant list
+*  JoinedMessage  -  adds the sending node to the Participant list
+*  LeaveMessage   -  removes the node from the Participant list. 
+*  The thread terminates once the sending side of the
 *  connection closes the connection.
 */
 public class ReceiveThread implements Runnable{
@@ -23,13 +27,27 @@ public class ReceiveThread implements Runnable{
    */
    private Socket connection;
 
+   private ArrayList<Participant> threadList;
+
+   private Participant threadSelf;
+
+   private ObjectInputStream fromClient;
+
+   private ObjectOutputStream toClient;
+
+
    /** @brief Constructor.
    *  @param socket - The Socket object for receiving the incomming message
    *  from.
    */
-   public ReceiveThread( Socket socket )
+   public ReceiveThread( Socket socket,  ArrayList<Participant> list, Participant self)
    {
+      // initialize variables
       this.connection = socket;
+      this.threadList = list;
+      this.threadSelf = self;
+      this.fromClient = null;
+      this.toClient = null;   
    }
 
    /** @brief Interface method from Runnable - starts the thread.
@@ -38,17 +56,52 @@ public class ReceiveThread implements Runnable{
    */
    public void run()
    {
-
       try
       {
-         Scanner scanner = new Scanner(connection.getInputStream());
-         String message = scanner.nextLine();
-         System.out.println(message);
-         connection.close();
+         // set up connections         
+         fromClient = new ObjectInputStream( connection.getInputStream() );
+         toClient = new ObjectOutputStream( connection.getOutputStream() );
+
+         // get the message class type
+         Object messageClass = fromClient.readObject();
+
+         // check if message was a chat message
+         if ( messageClass instanceof ChatMessage )
+         {
+            // print the message to the console
+            String message = ( String ) fromClient.readObject();
+            System.out.println( message );  
+         }
+
+         // check if message equal to a joinMessage
+         if ( messageClass instanceof JoinMessage )
+         {
+            // clean toClient onject
+            toClient.reset();
+            // send back threadList
+            toClient.writeObject( threadList );            
+         }
+
+         // check if message equal to a joinedMessage
+         if ( messageClass instanceof JoinedMessage )
+         {
+            // add the new node to the list
+            threadList.add( ( Participant ) fromClient.readObject()); 
+         }
+
+         // check if message equal to leave message
+         if ( messageClass instanceof LeaveMessage )
+         {
+            // remove node from list
+            threadList.remove(fromClient.readObject());
+         }
+
+         // close connection
+         connection.close();                       
       }
-      catch (Exception e)
+      catch (Exception ioE)
       {
-         System.out.println("Error in getting connection message.");
+         System.out.println("Error in recieving incomming message.");
       }
 
    }
