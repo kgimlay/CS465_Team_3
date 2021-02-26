@@ -1,6 +1,6 @@
 /** @class JoinMessage
-*  @authors
-*  @date
+*  @authors Kevin Imlay
+*  @date 2-20-21
 */
 
 import java.util.ArrayList;

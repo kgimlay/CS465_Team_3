@@ -1,6 +1,6 @@
 /** @class Message
-*  @authors
-*  @date
+*  @authors Kevin Imlay
+*  @date 2-20-21
 */
 
 

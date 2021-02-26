@@ -1,6 +1,6 @@
 /** @class SendThread
-*  @authors
-*  @date
+*  @authors Randy
+*  @date 2-25-21
 */
 
 import java.util.ArrayList;

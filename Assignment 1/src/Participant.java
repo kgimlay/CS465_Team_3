@@ -1,6 +1,6 @@
 /** @class Participant
-*  @authors
-*  @date
+*  @authors Yasmin Vega
+*  @date 2-20-21
 */
 
 import java.net.InetAddress;

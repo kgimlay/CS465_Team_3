@@ -1,6 +1,6 @@
 /** @class ChatNode
-*  @authors Matt Flanders (add more names here if you edit)
-*  @date 2-22-21
+*  @authors Matt Flanders, Yasmin Vega, Kevin Imlay
+*  @date 2-22-21 and 2-25-21
 */
 
 import java.util.ArrayList;
@@ -272,7 +272,7 @@ public class ChatNode
       /** @todo Implement getting from cl and sending message, and any other
       *  logic needed for handling unsuccessful join request.
       */
-      
+
       // set up loop to be taking in messages
       // CURRENTLY TEST LOOP
       Scanner scanner = new Scanner(System.in);
