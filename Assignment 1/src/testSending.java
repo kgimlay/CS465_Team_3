@@ -15,7 +15,7 @@ import java.net.*;
 *  Participant list and sends the message to them. Terminates once the message
 *  has been sent to every node on the participant list.
 */
-public class SendThread {
+public class testSending {
    /** @brief Message object to send.
    */
    private Message message;
@@ -32,18 +32,20 @@ public class SendThread {
    *  Once all the message has been sent to all participants, the
    *  thread terminates.
    */
-   public static void main()
+   public static void main(String args[])
    {
     Socket socketObject;
     int index;
-    for(index = 0; index < recipients.size(); index ++)
+    // for(index = 0; index < recipients.size(); index ++)
+    while(true)
     {
       try
       {
-       Participant recipient = recipients.get(index);
-       socketObject = new Socket(recipient.ip, recipient.port);
+       //Participant recipient = recipients.get(index);
+       socketObject = new Socket( InetAddress.getByName("localhost"), 5000);
        ObjectOutputStream outputStream = new ObjectOutputStream( socketObject.getOutputStream() );
-       outputStream.writeObject(message);
+       
+       outputStream.writeObject(new ChatMessage("aaaa", "bbbb"));
        socketObject.close();
       }
       catch( IOException ioE )

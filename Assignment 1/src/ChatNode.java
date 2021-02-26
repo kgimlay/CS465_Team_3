@@ -53,8 +53,10 @@ public class ChatNode
       // we don't initialize it here.
 
       // Initialize serverSocket
-      try {
+      try 
+      {         
          serverSocket = new ServerSocket( portNum );
+         System.out.println( serverSocket.getLocalSocketAddress());
       } catch (IOException ioE) {
          System.out.println("An error occured while opening the socket!");
 			System.exit(1);

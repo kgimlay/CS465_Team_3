@@ -5,6 +5,7 @@
 *  @todo Fugure out how to manipulate par list from calls in here.
 */
 
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.io.ObjectInputStream;
@@ -22,18 +23,18 @@ import java.lang.Runnable;
 *  The thread terminates once the sending side of the
 *  connection closes the connection.
 */
-public class ReceiveThread {
+public class testReceiving {
    /**  @brief A Socket object for receiving the incomming message from.
    */
-   private Socket connection;
+   private static Socket connection;
 
-   private ArrayList<Participant> threadList;
+   private static ArrayList<Participant> threadList;
 
-   private Participant threadSelf;
+   private static Participant threadSelf;
 
-   private ObjectInputStream fromClient;
+   private static ObjectInputStream fromClient;
 
-   private ObjectOutputStream toClient;
+   private static ObjectOutputStream toClient;
 
 
    /** @brief Interface method from Runnable - starts the thread.
@@ -44,46 +45,55 @@ public class ReceiveThread {
    {
       try
       {
-         // set up connections
+         ServerSocket serverSocket = new ServerSocket(5000);
+         connection = serverSocket.accept();
          fromClient = new ObjectInputStream( connection.getInputStream() );
          toClient = new ObjectOutputStream( connection.getOutputStream() );
 
-         // get the message class type
-         Object messageClass = fromClient.readObject();
-
-         // check if message was a chat message
-         if ( messageClass instanceof ChatMessage )
+         while(true)
          {
-            // print the message to the console
-            String message = ( String ) fromClient.readObject();
-            System.out.println( message );
+            // set up connections
+            
+
+            // get the message class type
+            Object messageClass = fromClient.readObject();
+            System.out.println(messageClass);
+            connection.close();
          }
 
-         // check if message equal to a joinMessage
-         if ( messageClass instanceof JoinMessage )
-         {
-            // clean toClient onject
-            toClient.reset();
-            // send back threadList
-            toClient.writeObject( threadList );
-         }
+         // // check if message was a chat message
+         // if ( messageClass instanceof ChatMessage )
+         // {
+         //    // print the message to the console
+         //    String message = ( String ) fromClient.readObject();
+         //    System.out.println( message );
+         // }
 
-         // check if message equal to a joinedMessage
-         if ( messageClass instanceof JoinedMessage )
-         {
-            // add the new node to the list
-            threadList.add( ( Participant ) fromClient.readObject());
-         }
+         // // check if message equal to a joinMessage
+         // if ( messageClass instanceof JoinMessage )
+         // {
+         //    // clean toClient onject
+         //    toClient.reset();
+         //    // send back threadList
+         //    toClient.writeObject( threadList );
+         // }
 
-         // check if message equal to leave message
-         if ( messageClass instanceof LeaveMessage )
-         {
-            // remove node from list
-            threadList.remove(fromClient.readObject());
-         }
+         // // check if message equal to a joinedMessage
+         // if ( messageClass instanceof JoinedMessage )
+         // {
+         //    // add the new node to the list
+         //    threadList.add( ( Participant ) fromClient.readObject());
+         // }
+
+         // // check if message equal to leave message
+         // if ( messageClass instanceof LeaveMessage )
+         // {
+         //    // remove node from list
+         //    threadList.remove(fromClient.readObject());
+         // }
 
          // close connection
-         connection.close();
+         // connection.close();
       }
       catch (Exception ioE)
       {
