@@ -69,7 +69,7 @@ public class ReceiveThread implements Runnable{
          if ( messageClass instanceof ChatMessage )
          {
             // print the message to the console
-            String message = ( String ) fromClient.readObject();  // I think you ment to put messageClass instead of .readObject()
+            String message = ( String ) messageClass;
             System.out.println( message );
          }
 
@@ -78,22 +78,27 @@ public class ReceiveThread implements Runnable{
          {
             // clean toClient object
             toClient.reset();
+            // copy the Participant list and add your selfParticipant to it, then send that
+            ArrayList<Participant> copyOfThreadList = threadList;
+            copyOfThreadList.add(threadSelf);
             // send back threadList
-            toClient.writeObject( threadList ); // copy the Participant list and add your selfParticipant to is, then send that
+            toClient.writeObject( copyOfThreadList ); 
          }
 
          // check if message equal to a joinedMessage
          if ( messageClass instanceof JoinedMessage )
          {
             // add the new node to the list
-            threadList.add( ( Participant ) fromClient.readObject());   // messageClass instead of .readObject()
+            threadList.add( ( Participant ) messageClass );   
          }
 
          // check if message equal to leave message
          if ( messageClass instanceof LeaveMessage )
          {
             // remove node from list
-            threadList.remove(fromClient.readObject());  // get the sending Participant and remove them from the Participant list
+            // threadList.remove(fromClient.readObject());  // get the sending Participant and remove them from the Participant list
+            // same mistakes as before not using chatMessage, leaving previous just in case
+            threadList.remove( messageClass );
          }
 
          // close connection
