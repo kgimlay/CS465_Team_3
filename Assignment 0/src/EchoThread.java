@@ -48,8 +48,6 @@ public class EchoThread implements Runnable {
 		}
 	 }
 
-
-
 	/*
 	 * Interface Runnable's run method. Used in the creation of a new thread
 	 * 	to handle a connection.
