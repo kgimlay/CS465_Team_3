@@ -100,9 +100,11 @@ public class ReceiveThread implements Runnable{
             // report
             System.out.println("Connected to: " + messageClass);
             // add participants recieved to participant list
-
+            threadList.addAll(((JoinMessage)messageClass).participantList);
             // send JoinedMessage to everyone on participant list
-            
+            new SendThread( new JoinedMessage(threadSelf.name, threadSelf.port), threadList);
+
+                        
          }
 
          // check if message equal to a joinedMessage
