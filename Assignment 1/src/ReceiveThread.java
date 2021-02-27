@@ -67,8 +67,8 @@ public class ReceiveThread implements Runnable{
 
          // get the message class type
          Object messageClass = fromClient.readObject();  // is this blocking? We want it to be blocking
-
          System.out.println(messageClass);
+         
          // check if message was a chat message
          if ( messageClass instanceof ChatMessage )
          {
