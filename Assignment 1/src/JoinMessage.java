@@ -32,4 +32,12 @@ public class JoinMessage extends Message
           super.senderID = senderID;
           this.participantList = participantList;
      }
+
+     /** @brief Override the toString() method to alllow for nice printing of
+     *  the chat messages.
+     */
+     public String toString()
+     {
+        return super.senderID + " >> " + participantList;
+     }
 }

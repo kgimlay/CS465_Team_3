@@ -19,4 +19,12 @@ public class LeaveMessage extends Message
      {
           super.senderID = senderID;
      }
+
+     /** @brief Override the toString() method to alllow for nice printing of
+     *  the chat messages.
+     */
+     public String toString()
+     {
+        return super.senderID;
+     }
 }
