@@ -28,8 +28,6 @@ public class SendThread implements Runnable{
    *  @param message - Message object of the message to send.
    *  @param recipients - ArrayList of Participant as the participant list to
    *  send the message to.
-   *  @param selfParticipant - Participant in participant list that is
-      self
    */
    public SendThread( Message message, ArrayList<Participant> recipients )
    {
@@ -64,8 +62,9 @@ public class SendThread implements Runnable{
          }
          catch( IOException ioE )
          {
-    	      System.out.println( "In SendThread an i/o exception has occured"+
-                               "while trying to open connection socket object");
+    	      System.out.println( "In SendThread an i/o exception has occured"
+                               + "while trying to open connection socket object"
+                               + ". " + ioE);
          }
 
       }

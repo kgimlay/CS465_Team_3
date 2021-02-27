@@ -28,7 +28,7 @@ public class ChatNode
 
    /** @brief List of participants to send messages to. Excludes one's self.
    */
-   private static ArrayList participantList;
+   private static ArrayList<Participant> participantList;
 
    /** @brief Self as a participant. This is kept separate from the participant
    * list to prevent sending to self.
@@ -103,7 +103,7 @@ public class ChatNode
 
       // create a join message to join the existing chat
       // create a participant of the node to connect to
-      Message joinRequest = new JoinMessage("placeholder", null);
+      Message joinRequest = new JoinMessage("placeholder", selfParticipant.port, null);
       ArrayList<Participant> joinRecipient = new ArrayList<Participant>();
       joinRecipient.add(new Participant("Dummy Name", ip, joinPort));
 
@@ -121,7 +121,7 @@ public class ChatNode
    private static void sendMessage(String message)
    {
       // create a message to send
-      ChatMessage sendMessage = new ChatMessage("placeholder", message);
+      ChatMessage sendMessage = new ChatMessage("placeholder", selfParticipant.port, message);
       // pass the created message and participant list to the sendd manager
       sendManagerThread = new Thread(new SendThread(sendMessage,
                                                       participantList));
@@ -137,7 +137,7 @@ public class ChatNode
    private static void leaveChat()
    {
       // create a leave message to signal departure from the chat
-      LeaveMessage leaveMessage = new LeaveMessage("placeholder");
+      LeaveMessage leaveMessage = new LeaveMessage("placeholder", selfParticipant.port);
       // pass the created leave message and participant list to the send manager
       sendManagerThread = new Thread(new SendThread(leaveMessage,
                                                       participantList));
@@ -294,11 +294,16 @@ public class ChatNode
          String input = scanner.nextLine();
          if(input.equals("exit"))
          {
+            leaveChat();
+         }
+         else if(input.equals("quit"))
+         {
             break;
          }
          System.out.println(input);
+         sendMessage(input);
       }
       scanner.close();
-
+      System.exit(0);
    }
 }

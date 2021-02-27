@@ -16,9 +16,10 @@ public class JoinedMessage extends Message
      *  @param senderID - String of the public chat name to display on peers'
      *  messages.
      */
-     public JoinedMessage(String senderID)
+     public JoinedMessage(String senderID, int portNum)
      {
         super.senderID = senderID;
+        super.portNum = portNum;
      }
 
      /** @brief Override the toString() method to alllow for nice printing of

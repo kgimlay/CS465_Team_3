@@ -15,9 +15,10 @@ public class LeaveMessage extends Message
      *  @param senderID - String of the public chat name to display on peers'
      *  messages.
      */
-     public LeaveMessage(String senderID)
+     public LeaveMessage(String senderID, int portNum)
      {
           super.senderID = senderID;
+          super.portNum = portNum;
      }
 
      /** @brief Override the toString() method to alllow for nice printing of

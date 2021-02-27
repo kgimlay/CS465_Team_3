@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.Runnable;
+import java.io.IOException;
+import java.lang.ClassNotFoundException;
 
 /** @brief ReceiveThread handles receiving a message from a single connection
 *  in the topology. A ReceiveThread is spawned on the acceptance of an incomming
@@ -34,8 +36,6 @@ public class ReceiveThread implements Runnable{
 
    private ObjectInputStream fromClient;
 
-   private ObjectOutputStream toClient;
-
 
    /** @brief Constructor.
    *  @param socket - The Socket object for receiving the incomming message
@@ -48,8 +48,7 @@ public class ReceiveThread implements Runnable{
       this.threadList = list;
       this.threadSelf = self;
       this.fromClient = null;
-      this.toClient = null;
-      
+
    }
 
    /** @brief Interface method from Runnable - starts the thread.
@@ -65,11 +64,12 @@ public class ReceiveThread implements Runnable{
       {
          // set up connections
          fromClient = new ObjectInputStream( connection.getInputStream() );
-        
+
          // get the message class type
-         Object messageClass = fromClient.readObject(); 
-         System.out.println(messageClass);
-         
+         Object messageClass = fromClient.readObject();
+         // close connection
+         connection.close();
+
          // check if message was a chat message
          if ( messageClass instanceof ChatMessage )
          {
@@ -79,20 +79,30 @@ public class ReceiveThread implements Runnable{
          }
 
          // check if message equal to a joinMessage
-         else if ( messageClass instanceof JoinMessage )
+         else if ( messageClass instanceof JoinMessage
+                  && ((JoinMessage)messageClass).participantList == null)
          {
-            // clean toClient object
-            toClient.reset();
             // copy the Participant list and add your selfParticipant to it, then send that
             ArrayList<Participant> copyOfThreadList = new ArrayList<Participant>(threadList);
             copyOfThreadList.add(threadSelf);
             // send back threadList
-            int senderPort= connection.getPort();
+            int senderPort= ((Message)messageClass).portNum;
             InetAddress senderAddress = connection.getInetAddress();
             ArrayList<Participant> recipient =  new ArrayList<Participant>();
             recipient.add( new Participant("bbb", senderAddress, senderPort) );
-            Thread response = new Thread( new SendThread( new JoinMessage( "aaa", copyOfThreadList), recipient ) );
+            JoinMessage responseMessage = new JoinMessage( "aaa", threadSelf.port, copyOfThreadList);
+            Thread response = new Thread( new SendThread( responseMessage, recipient ) );
+            System.out.println("Message: " + responseMessage + "Receiver: " + recipient);
             response.start();
+         }
+         else if ( messageClass instanceof JoinMessage )
+         {
+            // report
+            System.out.println("Connected to: " + messageClass);
+            // add participants recieved to participant list
+
+            // send JoinedMessage to everyone on participant list
+            
          }
 
          // check if message equal to a joinedMessage
@@ -118,12 +128,14 @@ public class ReceiveThread implements Runnable{
 
          // print for debugging purposes
          System.out.println("---Ending Receive Thread---");
-         // close connection
-         connection.close();
       }
-      catch (Exception ioE)
+      catch (IOException ioE)
       {
          System.out.println("Error in recieving incoming message. " + ioE);
+      }
+      catch (ClassNotFoundException clE)
+      {
+         System.out.println("Error in recieving incoming message. " + clE);
       }
 
    }

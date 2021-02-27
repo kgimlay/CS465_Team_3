@@ -19,9 +19,10 @@ public class ChatMessage extends Message
    *  messages.
    *  @param message - String of the message to display on the peers' messages.
 	*/
-	public ChatMessage(String senderID, String message)
+	public ChatMessage(String senderID, int portNum, String message)
 	{
 		super.senderID = senderID;
+      super.portNum = portNum;
 		this.message = message;
 	}
 

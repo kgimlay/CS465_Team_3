@@ -14,7 +14,11 @@ public abstract class Message implements Serializable
 {
      /** @brief SenderID is used in every subtype of messages.
      */
-    String senderID;
+    public String senderID;
+
+    /** @brief Port number for opening connections to.
+    */
+    public int portNum;
 
     /** @brief Override the toString() method to alllow for nice printing of
     *  the chat messages.

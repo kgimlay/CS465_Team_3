@@ -27,9 +27,11 @@ public class JoinMessage extends Message
      *  as it should only be not Null if the message is responding to a node
      *  that wants to join the chat.
      */
-     public JoinMessage(String senderID, ArrayList<Participant> participantList)
+     public JoinMessage(String senderID, int portNum,
+                        ArrayList<Participant> participantList)
      {
           super.senderID = senderID;
+          super.portNum = portNum;
           this.participantList = participantList;
      }
 
