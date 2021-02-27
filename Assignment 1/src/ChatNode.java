@@ -28,7 +28,7 @@ public class ChatNode
 
    /** @brief List of participants to send messages to. Excludes one's self.
    */
-   private static ArrayList<Participant> participantList;
+   private static ArrayList participantList;
 
    /** @brief Self as a participant. This is kept separate from the participant
    * list to prevent sending to self.
