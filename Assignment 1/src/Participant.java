@@ -4,12 +4,13 @@
 */
 
 import java.net.InetAddress;
+import java.io.Serializable;
 
 /** @brief Participant stores the public name, port, and ip address of a single
 *  connection within the chat topology. Used to form the participant list for
 *  sending messages to all of the nodes in the topology.
 */
-public class Participant
+public class Participant implements Serializable
 {
     /** @brief String representation of the public chat name to display.
     */
@@ -35,5 +36,14 @@ public class Participant
         name = userName;
         ip = ipAddress;
         port = portNum;
+    }
+
+    /** @brief Override the toString() method to alllow for nice printing of
+    *  the chat messages.
+    */
+    public String toString()
+    {
+        return "Name: " + this.name + " | Port: " + this.port + " | IP: "
+               + this.ip;
     }
 }

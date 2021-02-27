@@ -55,6 +55,9 @@ public class ReceiveManager implements Runnable
    */
    public void run()
    {
+      // print for debugging
+      System.out.println("---Starting Receive Manager---");
+
       // loop to create as many threads as needed
       while (true)
       {

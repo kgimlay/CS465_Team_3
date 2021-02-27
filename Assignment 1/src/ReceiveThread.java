@@ -56,6 +56,9 @@ public class ReceiveThread implements Runnable{
    */
    public void run()
    {
+      // print for debugging
+      System.out.println("---Starting Receive Thread---");
+
       try
       {
          // set up connections
@@ -65,6 +68,7 @@ public class ReceiveThread implements Runnable{
          // get the message class type
          Object messageClass = fromClient.readObject();  // is this blocking? We want it to be blocking
 
+         System.out.println(messageClass);
          // check if message was a chat message
          if ( messageClass instanceof ChatMessage )
          {
@@ -82,14 +86,14 @@ public class ReceiveThread implements Runnable{
             ArrayList<Participant> copyOfThreadList = threadList;
             copyOfThreadList.add(threadSelf);
             // send back threadList
-            toClient.writeObject( copyOfThreadList ); 
+            toClient.writeObject( copyOfThreadList );
          }
 
          // check if message equal to a joinedMessage
          if ( messageClass instanceof JoinedMessage )
          {
             // add the new node to the list
-            threadList.add( ( Participant ) messageClass );   
+            threadList.add( ( Participant ) messageClass );
          }
 
          // check if message equal to leave message
@@ -101,12 +105,14 @@ public class ReceiveThread implements Runnable{
             threadList.remove( messageClass );
          }
 
+         // print for debugging purposes
+         System.out.println("---Ending Receive Thread---");
          // close connection
          connection.close();
       }
       catch (Exception ioE)
       {
-         System.out.println("Error in recieving incoming message.");
+         System.out.println("Error in recieving incoming message. " + ioE);
       }
 
    }

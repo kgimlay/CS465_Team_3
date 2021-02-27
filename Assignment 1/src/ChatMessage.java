@@ -24,4 +24,12 @@ public class ChatMessage extends Message
 		super.senderID = senderID;
 		this.message = message;
 	}
+
+   /** @brief Override the toString() method to alllow for nice printing of
+   *  the chat messages.
+   */
+   public String toString()
+   {
+      return super.senderID + " >> " + message;
+   }
 }

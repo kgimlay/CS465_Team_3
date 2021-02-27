@@ -20,11 +20,11 @@ public class ChatNode
 {
    /** @brief ReceiveManager to handle incomming messages.
    */
-   private static ReceiveManager receiveManager;
+   private static Thread receiveManagerThread;
 
    /** @brief SendThread to send outgoing messages.
    */
-   private static SendThread sendManager;
+   private static Thread sendManagerThread;
 
    /** @brief List of participants to send messages to. Excludes one's self.
    */
@@ -47,18 +47,19 @@ public class ChatNode
    {
       // initialize other attributes
       participantList = new ArrayList<Participant>();
-      receiveManager = new ReceiveManager(serverSocket, participantList,
-                                          selfParticipant);
       // Note that sendManager is initialized for every message sent, therefore
       // we don't initialize it here.
 
       // Initialize serverSocket
-      try 
-      {         
-         serverSocket = new ServerSocket( portNum );
-         System.out.println( serverSocket.getLocalSocketAddress());
+      try
+      {
+         serverSocket = new ServerSocket(portNum, -1,
+                                          InetAddress.getByName("localhost"));
+         System.out.println("Chat Node opened at: "
+                              + serverSocket.getLocalSocketAddress());
       } catch (IOException ioE) {
-         System.out.println("An error occured while opening the socket!");
+         System.out.println("An error occured while opening the socket! "
+                              + ioE);
 			System.exit(1);
       }
 
@@ -67,8 +68,14 @@ public class ChatNode
                                           serverSocket.getInetAddress(),
                                           serverSocket.getLocalPort() );
 
-      System.out.println(serverSocket);
-      System.out.println(selfParticipant);
+      // start receiving
+      receiveManagerThread = new Thread(new ReceiveManager(serverSocket,
+                                                            participantList,
+                                                            selfParticipant));
+      receiveManagerThread.start();
+
+      // report for debugging
+      System.out.println("Self Participant: " + selfParticipant);
    }
 
    /** @brief Starts a new chat topology with just the one node (self).
@@ -97,11 +104,13 @@ public class ChatNode
       // create a join message to join the existing chat
       // create a participant of the node to connect to
       Message joinRequest = new JoinMessage("placeholder", null);
-      addParticipant(new Participant("placeholder", ip, joinPort));
+      ArrayList<Participant> joinRecipient = new ArrayList<Participant>();
+      joinRecipient.add(new Participant("Dummy Name", ip, joinPort));
 
       // send request
-      sendManager = new SendThread(joinRequest, participantList);
-      sendManager.run();
+      sendManagerThread = new Thread(new SendThread(joinRequest,
+                                                      joinRecipient));
+      sendManagerThread.start();
    }
 
    /** @brief Sends a message to the other participants in the chat. Creates a
@@ -114,9 +123,10 @@ public class ChatNode
       // create a message to send
       ChatMessage sendMessage = new ChatMessage("placeholder", message);
       // pass the created message and participant list to the sendd manager
-      sendManager = new SendThread(sendMessage, participantList);
+      sendManagerThread = new Thread(new SendThread(sendMessage,
+                                                      participantList));
       // start the thread in order to send the message to all participants
-      sendManager.run();
+      sendManagerThread.start();
 
    }
 
@@ -129,10 +139,11 @@ public class ChatNode
       // create a leave message to signal departure from the chat
       LeaveMessage leaveMessage = new LeaveMessage("placeholder");
       // pass the created leave message and participant list to the send manager
-      sendManager = new SendThread(leaveMessage, participantList);
+      sendManagerThread = new Thread(new SendThread(leaveMessage,
+                                                      participantList));
       // start the thread in order to have all participants remove the departing
       // participant from their participant lists
-      sendManager.run();
+      sendManagerThread.start();
    }
 
    /** @brief Add a participant to the participant list.

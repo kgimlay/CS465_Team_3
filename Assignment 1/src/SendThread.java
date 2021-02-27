@@ -46,24 +46,36 @@ public class SendThread implements Runnable{
    */
    public void run()
    {
-    Socket socketObject;
-    int index;
-    for(index = 0; index < recipients.size(); index ++)
-    {
-      try
+
+      // print for debugging
+      System.out.println("---Starting Sending Thread---");
+
+      Socket socketObject;
+      int index;
+      for(index = 0; index < recipients.size(); index ++)
       {
-       Participant recipient = recipients.get(index);
-       socketObject = new Socket(recipient.ip, recipient.port);
-       ObjectOutputStream outputStream = new ObjectOutputStream( socketObject.getOutputStream() );
-       outputStream.writeObject(message);
-       socketObject.close();
-      }
-      catch( IOException ioE )
-      {
- 			 System.out.println( "In SendThread an i/o exception has occured"+
+         try
+         {
+            Participant recipient = recipients.get(index);
+            socketObject = new Socket(recipient.ip, recipient.port);
+            ObjectOutputStream outputStream =
+                     new ObjectOutputStream( socketObject.getOutputStream() );
+            outputStream.writeObject(message);
+            System.out.print(message);
+         }
+         catch( IOException ioE )
+         {
+    	      System.out.println( "In SendThread an i/o exception has occured"+
                                "while trying to open connection socket object");
+         }
+         catch( Exception e)
+         {
+            System.out.println(e);
+         }
+
       }
 
-    }
+    // print for debugging purposes
+    System.out.println("---Ending Sending Thread---");
    }
  }
