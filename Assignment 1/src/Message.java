@@ -16,4 +16,11 @@ public abstract class Message implements Serializable
      */
     String senderID;
 
+    /** @brief Override the toString() method to alllow for nice printing of
+    *  the chat messages.
+    */
+    public String toString()
+    {
+       return senderID;
+    }
 }
