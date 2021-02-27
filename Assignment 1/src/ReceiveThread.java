@@ -5,6 +5,7 @@
 *  @todo Fugure out how to manipulate par list from calls in here.
 */
 
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.io.ObjectInputStream;
@@ -48,6 +49,7 @@ public class ReceiveThread implements Runnable{
       this.threadSelf = self;
       this.fromClient = null;
       this.toClient = null;
+      
    }
 
    /** @brief Interface method from Runnable - starts the thread.
@@ -63,10 +65,9 @@ public class ReceiveThread implements Runnable{
       {
          // set up connections
          fromClient = new ObjectInputStream( connection.getInputStream() );
-         toClient = new ObjectOutputStream( connection.getOutputStream() );   // possibly not work? might need to spawn a new SendThread instead for responding
-
+        
          // get the message class type
-         Object messageClass = fromClient.readObject();  // is this blocking? We want it to be blocking
+         Object messageClass = fromClient.readObject(); 
          System.out.println(messageClass);
          
          // check if message was a chat message
@@ -78,31 +79,41 @@ public class ReceiveThread implements Runnable{
          }
 
          // check if message equal to a joinMessage
-         if ( messageClass instanceof JoinMessage )
+         else if ( messageClass instanceof JoinMessage )
          {
             // clean toClient object
             toClient.reset();
             // copy the Participant list and add your selfParticipant to it, then send that
-            ArrayList<Participant> copyOfThreadList = threadList;
+            ArrayList<Participant> copyOfThreadList = new ArrayList<Participant>(threadList);
             copyOfThreadList.add(threadSelf);
             // send back threadList
-            toClient.writeObject( copyOfThreadList );
+            int senderPort= connection.getPort();
+            InetAddress senderAddress = connection.getInetAddress();
+            ArrayList<Participant> recipient =  new ArrayList<Participant>();
+            recipient.add( new Participant("bbb", senderAddress, senderPort) );
+            Thread response = new Thread( new SendThread( new JoinMessage( "aaa", copyOfThreadList), recipient ) );
+            response.start();
          }
 
          // check if message equal to a joinedMessage
-         if ( messageClass instanceof JoinedMessage )
+         else if ( messageClass instanceof JoinedMessage )
          {
             // add the new node to the list
             threadList.add( ( Participant ) messageClass );
          }
 
          // check if message equal to leave message
-         if ( messageClass instanceof LeaveMessage )
+         else if ( messageClass instanceof LeaveMessage )
          {
             // remove node from list
             // threadList.remove(fromClient.readObject());  // get the sending Participant and remove them from the Participant list
             // same mistakes as before not using chatMessage, leaving previous just in case
             threadList.remove( messageClass );
+         }
+
+         else
+         {
+            System.out.println("Non-message object recieved: " + messageClass );
          }
 
          // print for debugging purposes
