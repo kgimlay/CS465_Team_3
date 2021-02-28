@@ -295,15 +295,20 @@ public class ChatNode
          if(input.equals("exit"))
          {
             leaveChat();
-         }
-         else if(input.equals("quit"))
-         {
             break;
          }
          System.out.println(input);
          sendMessage(input);
       }
       scanner.close();
-      System.exit(0);
+      try
+      {
+        Thread.sleep(500);
+        System.exit(0);
+      }
+      catch(InterruptedException interExcept)
+      {
+        System.out.println("Error interrupted exception: Main Thread interrupted");
+      }
    }
 }
