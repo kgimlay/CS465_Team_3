@@ -53,6 +53,7 @@ public class SendThread implements Runnable{
          {
             // get temp recipient
             Participant recipient = recipients.get(index);
+
             // open new connection and send message
             socketObject = new Socket(recipient.ip, recipient.port);
             ObjectOutputStream outputStream =
@@ -67,7 +68,7 @@ public class SendThread implements Runnable{
             {
                Participant leftParticipant = recipients.remove(index);
                ChatPrettyPrinter.printCannotBeReached(leftParticipant.name);
-               ChatPrettyPrinter.printHasLeft(leftParticipant.name);
+               //ChatPrettyPrinter.printHasLeft(leftParticipant.name);
             }
          }
 

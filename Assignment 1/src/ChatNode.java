@@ -95,16 +95,18 @@ public class ChatNode
    *  @param joinPort - Integer port number of the known node, between 0 and
    *  65535 inclusive.
    */
-   private static void joinChat(String username, int selfPort, InetAddress ip, int joinPort)
+   private static void joinChat(String username, int selfPort, InetAddress ip,
+                                 int joinPort)
    {
       // initialize the attributes needed for operation (username + port #)
       initSelf( username, selfPort );
 
       // create a join message to join the existing chat
       // create a participant of the node to connect to
-      Message joinRequest = new JoinMessage(selfParticipant.name, selfParticipant.port, null);
+      Message joinRequest = new JoinMessage(selfParticipant.name,
+                                             selfParticipant.port, null);
       ArrayList<Participant> joinRecipient = new ArrayList<Participant>();
-      joinRecipient.add(new Participant(selfParticipant.name, ip, joinPort));
+      joinRecipient.add(new Participant("Chat", ip, joinPort));
 
       // send request to connect to a known node already in the chat
       sendManagerThread = new Thread(new SendThread(joinRequest,
@@ -120,7 +122,8 @@ public class ChatNode
    private static void sendMessage(String message)
    {
       // create a message to send
-      ChatMessage sendMessage = new ChatMessage(selfParticipant.name, selfParticipant.port, message);
+      ChatMessage sendMessage = new ChatMessage(selfParticipant.name,
+                                                selfParticipant.port, message);
       // pass the created message and participant list to the send manager
       sendManagerThread = new Thread(new SendThread(sendMessage,
                                                       participantList));
@@ -136,7 +139,8 @@ public class ChatNode
    private static void leaveChat()
    {
       // create a leave message to signal departure from the chat
-      LeaveMessage leaveMessage = new LeaveMessage(selfParticipant.name, selfParticipant.port);
+      LeaveMessage leaveMessage = new LeaveMessage(selfParticipant.name,
+                                                      selfParticipant.port);
       // pass the created leave message and participant list to the send manager
       sendManagerThread = new Thread(new SendThread(leaveMessage,
                                                       participantList));
@@ -206,7 +210,7 @@ public class ChatNode
          && !(args.length == 4 && args[0].equals("-j") ))
       {
          System.out.println("\nUsage: -n <port to open>  | -j <port to open> "
-            + "<ip to conenct to> <port to connect to>\n");
+            + "<ip to connect to> <port to connect to>\n");
          System.exit(1);
       }
       // flags are correct, good to get next arguments
@@ -267,7 +271,7 @@ public class ChatNode
       // var to hold chosen username
       String username;
       // Prompt user to enter a username
-      System.out.print("Enter username: ");
+      System.out.print("###  Chat Name: ");
       // Grab user input and store into var username
       username = getInput.nextLine();
 
@@ -285,8 +289,7 @@ public class ChatNode
       }
 
       // report chat started and where
-      ChatPrettyPrinter.addChatInfo(username, serverSocket.getInetAddress(),
-                                    openPort);
+      ChatPrettyPrinter.addChatInfo(serverSocket.getInetAddress(), openPort);
 
       // set up loop to be taking in messages
       // Create scanner object to read input
@@ -320,7 +323,8 @@ public class ChatNode
       // report the error
       catch(InterruptedException interExcept)
       {
-        System.out.println("Error interrupted exception: Main Thread interrupted");
+        System.out.println("Error interrupted exception: Main Thread "
+         +"interrupted");
       }
    }
 }

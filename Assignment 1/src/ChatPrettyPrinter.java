@@ -8,6 +8,8 @@ import java.net.InetAddress;
 /** @brief Prints content to the command line in a pretty and formatted manner
 *  to make a nice user experience. For decorative purposes only, and doesn't
 *  add any functionality to the chat program.
+*  @note This originally used ANSI escape sequences, but we had issues of
+*  compatibility on Windows machines.
 */
 public class ChatPrettyPrinter
 {
@@ -24,7 +26,6 @@ public class ChatPrettyPrinter
    /** @brief Creates the chat stats and node info section.
    */
    private static String ChatInfoSectionStr = ""
-   +"###  Chat Name: %s\n"
    +"###  IP: %s\n"
    +"###  Port: %d\n"
    +"##########################################################################"
@@ -46,31 +47,21 @@ public class ChatPrettyPrinter
    */
    public static void ppChatStart()
    {
-      // clear the terminal window ad put cursor at home
-      System.out.print("\033[2J\033[H");
-
       // print header
-      System.out.println(chatHearderStr);
+      System.out.print(chatHearderStr);
    }
 
-   /** @brief Clears the username line query line and puts chat stats at the top
+   /** @brief puts chat stats at the top
    *  of the section, just under the header.
    */
-   public static void addChatInfo(String username, InetAddress ip, int port)
+   public static void addChatInfo(InetAddress ip, int port)
    {
       // format string for printing
-      String formattedStr = String.format(ChatInfoSectionStr, username,
+      String formattedStr = String.format(ChatInfoSectionStr,
                                           ip.toString(), port);
 
-      // put cursor just below the chat header and print
-      System.out.print("\033[4;0H");
+      // print string
       System.out.println(formattedStr);
-
-      // move cursor to fill in ends of lines
-      System.out.print("\033[4;77H###");  // line 1
-      System.out.print("\033[5;77H###");  // line 2
-      System.out.print("\033[6;77H###");  // line 3
-      System.out.print("\033[9;0H");      // restore position
    }
 
    /** @brief Prints a message formatted.
@@ -80,9 +71,8 @@ public class ChatPrettyPrinter
       // format message line string
       String formattedStr = String.format(recMsgLineHeadStr, senderID, message);
 
-      // move cursor, print message, then move cursor back
+      // print message
       System.out.println(formattedStr);
-      //System.out.print("\033[u");
    }
 
    /** @brief Prints the has left chat string
