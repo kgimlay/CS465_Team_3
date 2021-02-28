@@ -43,7 +43,7 @@ public class ChatNode
    *  @param portNum - Integer port number for opening connections on,
    *  between 0 and 65535 inclusive.
    */
-   private static void initSelf( int portNum )
+   private static void initSelf(String username, int portNum )
    {
       // initialize other attributes
       participantList = new ArrayList<Participant>();
@@ -64,7 +64,7 @@ public class ChatNode
       }
 
       // initialize one's self as a participant
-      selfParticipant = new Participant("Implement get username!",
+      selfParticipant = new Participant(username,
                                           serverSocket.getInetAddress(),
                                           serverSocket.getLocalPort() );
 
@@ -82,10 +82,10 @@ public class ChatNode
    *  @param selfPort - Integer port number for opening connections on,
    *  between 0 and 65535 inclusive.
    */
-   private static void startChat(int selfPort)
+   private static void startChat(String username, int selfPort)
    {
       // initialize the attributes needed for operation
-      initSelf( selfPort );
+      initSelf( username, selfPort );
    }
 
    /** @brief Joins an already existing chat topology.
@@ -96,16 +96,16 @@ public class ChatNode
    *  @param joinPort - Integer port number of the known node, between 0 and
    *  65535 inclusive.
    */
-   private static void joinChat(int selfPort, InetAddress ip, int joinPort)
+   private static void joinChat(String username, int selfPort, InetAddress ip, int joinPort)
    {
       // initialize the attributes needed for operation
-      initSelf( selfPort );
+      initSelf( username, selfPort );
 
       // create a join message to join the existing chat
       // create a participant of the node to connect to
-      Message joinRequest = new JoinMessage("placeholder", selfParticipant.port, null);
+      Message joinRequest = new JoinMessage(selfParticipant.name, selfParticipant.port, null);
       ArrayList<Participant> joinRecipient = new ArrayList<Participant>();
-      joinRecipient.add(new Participant("Dummy Name", ip, joinPort));
+      joinRecipient.add(new Participant(selfParticipant.name, ip, joinPort));
 
       // send request
       sendManagerThread = new Thread(new SendThread(joinRequest,
@@ -121,7 +121,7 @@ public class ChatNode
    private static void sendMessage(String message)
    {
       // create a message to send
-      ChatMessage sendMessage = new ChatMessage("placeholder", selfParticipant.port, message);
+      ChatMessage sendMessage = new ChatMessage(selfParticipant.name, selfParticipant.port, message);
       // pass the created message and participant list to the sendd manager
       sendManagerThread = new Thread(new SendThread(sendMessage,
                                                       participantList));
@@ -137,7 +137,7 @@ public class ChatNode
    private static void leaveChat()
    {
       // create a leave message to signal departure from the chat
-      LeaveMessage leaveMessage = new LeaveMessage("placeholder", selfParticipant.port);
+      LeaveMessage leaveMessage = new LeaveMessage(selfParticipant.name, selfParticipant.port);
       // pass the created leave message and participant list to the send manager
       sendManagerThread = new Thread(new SendThread(leaveMessage,
                                                       participantList));
@@ -268,18 +268,27 @@ public class ChatNode
             System.exit(1);
          }
       }
+      
+      // Create scanner object to take user input
+      Scanner getInput = new Scanner(System.in);
+      // var to hold chosen username
+      String username;
+      // Prompt user to enter a username
+      System.out.println("Enter username"); 
+      // Grab user input and store into var username
+      username = getInput.nextLine();  
 
       // start a new chat or join a chat, whichever was specified in command
       // line arguments
       if (isJoining)
       {
          // join a chat
-         joinChat(openPort, joinIp, joinPort);
+         joinChat(username, openPort, joinIp, joinPort);
       }
       else
       {
          // start a chat
-         startChat(openPort);
+         startChat(username, openPort);
       }
 
       /** @todo Implement getting from cl and sending message, and any other
