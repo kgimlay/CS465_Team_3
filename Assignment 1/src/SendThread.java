@@ -44,17 +44,17 @@ public class SendThread implements Runnable{
    */
    public void run()
    {
-
-      // print for debugging
-      //System.out.println("---Starting Sending Thread---");
-
+      // initialize variables
       Socket socketObject;
       int index;
+      // loop across recipient list and send messge to all
       for(index = 0; index < recipients.size(); index ++)
       {
          try
          {
+            // get temp recipient
             Participant recipient = recipients.get(index);
+            // open new connection and send message
             socketObject = new Socket(recipient.ip, recipient.port);
             ObjectOutputStream outputStream =
                      new ObjectOutputStream( socketObject.getOutputStream() );
@@ -68,8 +68,5 @@ public class SendThread implements Runnable{
          }
 
       }
-
-    // print for debugging purposes
-    //System.out.println("---Ending Sending Thread---");
    }
  }

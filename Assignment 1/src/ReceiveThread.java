@@ -29,26 +29,22 @@ public class ReceiveThread implements Runnable{
    /**  @brief A Socket object for receiving the incomming message from.
    */
    private Socket connection;
-
    private ArrayList<Participant> threadList;
-
    private Participant threadSelf;
-
    private ObjectInputStream fromClient;
-
 
    /** @brief Constructor.
    *  @param socket - The Socket object for receiving the incomming message
    *  from.
    */
-   public ReceiveThread( Socket socket,  ArrayList<Participant> list, Participant self)
+   public ReceiveThread( Socket socket,  ArrayList<Participant> list,
+                           Participant self)
    {
       // initialize variables
       this.connection = socket;
       this.threadList = list;
       this.threadSelf = self;
       this.fromClient = null;
-
    }
 
    /** @brief Interface method from Runnable - starts the thread.
@@ -57,102 +53,58 @@ public class ReceiveThread implements Runnable{
    */
    public void run()
    {
-      // print for debugging
-      //System.out.println("---Starting Receive Thread---");
-
       try
       {
          // set up connections
          fromClient = new ObjectInputStream( connection.getInputStream() );
 
          // get the message class type
-         Object messageClass = fromClient.readObject();
-         System.out.println( messageClass.getClass()  );
-         // close connection
+         Object messageObj = fromClient.readObject();
+         System.out.println( messageObj.getClass()  );
+
+         // close connection because it is not being used any more.
+         // closing happens on this side to make sure the message is received
+         // before the connection is closed.
          connection.close();
 
-         // check if message was a chat message
-         if ( messageClass instanceof ChatMessage )
+         // if message was a chat message, print the message to the console
+         if ( messageObj instanceof ChatMessage )
          {
-            // print the message to the console
-            System.out.println( messageClass );
+            System.out.println( messageObj );
          }
 
-         // check if message equal to a joinMessage
-         else if ( messageClass instanceof JoinMessage
-                  && ((JoinMessage)messageClass).participantList == null)
+         // check if message is a joinMessage without a participant list
+         // (received join request)
+         else if ( messageObj instanceof JoinMessage
+                  && ((JoinMessage)messageObj).participantList == null)
          {
-            // copy the Participant list and add your selfParticipant to it, then send that
-            ArrayList<Participant> copyOfThreadList = new ArrayList<Participant>(threadList);
-            copyOfThreadList.add(threadSelf);
-            // send back threadList
-            int senderPort= ((Message)messageClass).portNum;
-            InetAddress senderAddress = connection.getInetAddress();
-            ArrayList<Participant> recipient =  new ArrayList<Participant>();
-            recipient.add( new Participant("bbb", senderAddress, senderPort) );
-            JoinMessage responseMessage = new JoinMessage( "aaa", threadSelf.port, copyOfThreadList);
-            Thread response = new Thread( new SendThread( responseMessage, recipient ) );
-            response.start();
-         }
-         else if ( messageClass instanceof JoinMessage )
-         {
-            // add participants recieved to participant list
-            threadList.addAll(((JoinMessage)messageClass).participantList);
-            // send JoinedMessage to everyone on participant list
-            Thread sendJoined = new Thread(new SendThread( new JoinedMessage(threadSelf.name, threadSelf.port), threadList));
-            sendJoined.start();
-
-            // report
-            System.out.print("You have joined the chat with ");
-            int index;
-            for (index = 0; index < threadList.size()-1; index++)
-            {
-               System.out.print(threadList.get(index).name + ", ");
-            }
-            System.out.println(threadList.get(index).name);
+            handleJoinRequest((JoinMessage) messageObj);
          }
 
-         // check if message equal to a joinedMessage
-         else if ( messageClass instanceof JoinedMessage )
+         // if message is a JoinMessage
+         // (response to join request)
+         else if ( messageObj instanceof JoinMessage )
          {
-            // add the new node to the list
-            JoinedMessage message = (JoinedMessage)messageClass;
-            Participant newParticipant = new Participant(message.senderID, connection.getInetAddress(), message.portNum);
-            threadList.add( newParticipant);
-
-            // report new user
-            System.out.println(message.senderID + " has joined the chat!");
+            handleJoinResponse((JoinMessage) messageObj);
          }
 
-         // check if message equal to leave message
-         else if ( messageClass instanceof LeaveMessage )
+         // check if message is a joinedMessage
+         else if ( messageObj instanceof JoinedMessage )
          {
-            // find the participant in the participant list
-            for (int index = 0; index < threadList.size(); index++)
-            {
-               if( threadList.get(index).name.equals( ( ( LeaveMessage )messageClass ).senderID)
-                   && threadList.get(index).port == ((LeaveMessage)messageClass).portNum
-                   && threadList.get(index).ip.equals(connection.getInetAddress() ))
-               {
-                  // remove node from list
-                  Participant nodLeft = threadList.remove(index);
-
-                  // report
-                  System.out.println("Participant List: " + threadList);
-                  System.out.println(nodLeft + "has left the chat :-(");
-                  break;
-               }
-               System.out.println("Not Found At Index: " + index);
-            }
+            handleJoinedMessage((JoinedMessage) messageObj);
          }
 
+         // check if message is a leave message
+         else if ( messageObj instanceof LeaveMessage )
+         {
+            handleLeaveMessage((LeaveMessage) messageObj);
+         }
+
+         // a non-message object was received! This shouldn't happn!
          else
          {
-            System.out.println("Non-message object recieved: " + messageClass );
+            System.out.println("Non-message object recieved: " + messageObj );
          }
-
-         // print for debugging purposes
-         //System.out.println("---Ending Receive Thread---");
       }
       catch (IOException ioE)
       {
@@ -162,6 +114,109 @@ public class ReceiveThread implements Runnable{
       {
          System.out.println("Error in recieving incoming message. " + clE);
       }
-
    }
+
+   /** @brief Handles a join request.
+   *  Responds to a join request with a JoinMessage. The Participant list field
+   *  is filled with the participant of this particular node plus it's self
+   *  participant added to it.
+   */
+   private void handleJoinRequest(Message messageObj)
+   {
+      // copy the Participant list and add your selfParticipant to it,
+      // then send that
+      ArrayList<Participant> copyOfThreadList =
+            new ArrayList<Participant>(threadList);
+      copyOfThreadList.add(threadSelf);
+
+      // get info to send back threadList
+      int senderPort= messageObj.portNum;
+      InetAddress senderAddress = connection.getInetAddress();
+
+      // create dummy Participant list with just the node to send to
+      ArrayList<Participant> recipient =  new ArrayList<Participant>();
+      recipient.add( new Participant("", senderAddress, senderPort) );
+
+      // send back JoinMessage with the participant list
+      JoinMessage responseMessage = new JoinMessage( threadSelf.name,
+                                                      threadSelf.port,
+                                                      copyOfThreadList);
+      Thread response = new Thread( new SendThread( responseMessage,
+                                                      recipient ) );
+      response.start();
+   }
+
+   /** @brief Handles a join response.
+   *  Takes the Participant list attribute from the join response and fills one
+   *  owns participant list with it. Uses the newly formed participant list to
+   *  send JoinedMessages to all the other participants and reports all of the
+   *  names of the participants that you have connected to.
+   */
+   private void handleJoinResponse(JoinMessage messageObj)
+   {
+      // add participants recieved to participant list
+      threadList.addAll(messageObj.participantList);
+      // send JoinedMessage to everyone on participant list
+      Thread sendJoined = new Thread(new SendThread(
+            new JoinedMessage(threadSelf.name,
+                              threadSelf.port),
+                              threadList));
+      sendJoined.start();
+
+      // report
+      System.out.print("You have joined the chat with ");
+      int index;
+      for (index = 0; index < threadList.size()-1; index++)
+      {
+         System.out.print(threadList.get(index).name + ", ");
+      }
+      System.out.println(threadList.get(index).name);
+   }
+
+   /** @brief Handles a joined message.
+   *  Takes the information from the message, makes a new Participant with it,
+   *  and adds that Participant to the participant list. Then it reports who
+   *  has joined the chat.
+   */
+   private void handleJoinedMessage(JoinedMessage messageObj)
+   {
+      // add the new node to the list
+      JoinedMessage message = messageObj;
+      Participant newParticipant = new Participant(message.senderID,
+                                             connection.getInetAddress(),
+                                             message.portNum);
+      threadList.add( newParticipant);
+
+      // report new user
+      System.out.println(message.senderID + " has joined the chat!");
+   }
+
+   /** @brief Handles a leave message.
+   *  When a LeaveMessage is received, the Participant that that message was
+   *  sent from is looked up and removed from the participant list. Then the
+   *  participant is reported as leaving the chat.
+   */
+   private void handleLeaveMessage(LeaveMessage messageObj)
+   {
+      // find the participant in the participant list
+      for (int index = 0; index < threadList.size(); index++)
+      {
+         // if the information matches the participant being compared to
+         if( threadList.get(index).name.equals(
+                  ((LeaveMessage)messageObj).senderID)
+             && threadList.get(index).port ==
+                  ((LeaveMessage)messageObj).portNum
+             && threadList.get(index).ip.equals(
+                  connection.getInetAddress() ))
+         {
+            // remove node from list
+            Participant nodLeft = threadList.remove(index);
+            // report
+            System.out.println("Participant List: " + threadList);
+            System.out.println(nodLeft + "has left the chat :-(");
+            break;
+         }
+      }
+   }
+
 }
