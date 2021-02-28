@@ -126,10 +126,23 @@ public class ReceiveThread implements Runnable{
          // check if message equal to leave message
          else if ( messageClass instanceof LeaveMessage )
          {
+            //set up variables for participant list search
+            int index = 0;
+            boolean found = false;
+            int length = threadList.size();
+            // find the participant in the participant list
+            while( index < length && !found)
+            {
+               if( threadList.get(index).name ==  ((LeaveMessage)messageClass).senderID 
+                   && threadList.get(index).port == ((LeaveMessage)messageClass).portNum
+                   && threadList.get(index).ip == connection.getInetAddress() )
+               {
+                  found = true;      
+               }
+            }
+            int indexToRemove;
             // remove node from list
-            // threadList.remove(fromClient.readObject());  // get the sending Participant and remove them from the Participant list
-            // same mistakes as before not using chatMessage, leaving previous just in case
-            threadList.remove( messageClass );
+            threadList.remove(index);
          }
 
          else
