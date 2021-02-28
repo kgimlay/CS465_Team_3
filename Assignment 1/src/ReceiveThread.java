@@ -29,13 +29,9 @@ public class ReceiveThread implements Runnable{
    /**  @brief A Socket object for receiving the incomming message from.
    */
    private Socket connection;
-
    private ArrayList<Participant> threadList;
-
    private Participant threadSelf;
-
    private ObjectInputStream fromClient;
-
 
    /** @brief Constructor.
    *  @param socket - The Socket object for receiving the incomming message
@@ -48,7 +44,6 @@ public class ReceiveThread implements Runnable{
       this.threadList = list;
       this.threadSelf = self;
       this.fromClient = null;
-
    }
 
    /** @brief Interface method from Runnable - starts the thread.
@@ -57,14 +52,10 @@ public class ReceiveThread implements Runnable{
    */
    public void run()
    {
-      // print for debugging
-      //System.out.println("---Starting Receive Thread---");
-
       try
       {
          // set up connections
          fromClient = new ObjectInputStream( connection.getInputStream() );
-
          // get the message class type
          Object messageClass = fromClient.readObject();
          System.out.println( messageClass.getClass()  );
@@ -89,8 +80,8 @@ public class ReceiveThread implements Runnable{
             int senderPort= ((Message)messageClass).portNum;
             InetAddress senderAddress = connection.getInetAddress();
             ArrayList<Participant> recipient =  new ArrayList<Participant>();
-            recipient.add( new Participant("bbb", senderAddress, senderPort) );
-            JoinMessage responseMessage = new JoinMessage( "aaa", threadSelf.port, copyOfThreadList);
+            recipient.add( new Participant("", senderAddress, senderPort) );
+            JoinMessage responseMessage = new JoinMessage( threadSelf.name, threadSelf.port, copyOfThreadList);
             Thread response = new Thread( new SendThread( responseMessage, recipient ) );
             response.start();
          }
@@ -116,10 +107,10 @@ public class ReceiveThread implements Runnable{
          else if ( messageClass instanceof JoinedMessage )
          {
             // add the new node to the list
+            
             JoinedMessage message = (JoinedMessage)messageClass;
             Participant newParticipant = new Participant(message.senderID, connection.getInetAddress(), message.portNum);
             threadList.add( newParticipant);
-
             // report new user
             System.out.println(message.senderID + " has joined the chat!");
          }
@@ -136,13 +127,11 @@ public class ReceiveThread implements Runnable{
                {
                   // remove node from list
                   Participant nodLeft = threadList.remove(index);
-
                   // report
                   System.out.println("Participant List: " + threadList);
                   System.out.println(nodLeft + "has left the chat :-(");
                   break;
                }
-               System.out.println("Not Found At Index: " + index);
             }
          }
 
@@ -150,9 +139,6 @@ public class ReceiveThread implements Runnable{
          {
             System.out.println("Non-message object recieved: " + messageClass );
          }
-
-         // print for debugging purposes
-         //System.out.println("---Ending Receive Thread---");
       }
       catch (IOException ioE)
       {
