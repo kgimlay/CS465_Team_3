@@ -130,9 +130,9 @@ public class ReceiveThread implements Runnable{
             // find the participant in the participant list
             for (int index = 0; index < threadList.size(); index++)
             {
-               if( threadList.get(index).name ==  ((LeaveMessage)messageClass).senderID
+               if( threadList.get(index).name.equals( ( ( LeaveMessage )messageClass ).senderID)
                    && threadList.get(index).port == ((LeaveMessage)messageClass).portNum
-                   && threadList.get(index).ip == connection.getInetAddress() )
+                   && threadList.get(index).ip.equals(connection.getInetAddress() ))
                {
                   // remove node from list
                   Participant nodLeft = threadList.remove(index);
