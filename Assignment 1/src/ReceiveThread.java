@@ -58,7 +58,7 @@ public class ReceiveThread implements Runnable{
    public void run()
    {
       // print for debugging
-      System.out.println("---Starting Receive Thread---");
+      //System.out.println("---Starting Receive Thread---");
 
       try
       {
@@ -67,6 +67,7 @@ public class ReceiveThread implements Runnable{
 
          // get the message class type
          Object messageClass = fromClient.readObject();
+         System.out.println( messageClass.getClass()  );
          // close connection
          connection.close();
 
@@ -74,8 +75,7 @@ public class ReceiveThread implements Runnable{
          if ( messageClass instanceof ChatMessage )
          {
             // print the message to the console
-            String message = ( String ) messageClass;
-            System.out.println( message );
+            System.out.println( messageClass );
          }
 
          // check if message equal to a joinMessage
@@ -96,13 +96,20 @@ public class ReceiveThread implements Runnable{
          }
          else if ( messageClass instanceof JoinMessage )
          {
-            // report
-            System.out.println("Connected to: " + messageClass);
             // add participants recieved to participant list
             threadList.addAll(((JoinMessage)messageClass).participantList);
             // send JoinedMessage to everyone on participant list
             Thread sendJoined = new Thread(new SendThread( new JoinedMessage(threadSelf.name, threadSelf.port), threadList));
             sendJoined.start();
+
+            // report
+            System.out.print("You have joined the chat with ");
+            int index;
+            for (index = 0; index < threadList.size()-1; index++)
+            {
+               System.out.print(threadList.get(index).name + ", ");
+            }
+            System.out.println(threadList.get(index).name);
          }
 
          // check if message equal to a joinedMessage
@@ -111,17 +118,32 @@ public class ReceiveThread implements Runnable{
             // add the new node to the list
             JoinedMessage message = (JoinedMessage)messageClass;
             Participant newParticipant = new Participant(message.senderID, connection.getInetAddress(), message.portNum);
-            threadList.add( newParticipant );
-            System.out.println("Received Participant List. Added: " + newParticipant);
+            threadList.add( newParticipant);
+
+            // report new user
+            System.out.println(message.senderID + " has joined the chat!");
          }
 
          // check if message equal to leave message
          else if ( messageClass instanceof LeaveMessage )
          {
-            // remove node from list
-            // threadList.remove(fromClient.readObject());  // get the sending Participant and remove them from the Participant list
-            // same mistakes as before not using chatMessage, leaving previous just in case
-            threadList.remove( messageClass );
+            // find the participant in the participant list
+            for (int index = 0; index < threadList.size(); index++)
+            {
+               if( threadList.get(index).name ==  ((LeaveMessage)messageClass).senderID
+                   && threadList.get(index).port == ((LeaveMessage)messageClass).portNum
+                   && threadList.get(index).ip == connection.getInetAddress() )
+               {
+                  // remove node from list
+                  Participant nodLeft = threadList.remove(index);
+
+                  // report
+                  System.out.println("Participant List: " + threadList);
+                  System.out.println(nodLeft + "has left the chat :-(");
+                  break;
+               }
+               System.out.println("Not Found At Index: " + index);
+            }
          }
 
          else
@@ -130,7 +152,7 @@ public class ReceiveThread implements Runnable{
          }
 
          // print for debugging purposes
-         System.out.println("---Ending Receive Thread---");
+         //System.out.println("---Ending Receive Thread---");
       }
       catch (IOException ioE)
       {
