@@ -40,7 +40,7 @@ public class ChatNode
    private static ServerSocket serverSocket;
 
    /** @brief Initialize the attribute needed for operation.
-   *  @param username - The user's chosen display name. 
+   *  @param username - The user's chosen display name.
    *  @param portNum - Integer port number for opening connections on,
    *  between 0 and 65535 inclusive.
    */
@@ -48,7 +48,7 @@ public class ChatNode
    {
       // initialize the participant list
       participantList = new ArrayList<Participant>();
-      
+
       // Note that sendManager is initialized for every message sent, therefore
       // we don't initialize it here.
 
@@ -76,7 +76,7 @@ public class ChatNode
    }
 
    /** @brief Starts a new chat topology with just the one node (self).
-   *  @param username - The user's chosen display name. 
+   *  @param username - The user's chosen display name.
    *  @param selfPort - Integer port number for opening connections on,
    *  between 0 and 65535 inclusive.
    */
@@ -84,11 +84,6 @@ public class ChatNode
    {
       // initialize the attributes needed for operation (username + port #)
       initSelf( username, selfPort );
-
-
-      // report chat started and where
-      System.out.println("New chat started at " + serverSocket.getInetAddress()
-            + " : " + selfPort);
    }
 
    /** @brief Joins an already existing chat topology.
@@ -263,15 +258,18 @@ public class ChatNode
             System.exit(1);
          }
       }
-      
+
+      // pretty print the chat header
+      ChatPrettyPrinter.ppChatStart();
+
       // Create scanner object to take user input
       Scanner getInput = new Scanner(System.in);
       // var to hold chosen username
       String username;
       // Prompt user to enter a username
-      System.out.println("Enter username:"); 
+      System.out.print("Enter username: ");
       // Grab user input and store into var username
-      username = getInput.nextLine();  
+      username = getInput.nextLine();
 
       // start a new chat or join a chat, whichever was specified in command
       // line arguments
@@ -286,8 +284,12 @@ public class ChatNode
          startChat(username, openPort);
       }
 
+      // report chat started and where
+      ChatPrettyPrinter.addChatInfo(username, serverSocket.getInetAddress(),
+                                    openPort);
+
       // set up loop to be taking in messages
-      // Create scanner object to read input 
+      // Create scanner object to read input
       Scanner scanner = new Scanner(System.in);
 
       while(true)
@@ -300,13 +302,17 @@ public class ChatNode
             leaveChat();
             break;
          }
-         // if the exit command was not detected, send input as message
-         sendMessage(input);
+         // if the input is not empty, send input as message
+         if(!input.equals(""))
+         {
+            sendMessage(input);
+         }
       }
       // close created scanner object
       scanner.close();
       try
       {
+        // sleep to let all leave messages be sent before exiting
         Thread.sleep(500);
         System.exit(0);
       }

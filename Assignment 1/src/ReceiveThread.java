@@ -36,6 +36,10 @@ public class ReceiveThread implements Runnable{
    /** @brief Constructor.
    *  @param socket - The Socket object for receiving the incomming message
    *  from.
+   *  @param list - ArrayList of Participants to put newly joined participants
+   *  into and to send in join request responses.
+   *  @param self - Participant of one node's self. Used in sending the
+   *  participant list in a join request response.
    */
    public ReceiveThread( Socket socket,  ArrayList<Participant> list,
                            Participant self)
@@ -60,7 +64,6 @@ public class ReceiveThread implements Runnable{
 
          // get the message class type
          Object messageObj = fromClient.readObject();
-         System.out.println( messageObj.getClass()  );
 
          // close connection because it is not being used any more.
          // closing happens on this side to make sure the message is received
@@ -70,7 +73,10 @@ public class ReceiveThread implements Runnable{
          // if message was a chat message, print the message to the console
          if ( messageObj instanceof ChatMessage )
          {
-            System.out.println( messageObj );
+            //System.out.println( messageObj );
+            ChatPrettyPrinter.printReceivedMessage(
+                  ((ChatMessage)messageObj).senderID,
+                  ((ChatMessage)messageObj).message);
          }
 
          // check if message is a joinMessage without a participant list
@@ -210,10 +216,9 @@ public class ReceiveThread implements Runnable{
                   connection.getInetAddress() ))
          {
             // remove node from list
-            Participant nodLeft = threadList.remove(index);
+            Participant nodeLeft = threadList.remove(index);
             // report
-            System.out.println("Participant List: " + threadList);
-            System.out.println(nodLeft + "has left the chat :-(");
+            ChatPrettyPrinter.printHasLeft(nodeLeft.name);
             break;
          }
       }

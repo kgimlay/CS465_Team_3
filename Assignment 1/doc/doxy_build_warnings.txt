@@ -1,4 +1,4 @@
-/Users/kevinimlay/eclipse-workspace/CS465_Team_3/CS465_Team_3/Assignment 1/src/ChatNode.java:182: warning: Unsupported xml/html tag <port> found
-/Users/kevinimlay/eclipse-workspace/CS465_Team_3/CS465_Team_3/Assignment 1/src/ChatNode.java:183: warning: Unsupported xml/html tag <port> found
-/Users/kevinimlay/eclipse-workspace/CS465_Team_3/CS465_Team_3/Assignment 1/src/ChatNode.java:183: warning: Unsupported xml/html tag <ip> found
-/Users/kevinimlay/eclipse-workspace/CS465_Team_3/CS465_Team_3/Assignment 1/src/ChatNode.java:183: warning: Unsupported xml/html tag <port> found
+/Users/kevinimlay/eclipse-workspace/CS465_Team_3/CS465_Team_3/Assignment 1/src/ChatNode.java:194: warning: Unsupported xml/html tag <port> found
+/Users/kevinimlay/eclipse-workspace/CS465_Team_3/CS465_Team_3/Assignment 1/src/ChatNode.java:195: warning: Unsupported xml/html tag <port> found
+/Users/kevinimlay/eclipse-workspace/CS465_Team_3/CS465_Team_3/Assignment 1/src/ChatNode.java:195: warning: Unsupported xml/html tag <ip> found
+/Users/kevinimlay/eclipse-workspace/CS465_Team_3/CS465_Team_3/Assignment 1/src/ChatNode.java:195: warning: Unsupported xml/html tag <port> found

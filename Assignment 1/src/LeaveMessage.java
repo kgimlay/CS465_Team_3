@@ -14,6 +14,7 @@ public class LeaveMessage extends Message
      /** Constructor.
      *  @param senderID - String of the public chat name to display on peers'
      *  messages.
+     *  @param portNum - the port number of the sender.
      */
      public LeaveMessage(String senderID, int portNum)
      {

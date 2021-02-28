@@ -19,7 +19,6 @@ public class SendThread implements Runnable{
    /** @brief Message object to send.
    */
    private Message message;
-   //////////////////////////////////////////////////////////////////////Socket socketObject(Inet ip, int port);
    /** @brief Participant list to iterate over for sending the message.
    */
    private ArrayList<Participant> recipients;
@@ -62,9 +61,14 @@ public class SendThread implements Runnable{
          }
          catch( IOException ioE )
          {
-    	      System.out.println( "In SendThread an i/o exception has occured"
-                               + "while trying to open connection socket object"
-                               + ". " + ioE);
+    	      // if send fails due to connection refused
+            // remove that participant from the participant list
+            if (ioE.toString().contains("Connection refused"))
+            {
+               Participant leftParticipant = recipients.remove(index);
+               ChatPrettyPrinter.printCannotBeReached(leftParticipant.name);
+               ChatPrettyPrinter.printHasLeft(leftParticipant.name);
+            }
          }
 
       }

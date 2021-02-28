@@ -1,0 +1,5 @@
+<map id="ChatMessage" name="ChatMessage">
+<area shape="rect" id="node1" title="ChatMessage is the subtype that carries a message string between peers. This is the &#39;message&#39; you wou..." alt="" coords="5,271,164,392"/>
+<area shape="rect" id="node2" href="$class_message.html" title="Message class as parent type for all message objects to be sent between peers. Not implementable beca..." alt="" coords="22,131,147,223"/>
+<area shape="rect" id="node3" title=" " alt="" coords="40,5,129,83"/>
+</map>

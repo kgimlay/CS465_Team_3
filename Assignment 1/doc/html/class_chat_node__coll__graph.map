@@ -1,0 +1,9 @@
+<map id="ChatNode" name="ChatNode">
+<area shape="rect" id="node1" title="Main class for peer to peer chat application. Implements the top&#45;level logic of the application: star..." alt="" coords="177,359,376,744"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,175,68,252"/>
+<area shape="rect" id="node3" title=" " alt="" coords="111,175,271,252"/>
+<area shape="rect" id="node4" title=" " alt="" coords="295,175,397,252"/>
+<area shape="rect" id="node5" href="$class_participant.html" title="Participant stores the public name, port, and ip address of a single connection within the chat topol..." alt="" coords="421,145,585,281"/>
+<area shape="rect" id="node6" title=" " alt="" coords="401,5,491,83"/>
+<area shape="rect" id="node7" title=" " alt="" coords="515,5,607,83"/>
+</map>

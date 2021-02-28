@@ -72,7 +72,7 @@ public class ReceiveManager implements Runnable
          catch (IOException ioE)
          {
    			System.out.println("Something went wrong while waiting "
-   			+ "for a connection!");
+   			+ "for a connection! " + ioE);
    		}
       }
    }

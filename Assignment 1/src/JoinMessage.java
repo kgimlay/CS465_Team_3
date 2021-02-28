@@ -23,6 +23,7 @@ public class JoinMessage extends Message
      /** @brief Constructor.
      *  @param senderID - String of the public chat name to display on peers'
      *  messages.
+     *  @param portNum - the port number of the sender.
      *  @param participantList - An ArrayList of Participant objects. Optional
      *  as it should only be not Null if the message is responding to a node
      *  that wants to join the chat.

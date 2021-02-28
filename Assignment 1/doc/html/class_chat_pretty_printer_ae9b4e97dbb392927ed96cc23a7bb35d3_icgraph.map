@@ -1,0 +1,4 @@
+<map id="ChatPrettyPrinter.addChatInfo" name="ChatPrettyPrinter.addChatInfo">
+<area shape="rect" id="node1" title="Clears the username line query line and puts chat stats at the top of the section,..." alt="" coords="167,5,364,32"/>
+<area shape="rect" id="node2" href="$class_chat_node.html#a7f81d802867274d9f367ff8161bb609a" title="Main entrance to program. Parses the command line arguments and starts a new chat or joins the existi..." alt="" coords="5,5,119,32"/>
+</map>

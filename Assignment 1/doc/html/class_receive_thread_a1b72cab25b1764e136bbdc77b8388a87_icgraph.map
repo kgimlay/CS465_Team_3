@@ -1,0 +1,4 @@
+<map id="ReceiveThread.handleJoinRequest" name="ReceiveThread.handleJoinRequest">
+<area shape="rect" id="node1" title="Handles a join request. Responds to a join request with a JoinMessage. The Participant list field is ..." alt="" coords="185,5,361,47"/>
+<area shape="rect" id="node2" href="$class_receive_thread.html#aed761385f784aae81405b57987a9cfaa" title="Interface method from Runnable &#45; starts the thread. Receives the incomming message object and handles..." alt="" coords="5,13,137,39"/>
+</map>

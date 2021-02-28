@@ -15,6 +15,7 @@ public class JoinedMessage extends Message
      /** @brief Constructor.
      *  @param senderID - String of the public chat name to display on peers'
      *  messages.
+     *  @param portNum - the port number of the sender.
      */
      public JoinedMessage(String senderID, int portNum)
      {

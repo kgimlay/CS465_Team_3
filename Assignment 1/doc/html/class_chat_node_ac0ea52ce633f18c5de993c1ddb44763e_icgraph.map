@@ -1,0 +1,6 @@
+<map id="ChatNode.initSelf" name="ChatNode.initSelf">
+<area shape="rect" id="node1" title="Initialize the attribute needed for operation." alt="" coords="353,31,479,57"/>
+<area shape="rect" id="node2" href="$class_chat_node.html#a919af41449b057573e32240fd935b27c" title="Joins an already existing chat topology." alt="" coords="169,5,303,32"/>
+<area shape="rect" id="node4" href="$class_chat_node.html#a5e0c5253505727de54cc64a77a11d667" title="Starts a new chat topology with just the one node (self)." alt="" coords="167,56,305,83"/>
+<area shape="rect" id="node3" href="$class_chat_node.html#a7f81d802867274d9f367ff8161bb609a" title="Main entrance to program. Parses the command line arguments and starts a new chat or joins the existi..." alt="" coords="5,31,119,57"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="ReceiveThread.run" name="ReceiveThread.run">
+<area shape="rect" id="node1" title="Interface method from Runnable &#45; starts the thread. Receives the incomming message object and handles..." alt="" coords="5,143,137,170"/>
+<area shape="rect" id="node2" href="$class_receive_thread.html#a7cc5bd97ee4a5b0ee5dfb33371490867" title="Handles a joined message. Takes the information from the message, makes a new Participant with it,..." alt="" coords="193,5,384,47"/>
+<area shape="rect" id="node3" href="$class_receive_thread.html#a1b72cab25b1764e136bbdc77b8388a87" title="Handles a join request. Responds to a join request with a JoinMessage. The Participant list field is ..." alt="" coords="201,71,377,112"/>
+<area shape="rect" id="node4" href="$class_receive_thread.html#a3628ebddc70caf5b9c59c58c5a719781" title="Handles a join response. Takes the Participant list attribute from the join response and fills one ow..." alt="" coords="201,136,377,177"/>
+<area shape="rect" id="node5" href="$class_receive_thread.html#a188141c0f01e6da60a8b0944e1eaf823" title="Handles a leave message. When a LeaveMessage is received, the Participant that that message was sent ..." alt="" coords="195,201,382,243"/>
+<area shape="rect" id="node7" href="$class_chat_pretty_printer.html#a5c7602431cc4967e463aa49a7b58c064" title="Prints a message formatted." alt="" coords="185,267,392,308"/>
+<area shape="rect" id="node6" href="$class_chat_pretty_printer.html#a7dfdd01fabd1fb860ae124cfea4c98cf" title="Prints the has left chat string." alt="" coords="440,209,637,235"/>
+</map>

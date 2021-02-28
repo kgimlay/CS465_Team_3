@@ -1,0 +1,4 @@
+<map id="ChatPrettyPrinter.ppChatStart" name="ChatPrettyPrinter.ppChatStart">
+<area shape="rect" id="node1" title="Primes the command line screen and prints a header." alt="" coords="167,5,335,47"/>
+<area shape="rect" id="node2" href="$class_chat_node.html#a7f81d802867274d9f367ff8161bb609a" title="Main entrance to program. Parses the command line arguments and starts a new chat or joins the existi..." alt="" coords="5,13,119,39"/>
+</map>

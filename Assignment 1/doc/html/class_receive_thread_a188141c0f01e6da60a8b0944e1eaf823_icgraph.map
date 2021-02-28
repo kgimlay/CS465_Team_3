@@ -1,0 +1,4 @@
+<map id="ReceiveThread.handleLeaveMessage" name="ReceiveThread.handleLeaveMessage">
+<area shape="rect" id="node1" title="Handles a leave message. When a LeaveMessage is received, the Participant that that message was sent ..." alt="" coords="185,5,372,47"/>
+<area shape="rect" id="node2" href="$class_receive_thread.html#aed761385f784aae81405b57987a9cfaa" title="Interface method from Runnable &#45; starts the thread. Receives the incomming message object and handles..." alt="" coords="5,13,137,39"/>
+</map>

@@ -17,6 +17,7 @@ public class ChatMessage extends Message
 	/** @brief Constructor.
 	*  @param senderID - String of the public chat name to display on peers'
    *  messages.
+   *  @param portNum - the port number of the sender.
    *  @param message - String of the message to display on the peers' messages.
 	*/
 	public ChatMessage(String senderID, int portNum, String message)

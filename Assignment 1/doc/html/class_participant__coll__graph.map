@@ -1,0 +1,5 @@
+<map id="Participant" name="Participant">
+<area shape="rect" id="node1" title="Participant stores the public name, port, and ip address of a single connection within the chat topol..." alt="" coords="25,145,189,281"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,95,83"/>
+<area shape="rect" id="node3" title=" " alt="" coords="119,5,211,83"/>
+</map>

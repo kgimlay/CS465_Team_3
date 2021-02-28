@@ -1,0 +1,6 @@
+<map id="ChatPrettyPrinter.printHasLeft" name="ChatPrettyPrinter.printHasLeft">
+<area shape="rect" id="node1" title="Prints the has left chat string." alt="" coords="420,42,617,69"/>
+<area shape="rect" id="node2" href="$class_receive_thread.html#a188141c0f01e6da60a8b0944e1eaf823" title="Handles a leave message. When a LeaveMessage is received, the Participant that that message was sent ..." alt="" coords="185,5,372,47"/>
+<area shape="rect" id="node4" href="$class_send_thread.html#a531cc28048d6b8c62fc998952be2d3b7" title="Interface method from Runnable &#45; starts the thread. Once started, iterates over each participant in t..." alt="" coords="221,71,336,98"/>
+<area shape="rect" id="node3" href="$class_receive_thread.html#aed761385f784aae81405b57987a9cfaa" title="Interface method from Runnable &#45; starts the thread. Receives the incomming message object and handles..." alt="" coords="5,13,137,39"/>
+</map>

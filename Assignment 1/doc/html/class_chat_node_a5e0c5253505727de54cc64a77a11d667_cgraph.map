@@ -1,0 +1,4 @@
+<map id="ChatNode.startChat" name="ChatNode.startChat">
+<area shape="rect" id="node1" title="Starts a new chat topology with just the one node (self)." alt="" coords="5,5,144,32"/>
+<area shape="rect" id="node2" href="$class_chat_node.html#ac0ea52ce633f18c5de993c1ddb44763e" title="Initialize the attribute needed for operation." alt="" coords="192,5,317,32"/>
+</map>

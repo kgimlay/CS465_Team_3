@@ -1,0 +1,4 @@
+<map id="ReceiveThread.handleLeaveMessage" name="ReceiveThread.handleLeaveMessage">
+<area shape="rect" id="node1" title="Handles a leave message. When a LeaveMessage is received, the Participant that that message was sent ..." alt="" coords="5,5,192,47"/>
+<area shape="rect" id="node2" href="$class_chat_pretty_printer.html#a7dfdd01fabd1fb860ae124cfea4c98cf" title="Prints the has left chat string." alt="" coords="240,13,437,39"/>
+</map>

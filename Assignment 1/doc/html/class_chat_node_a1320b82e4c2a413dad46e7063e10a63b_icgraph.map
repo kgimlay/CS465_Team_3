@@ -1,0 +1,4 @@
+<map id="ChatNode.sendMessage" name="ChatNode.sendMessage">
+<area shape="rect" id="node1" title="Sends a message to the other participants in the chat. Creates a ChatMessage object and sends to a Se..." alt="" coords="167,5,333,32"/>
+<area shape="rect" id="node2" href="$class_chat_node.html#a7f81d802867274d9f367ff8161bb609a" title="Main entrance to program. Parses the command line arguments and starts a new chat or joins the existi..." alt="" coords="5,5,119,32"/>
+</map>
