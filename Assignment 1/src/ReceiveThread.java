@@ -118,8 +118,23 @@ public class ReceiveThread implements Runnable{
          // check if message equal to leave message
          else if ( messageClass instanceof LeaveMessage )
          {
+            //set up variables for participant list search
+            int index = 0;
+            boolean found = false;
+            int length = threadList.size();
+            // find the participant in the participant list
+            while( index < length && !found)
+            {
+               if( threadList.get(index).name ==  ((LeaveMessage)messageClass).senderID 
+                   && threadList.get(index).port == ((LeaveMessage)messageClass).portNum
+                   && threadList.get(index).ip == connection.getInetAddress() )
+               {
+                  found = true;      
+               }
+            }
+            int indexToRemove;
             // remove node from list
-            threadList.remove( (Participant) messageClass );
+            threadList.remove(index);
          }
 
          else
