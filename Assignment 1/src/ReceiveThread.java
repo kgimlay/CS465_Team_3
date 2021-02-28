@@ -58,7 +58,7 @@ public class ReceiveThread implements Runnable{
    public void run()
    {
       // print for debugging
-      System.out.println("---Starting Receive Thread---");
+      //System.out.println("---Starting Receive Thread---");
 
       try
       {
@@ -74,8 +74,7 @@ public class ReceiveThread implements Runnable{
          if ( messageClass instanceof ChatMessage )
          {
             // print the message to the console
-            String message = ( String ) messageClass;
-            System.out.println( message );
+            System.out.println( messageClass );
          }
 
          // check if message equal to a joinMessage
@@ -96,13 +95,20 @@ public class ReceiveThread implements Runnable{
          }
          else if ( messageClass instanceof JoinMessage )
          {
-            // report
-            System.out.println("Connected to: " + messageClass);
             // add participants recieved to participant list
             threadList.addAll(((JoinMessage)messageClass).participantList);
             // send JoinedMessage to everyone on participant list
             Thread sendJoined = new Thread(new SendThread( new JoinedMessage(threadSelf.name, threadSelf.port), threadList));
             sendJoined.start();
+
+            // report
+            System.out.print("You have joined the chat with ");
+            int index;
+            for (index = 0; index < threadList.size()-1; index++)
+            {
+               System.out.print(threadList.get(index).name + ", ");
+            }
+            System.out.println(threadList.get(index).name);
          }
 
          // check if message equal to a joinedMessage
@@ -112,7 +118,9 @@ public class ReceiveThread implements Runnable{
             JoinedMessage message = (JoinedMessage)messageClass;
             Participant newParticipant = new Participant(message.senderID, connection.getInetAddress(), message.portNum);
             threadList.add( newParticipant );
-            System.out.println("Received Participant List. Added: " + newParticipant);
+
+            // report new user
+            System.out.println(message.senderID + " has joined the chat!");
          }
 
          // check if message equal to leave message
@@ -130,7 +138,7 @@ public class ReceiveThread implements Runnable{
          }
 
          // print for debugging purposes
-         System.out.println("---Ending Receive Thread---");
+         //System.out.println("---Ending Receive Thread---");
       }
       catch (IOException ioE)
       {

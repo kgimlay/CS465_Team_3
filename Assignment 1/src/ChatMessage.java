@@ -31,6 +31,6 @@ public class ChatMessage extends Message
    */
    public String toString()
    {
-      return super.senderID + " with port number: " + super.portNum + " >> " + message;
+      return super.senderID + " >> " + message;
    }
 }

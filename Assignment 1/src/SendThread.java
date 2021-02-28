@@ -46,7 +46,7 @@ public class SendThread implements Runnable{
    {
 
       // print for debugging
-      System.out.println("---Starting Sending Thread---");
+      //System.out.println("---Starting Sending Thread---");
 
       Socket socketObject;
       int index;
@@ -70,6 +70,6 @@ public class SendThread implements Runnable{
       }
 
     // print for debugging purposes
-    System.out.println("---Ending Sending Thread---");
+    //System.out.println("---Ending Sending Thread---");
    }
  }

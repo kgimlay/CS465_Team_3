@@ -55,8 +55,6 @@ public class ChatNode
       {
          serverSocket = new ServerSocket(portNum, -1,
                                           InetAddress.getByName("localhost"));
-         System.out.println("Chat Node opened at: "
-                              + serverSocket.getLocalSocketAddress());
       } catch (IOException ioE) {
          System.out.println("An error occured while opening the socket! "
                               + ioE);
@@ -73,9 +71,6 @@ public class ChatNode
                                                             participantList,
                                                             selfParticipant));
       receiveManagerThread.start();
-
-      // report for debugging
-      System.out.println("Self Participant: " + selfParticipant);
    }
 
    /** @brief Starts a new chat topology with just the one node (self).
@@ -86,6 +81,11 @@ public class ChatNode
    {
       // initialize the attributes needed for operation
       initSelf( selfPort );
+
+
+      // report chat started
+      System.out.println("New chat started at " + serverSocket.getInetAddress()
+            + " : " + selfPort);
    }
 
    /** @brief Joins an already existing chat topology.
