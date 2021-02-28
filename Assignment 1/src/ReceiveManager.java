@@ -73,7 +73,6 @@ public class ReceiveManager implements Runnable
          {
    			System.out.println("Something went wrong while waiting "
    			+ "for a connection!");
-   			System.exit(1);
    		}
       }
    }
