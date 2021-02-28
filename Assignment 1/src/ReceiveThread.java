@@ -119,9 +119,7 @@ public class ReceiveThread implements Runnable{
          else if ( messageClass instanceof LeaveMessage )
          {
             // remove node from list
-            // threadList.remove(fromClient.readObject());  // get the sending Participant and remove them from the Participant list
-            // same mistakes as before not using chatMessage, leaving previous just in case
-            threadList.remove( messageClass );
+            threadList.remove( (Participant) messageClass );
          }
 
          else
