@@ -67,6 +67,7 @@ public class ReceiveThread implements Runnable{
 
          // get the message class type
          Object messageClass = fromClient.readObject();
+         System.out.println( messageClass.getClass()  );
          // close connection
          connection.close();
 
@@ -117,7 +118,7 @@ public class ReceiveThread implements Runnable{
             // add the new node to the list
             JoinedMessage message = (JoinedMessage)messageClass;
             Participant newParticipant = new Participant(message.senderID, connection.getInetAddress(), message.portNum);
-            threadList.add( newParticipant );
+            threadList.add( newParticipant);
 
             // report new user
             System.out.println(message.senderID + " has joined the chat!");
@@ -126,23 +127,23 @@ public class ReceiveThread implements Runnable{
          // check if message equal to leave message
          else if ( messageClass instanceof LeaveMessage )
          {
-            //set up variables for participant list search
-            int index = 0;
-            boolean found = false;
-            int length = threadList.size();
             // find the participant in the participant list
-            while( index < length && !found)
+            for (int index = 0; index < threadList.size(); index++)
             {
-               if( threadList.get(index).name ==  ((LeaveMessage)messageClass).senderID 
+               if( threadList.get(index).name ==  ((LeaveMessage)messageClass).senderID
                    && threadList.get(index).port == ((LeaveMessage)messageClass).portNum
                    && threadList.get(index).ip == connection.getInetAddress() )
                {
-                  found = true;      
+                  // remove node from list
+                  Participant nodLeft = threadList.remove(index);
+
+                  // report
+                  System.out.println("Participant List: " + threadList);
+                  System.out.println(nodLeft + "has left the chat :-(");
+                  break;
                }
+               System.out.println("Not Found At Index: " + index);
             }
-            int indexToRemove;
-            // remove node from list
-            threadList.remove(index);
          }
 
          else

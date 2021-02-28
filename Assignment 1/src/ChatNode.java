@@ -297,7 +297,6 @@ public class ChatNode
             leaveChat();
             break;
          }
-         System.out.println(input);
          sendMessage(input);
       }
       scanner.close();
