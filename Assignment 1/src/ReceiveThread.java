@@ -92,7 +92,6 @@ public class ReceiveThread implements Runnable{
             recipient.add( new Participant("bbb", senderAddress, senderPort) );
             JoinMessage responseMessage = new JoinMessage( "aaa", threadSelf.port, copyOfThreadList);
             Thread response = new Thread( new SendThread( responseMessage, recipient ) );
-            System.out.println("Message: " + responseMessage + "Receiver: " + recipient);
             response.start();
          }
          else if ( messageClass instanceof JoinMessage )
@@ -102,16 +101,18 @@ public class ReceiveThread implements Runnable{
             // add participants recieved to participant list
             threadList.addAll(((JoinMessage)messageClass).participantList);
             // send JoinedMessage to everyone on participant list
-            new SendThread( new JoinedMessage(threadSelf.name, threadSelf.port), threadList);
-
-                        
+            Thread sendJoined = new Thread(new SendThread( new JoinedMessage(threadSelf.name, threadSelf.port), threadList));
+            sendJoined.start();
          }
 
          // check if message equal to a joinedMessage
          else if ( messageClass instanceof JoinedMessage )
          {
             // add the new node to the list
-            threadList.add( ( Participant ) messageClass );
+            JoinedMessage message = (JoinedMessage)messageClass;
+            Participant newParticipant = new Participant(message.senderID, connection.getInetAddress(), message.portNum);
+            threadList.add( newParticipant );
+            System.out.println("Received Participant List. Added: " + newParticipant);
          }
 
          // check if message equal to leave message
