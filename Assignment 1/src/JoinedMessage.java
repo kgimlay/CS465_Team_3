@@ -27,6 +27,6 @@ public class JoinedMessage extends Message
      */
      public String toString()
      {
-        return super.senderID;
+        return super.senderID  + " with port number: " + super.portNum;
      }
 }

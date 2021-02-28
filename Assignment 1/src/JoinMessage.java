@@ -40,6 +40,6 @@ public class JoinMessage extends Message
      */
      public String toString()
      {
-        return super.senderID + " | " + participantList;
+        return super.senderID  + " with port number: " + super.portNum + " | " + participantList;
      }
 }
