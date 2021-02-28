@@ -6,7 +6,7 @@
 
 /** @brief JoinedMessage is the subtype of message that is used to signal to a
 *  receiving node that the sending node has already requested and received a
-*  participant list. When the receiving node receives this a 'joined' message,
+*  participant list. When the receiving node receives a 'joined' message,
 *  the receiving node adds the sending node's connection information to it's
 *  participant list.
 */
@@ -22,7 +22,7 @@ public class JoinedMessage extends Message
         super.portNum = portNum;
      }
 
-     /** @brief Override the toString() method to alllow for nice printing of
+     /** @brief Override the toString() method to allow for nice printing of
      *  the chat messages.
      */
      public String toString()

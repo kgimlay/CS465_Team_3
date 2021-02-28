@@ -35,18 +35,20 @@ public class ChatNode
    */
    private static Participant selfParticipant;
 
-   /** @brief ServerSocket for spawning Sockets from for connections.
+   /** @brief ServerSocket for spawning Sockets for connections.
    */
    private static ServerSocket serverSocket;
 
    /** @brief Initialize the attribute needed for operation.
+   *  @param username - The user's chosen display name. 
    *  @param portNum - Integer port number for opening connections on,
    *  between 0 and 65535 inclusive.
    */
    private static void initSelf(String username, int portNum )
    {
-      // initialize other attributes
+      // initialize the participant list
       participantList = new ArrayList<Participant>();
+      
       // Note that sendManager is initialized for every message sent, therefore
       // we don't initialize it here.
 
@@ -66,7 +68,7 @@ public class ChatNode
                                           serverSocket.getInetAddress(),
                                           serverSocket.getLocalPort() );
 
-      // start receiving
+      // start receiving incoming connection requests
       receiveManagerThread = new Thread(new ReceiveManager(serverSocket,
                                                             participantList,
                                                             selfParticipant));
@@ -74,21 +76,23 @@ public class ChatNode
    }
 
    /** @brief Starts a new chat topology with just the one node (self).
+   *  @param username - The user's chosen display name. 
    *  @param selfPort - Integer port number for opening connections on,
    *  between 0 and 65535 inclusive.
    */
    private static void startChat(String username, int selfPort)
    {
-      // initialize the attributes needed for operation
+      // initialize the attributes needed for operation (username + port #)
       initSelf( username, selfPort );
 
 
-      // report chat started
+      // report chat started and where
       System.out.println("New chat started at " + serverSocket.getInetAddress()
             + " : " + selfPort);
    }
 
    /** @brief Joins an already existing chat topology.
+   *  @param username - The user's chosen display name.
    *  @param selfPort - Integer port number for opening connections on,
    *  between 0 and 65535 inclusive.
    *  @param ip - InetAddress of a node known to be in the chat topology to
@@ -98,7 +102,7 @@ public class ChatNode
    */
    private static void joinChat(String username, int selfPort, InetAddress ip, int joinPort)
    {
-      // initialize the attributes needed for operation
+      // initialize the attributes needed for operation (username + port #)
       initSelf( username, selfPort );
 
       // create a join message to join the existing chat
@@ -107,7 +111,7 @@ public class ChatNode
       ArrayList<Participant> joinRecipient = new ArrayList<Participant>();
       joinRecipient.add(new Participant(selfParticipant.name, ip, joinPort));
 
-      // send request
+      // send request to connect to a known node already in the chat
       sendManagerThread = new Thread(new SendThread(joinRequest,
                                                       joinRecipient));
       sendManagerThread.start();
@@ -122,7 +126,7 @@ public class ChatNode
    {
       // create a message to send
       ChatMessage sendMessage = new ChatMessage(selfParticipant.name, selfParticipant.port, message);
-      // pass the created message and participant list to the sendd manager
+      // pass the created message and participant list to the send manager
       sendManagerThread = new Thread(new SendThread(sendMessage,
                                                       participantList));
       // start the thread in order to send the message to all participants
@@ -182,7 +186,7 @@ public class ChatNode
    }
 
    /** @brief Main entrance to program.
-   *  Parses the command line arguments and starts a new chat or joins and
+   *  Parses the command line arguments and starts a new chat or joins the
    *  existing chat, whichever is specified. Then falls into a loop for
    *  accepting user input from the command line as messages to send or commands
    *  such as to leave the chat.
@@ -191,27 +195,11 @@ public class ChatNode
    */
    public static void main(String args[])
    {
-      /** Command line arguemnts are structed as such:
+      /** Command line arguments are structured as such:
       *  -n <port to open>  |
-      *  -j <port to open> <ip to conenct to> <port to connect to>
-      *//*
-      *  Algorithm:
-      *  If number of command line arguments != 2 or != 4:
-      *    print usage and abort
-      *  Else:
-      *    If flag == -n:
-      *      get port to open on
-      *      If port < 0 or > 65535:
-      *        print error message and abort
-      *    Else if flag == -j:
-      *      get port to open on, ip to connect to, port to connect to
-      *      If either port < 0 or > 65535:
-      *        print error message and abort
-      *      If ip is not valid:
-      *        print error message and abort
-      *    Else:
-      *      print usage and abort
+      *  -j <port to open> <ip to connect to> <port to connect to>
       */
+
       int openPort = 0;          // port to open your own connection on
       int joinPort = 0;          // port to connect to for joining
       InetAddress joinIp = null; // IP address to connect to for joining
@@ -226,8 +214,9 @@ public class ChatNode
             + "<ip to conenct to> <port to connect to>\n");
          System.exit(1);
       }
-      // flags are correct, good to get next arguemnts
+      // flags are correct, good to get next arguments
       try {
+         // grab the opening port number
          openPort = Integer.parseInt(args[1]);
          // report if port out of range
          if (openPort < 0 || openPort > 65535)
@@ -237,10 +226,12 @@ public class ChatNode
             System.exit(1);
          }
       }
+      // if port number isn't formated as expected, report the error
       catch(NumberFormatException nfException) {
          System.out.println("Error parsing open port to an integer");
          System.exit(1);
       }
+
       if (args[0].equals("-j"))
       {
          // set flag to join
@@ -249,7 +240,9 @@ public class ChatNode
          // catch exceptions for parsing port to an integer and
          // from trying to make an InetAddress object on the IP given
          try {
+            // grab ip address given
             joinIp = InetAddress.getByName(args[2]);
+            // grab port number given
             joinPort = Integer.parseInt(args[3]);
             // report if port out of range
             if (joinPort < 0 || joinPort > 65535)
@@ -259,10 +252,12 @@ public class ChatNode
                System.exit(1);
             }
          }
+         // if port number isn't formated as expected, report the error
          catch(NumberFormatException nfException) {
             System.out.println("Error parsing connecting port to an integer");
             System.exit(1);
          }
+         // the IP address of a host could not be determined, report the error
          catch(UnknownHostException uhException) {
             System.out.println("Error parsing IP address");
             System.exit(1);
@@ -274,7 +269,7 @@ public class ChatNode
       // var to hold chosen username
       String username;
       // Prompt user to enter a username
-      System.out.println("Enter username"); 
+      System.out.println("Enter username:"); 
       // Grab user input and store into var username
       username = getInput.nextLine();  
 
@@ -291,29 +286,32 @@ public class ChatNode
          startChat(username, openPort);
       }
 
-      /** @todo Implement getting from cl and sending message, and any other
-      *  logic needed for handling unsuccessful join request.
-      */
-
       // set up loop to be taking in messages
-      // CURRENTLY TEST LOOP
+      // Create scanner object to read input 
       Scanner scanner = new Scanner(System.in);
+
       while(true)
       {
+         // read input
          String input = scanner.nextLine();
+         // if input equals the exit command, leave chat
          if(input.equals("exit"))
          {
             leaveChat();
             break;
          }
+         // if the exit command was not detected, send input as message
          sendMessage(input);
       }
+      // close created scanner object
       scanner.close();
       try
       {
         Thread.sleep(500);
         System.exit(0);
       }
+      // thread is interrupted, either before or during activity
+      // report the error
       catch(InterruptedException interExcept)
       {
         System.out.println("Error interrupted exception: Main Thread interrupted");

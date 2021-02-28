@@ -26,8 +26,8 @@ public class ChatMessage extends Message
 		this.message = message;
 	}
 
-   /** @brief Override the toString() method to alllow for nice printing of
-   *  the chat messages.
+   /** @brief Override the toString() method to allow for nice printing of
+   *  the chat messages. Includes the message and who sent it.
    */
    public String toString()
    {
