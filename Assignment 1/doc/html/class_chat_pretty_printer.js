@@ -1,6 +1,6 @@
 var class_chat_pretty_printer =
 [
-    [ "addChatInfo", "class_chat_pretty_printer.html#ae9b4e97dbb392927ed96cc23a7bb35d3", null ],
+    [ "addChatInfo", "class_chat_pretty_printer.html#a8b3fcc266294b39838c3573d0265fc58", null ],
     [ "ppChatStart", "class_chat_pretty_printer.html#aa4e13b69b884f65390720c25ce5095fa", null ],
     [ "printCannotBeReached", "class_chat_pretty_printer.html#adbb455dda7b9a66100ac04e78f9a4945", null ],
     [ "printHasLeft", "class_chat_pretty_printer.html#a7dfdd01fabd1fb860ae124cfea4c98cf", null ],

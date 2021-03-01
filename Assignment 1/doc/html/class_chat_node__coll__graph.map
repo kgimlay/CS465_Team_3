@@ -1,5 +1,5 @@
 <map id="ChatNode" name="ChatNode">
-<area shape="rect" id="node1" title="Main class for peer to peer chat application. Implements the top&#45;level logic of the application: star..." alt="" coords="177,359,376,744"/>
+<area shape="rect" id="node1" title="Main class for peer to peer chat application. Implements the top&#45;level logic of the application: star..." alt="" coords="189,359,364,641"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,175,68,252"/>
 <area shape="rect" id="node3" title=" " alt="" coords="111,175,271,252"/>
 <area shape="rect" id="node4" title=" " alt="" coords="295,175,397,252"/>

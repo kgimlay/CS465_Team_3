@@ -1,6 +1,6 @@
 <map id="ChatNode.main" name="ChatNode.main">
 <area shape="rect" id="node1" title="Main entrance to program. Parses the command line arguments and starts a new chat or joins the existi..." alt="" coords="5,136,119,163"/>
-<area shape="rect" id="node2" href="$class_chat_pretty_printer.html#ae9b4e97dbb392927ed96cc23a7bb35d3" title="Clears the username line query line and puts chat stats at the top of the section,..." alt="" coords="167,5,364,32"/>
+<area shape="rect" id="node2" href="$class_chat_pretty_printer.html#a8b3fcc266294b39838c3573d0265fc58" title="puts chat stats at the top of the section, just under the header." alt="" coords="167,5,364,32"/>
 <area shape="rect" id="node3" href="$class_chat_node.html#a919af41449b057573e32240fd935b27c" title="Joins an already existing chat topology." alt="" coords="199,56,332,83"/>
 <area shape="rect" id="node5" href="$class_chat_node.html#a16ca6094bd1f911c17b3be77f5304788" title="Leaves the chat. Gracefully disconnects from all members of the topology by sending them LeaveMessage..." alt="" coords="193,107,337,133"/>
 <area shape="rect" id="node6" href="$class_chat_pretty_printer.html#aa4e13b69b884f65390720c25ce5095fa" title="Primes the command line screen and prints a header." alt="" coords="181,158,349,199"/>

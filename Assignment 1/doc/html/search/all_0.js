@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['addchatinfo_0',['addChatInfo',['../class_chat_pretty_printer.html#ae9b4e97dbb392927ed96cc23a7bb35d3',1,'ChatPrettyPrinter']]],
-  ['addparticipant_1',['addParticipant',['../class_chat_node.html#a07775de1c443ce09de47eab902dbf8da',1,'ChatNode']]],
-  ['addparticipants_2',['addParticipants',['../class_chat_node.html#a7c4b103e7b8d97b7d6b55c4ad18fa11d',1,'ChatNode']]]
+  ['addchatinfo_0',['addChatInfo',['../class_chat_pretty_printer.html#a8b3fcc266294b39838c3573d0265fc58',1,'ChatPrettyPrinter']]]
 ];

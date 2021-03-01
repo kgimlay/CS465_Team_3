@@ -149,41 +149,6 @@ public class ChatNode
       sendManagerThread.start();
    }
 
-   /** @brief Add a participant to the participant list.
-   *  @param participant - A Participant object to add to the list of
-   *  participants.
-   */
-   private static void addParticipant(Participant participant)
-   {
-      participantList.add(participant);
-   }
-
-   /** @brief Add a participant list. Used when joining a chat to take the
-   *  contained participant list in the returned JoinMessage object and insert
-   *  it as this node's participant list.
-   *  @param participants - An ArrayList of Participants to set as the new
-   *  participant list.
-   */
-   private static void addParticipants(ArrayList<Participant> participants)
-   {
-      // iterate over given participants list and add each participant
-      // to this object's own participant list
-      for (int i = 0; i < participants.size(); i++)
-      {
-         addParticipant(participants.get(i));
-      }
-   }
-
-   /** @brief Remove a participant from the participant list. Used when a
-   *  LeaveMessage is received to remove the leaving node from the participant
-   *  list.
-   *  @param participant - Participant object of the participant to remove.
-   */
-   private static void removeParticipant(Participant participant)
-   {
-      participantList.remove(participant);
-   }
-
    /** @brief Main entrance to program.
    *  Parses the command line arguments and starts a new chat or joins the
    *  existing chat, whichever is specified. Then falls into a loop for

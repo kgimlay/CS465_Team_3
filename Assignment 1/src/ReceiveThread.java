@@ -29,9 +29,9 @@ public class ReceiveThread implements Runnable{
    /**  @brief A Socket object for receiving the incomming message from.
    */
    private Socket connection;
-   private ArrayList<Participant> threadList;
-   private Participant threadSelf;
-   private ObjectInputStream fromClient;
+   private ArrayList<Participant> participantList;
+   private Participant selfParticipant;
+   private ObjectInputStream fromPeer;
 
    /** @brief Constructor.
    *  @param socket - The Socket object for receiving the incomming message
@@ -46,9 +46,9 @@ public class ReceiveThread implements Runnable{
    {
       // initialize variables
       this.connection = socket;
-      this.threadList = list;
-      this.threadSelf = self;
-      this.fromClient = null;
+      this.participantList = list;
+      this.selfParticipant = self;
+      this.fromPeer = null;
    }
 
    /** @brief Interface method from Runnable - starts the thread.
@@ -60,10 +60,10 @@ public class ReceiveThread implements Runnable{
       try
       {
          // set up connections
-         fromClient = new ObjectInputStream( connection.getInputStream() );
+         fromPeer = new ObjectInputStream( connection.getInputStream() );
 
          // get the message class type
-         Object messageObj = fromClient.readObject();
+         Object messageObj = fromPeer.readObject();
 
          // close connection because it is not being used any more.
          // closing happens on this side to make sure the message is received
@@ -132,10 +132,10 @@ public class ReceiveThread implements Runnable{
       // copy the Participant list and add your selfParticipant to it,
       // then send that
       ArrayList<Participant> copyOfThreadList =
-            new ArrayList<Participant>(threadList);
-      copyOfThreadList.add(threadSelf);
+            new ArrayList<Participant>(participantList);
+      copyOfThreadList.add(selfParticipant);
 
-      // get info to send back threadList
+      // get info to send back participantList
       int senderPort= messageObj.portNum;
       InetAddress senderAddress = connection.getInetAddress();
 
@@ -144,8 +144,8 @@ public class ReceiveThread implements Runnable{
       recipient.add( new Participant("", senderAddress, senderPort) );
 
       // send back JoinMessage with the participant list
-      JoinMessage responseMessage = new JoinMessage( threadSelf.name,
-                                                      threadSelf.port,
+      JoinMessage responseMessage = new JoinMessage( selfParticipant.name,
+                                                      selfParticipant.port,
                                                       copyOfThreadList);
       Thread response = new Thread( new SendThread( responseMessage,
                                                       recipient ) );
@@ -161,22 +161,22 @@ public class ReceiveThread implements Runnable{
    private void handleJoinResponse(JoinMessage messageObj)
    {
       // add participants recieved to participant list
-      threadList.addAll(messageObj.participantList);
+      participantList.addAll(messageObj.participantList);
       // send JoinedMessage to everyone on participant list
       Thread sendJoined = new Thread(new SendThread(
-            new JoinedMessage(threadSelf.name,
-                              threadSelf.port),
-                              threadList));
+            new JoinedMessage(selfParticipant.name,
+                              selfParticipant.port),
+                              participantList));
       sendJoined.start();
 
       // report
       System.out.print("You have joined the chat with ");
       int index;
-      for (index = 0; index < threadList.size()-1; index++)
+      for (index = 0; index < participantList.size()-1; index++)
       {
-         System.out.print(threadList.get(index).name + ", ");
+         System.out.print(participantList.get(index).name + ", ");
       }
-      System.out.println(threadList.get(index).name);
+      System.out.println(participantList.get(index).name);
    }
 
    /** @brief Handles a joined message.
@@ -191,7 +191,7 @@ public class ReceiveThread implements Runnable{
       Participant newParticipant = new Participant(message.senderID,
                                              connection.getInetAddress(),
                                              message.portNum);
-      threadList.add( newParticipant);
+      participantList.add( newParticipant);
 
       // report new user
       System.out.println(message.senderID + " has joined the chat!");
@@ -205,18 +205,18 @@ public class ReceiveThread implements Runnable{
    private void handleLeaveMessage(LeaveMessage messageObj)
    {
       // find the participant in the participant list
-      for (int index = 0; index < threadList.size(); index++)
+      for (int index = 0; index < participantList.size(); index++)
       {
          // if the information matches the participant being compared to
-         if( threadList.get(index).name.equals(
+         if( participantList.get(index).name.equals(
                   ((LeaveMessage)messageObj).senderID)
-             && threadList.get(index).port ==
+             && participantList.get(index).port ==
                   ((LeaveMessage)messageObj).portNum
-             && threadList.get(index).ip.equals(
+             && participantList.get(index).ip.equals(
                   connection.getInetAddress() ))
          {
             // remove node from list
-            Participant nodeLeft = threadList.remove(index);
+            Participant nodeLeft = participantList.remove(index);
             // report
             ChatPrettyPrinter.printHasLeft(nodeLeft.name);
             break;

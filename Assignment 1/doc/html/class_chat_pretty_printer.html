@@ -97,7 +97,7 @@ Collaboration diagram for ChatPrettyPrinter:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_chat_pretty_printer__coll__graph.png" border="0" usemap="#a_chat_pretty_printer_coll__map" alt="Collaboration graph"/></div>
 <map name="a_chat_pretty_printer_coll__map" id="a_chat_pretty_printer_coll__map">
-<area shape="rect" title="Prints content to the command line in a pretty and formatted manner to make a nice user experience...." alt="" coords="5,5,220,303"/>
+<area shape="rect" title="Prints content to the command line in a pretty and formatted manner to make a nice user experience...." alt="" coords="5,5,220,288"/>
 </map>
 </div>
 <table class="memberdecls">
@@ -106,9 +106,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:aa4e13b69b884f65390720c25ce5095fa"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_pretty_printer.html#aa4e13b69b884f65390720c25ce5095fa">ppChatStart</a> ()</td></tr>
 <tr class="memdesc:aa4e13b69b884f65390720c25ce5095fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primes the command line screen and prints a header.  <a href="class_chat_pretty_printer.html#aa4e13b69b884f65390720c25ce5095fa">More...</a><br /></td></tr>
 <tr class="separator:aa4e13b69b884f65390720c25ce5095fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9b4e97dbb392927ed96cc23a7bb35d3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_pretty_printer.html#ae9b4e97dbb392927ed96cc23a7bb35d3">addChatInfo</a> (String username, InetAddress ip, int port)</td></tr>
-<tr class="memdesc:ae9b4e97dbb392927ed96cc23a7bb35d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the username line query line and puts chat stats at the top of the section, just under the header.  <a href="class_chat_pretty_printer.html#ae9b4e97dbb392927ed96cc23a7bb35d3">More...</a><br /></td></tr>
-<tr class="separator:ae9b4e97dbb392927ed96cc23a7bb35d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b3fcc266294b39838c3573d0265fc58"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_pretty_printer.html#a8b3fcc266294b39838c3573d0265fc58">addChatInfo</a> (InetAddress ip, int port)</td></tr>
+<tr class="memdesc:a8b3fcc266294b39838c3573d0265fc58"><td class="mdescLeft">&#160;</td><td class="mdescRight">puts chat stats at the top of the section, just under the header.  <a href="class_chat_pretty_printer.html#a8b3fcc266294b39838c3573d0265fc58">More...</a><br /></td></tr>
+<tr class="separator:a8b3fcc266294b39838c3573d0265fc58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c7602431cc4967e463aa49a7b58c064"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chat_pretty_printer.html#a5c7602431cc4967e463aa49a7b58c064">printReceivedMessage</a> (String senderID, String message)</td></tr>
 <tr class="memdesc:a5c7602431cc4967e463aa49a7b58c064"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a message formatted.  <a href="class_chat_pretty_printer.html#a5c7602431cc4967e463aa49a7b58c064">More...</a><br /></td></tr>
 <tr class="separator:a5c7602431cc4967e463aa49a7b58c064"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -139,11 +139,12 @@ Static Private Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Prints content to the command line in a pretty and formatted manner to make a nice user experience. For decorative purposes only, and doesn't add any functionality to the chat program. </p>
+<dl class="section note"><dt>Note</dt><dd>This originally used ANSI escape sequences, but we had issues of compatibility on Windows machines.</dd></dl>
 <dl class="section author"><dt>Authors</dt><dd>Kevin Imlay </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2-27-21 </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae9b4e97dbb392927ed96cc23a7bb35d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9b4e97dbb392927ed96cc23a7bb35d3">&#9670;&nbsp;</a></span>addChatInfo()</h2>
+<a id="a8b3fcc266294b39838c3573d0265fc58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b3fcc266294b39838c3573d0265fc58">&#9670;&nbsp;</a></span>addChatInfo()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -154,12 +155,6 @@ Static Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">static void ChatPrettyPrinter.addChatInfo </td>
           <td>(</td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>username</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">InetAddress&#160;</td>
           <td class="paramname"><em>ip</em>, </td>
         </tr>
@@ -182,13 +177,13 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Clears the username line query line and puts chat stats at the top of the section, just under the header. </p>
+<p>puts chat stats at the top of the section, just under the header. </p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_chat_pretty_printer_ae9b4e97dbb392927ed96cc23a7bb35d3_icgraph.png" border="0" usemap="#aclass_chat_pretty_printer_ae9b4e97dbb392927ed96cc23a7bb35d3_icgraph" alt=""/></div>
-<map name="aclass_chat_pretty_printer_ae9b4e97dbb392927ed96cc23a7bb35d3_icgraph" id="aclass_chat_pretty_printer_ae9b4e97dbb392927ed96cc23a7bb35d3_icgraph">
-<area shape="rect" title="Clears the username line query line and puts chat stats at the top of the section,..." alt="" coords="167,5,364,32"/>
+<div class="center"><img src="class_chat_pretty_printer_a8b3fcc266294b39838c3573d0265fc58_icgraph.png" border="0" usemap="#aclass_chat_pretty_printer_a8b3fcc266294b39838c3573d0265fc58_icgraph" alt=""/></div>
+<map name="aclass_chat_pretty_printer_a8b3fcc266294b39838c3573d0265fc58_icgraph" id="aclass_chat_pretty_printer_a8b3fcc266294b39838c3573d0265fc58_icgraph">
+<area shape="rect" title="puts chat stats at the top of the section, just under the header." alt="" coords="167,5,364,32"/>
 <area shape="rect" href="class_chat_node.html#a7f81d802867274d9f367ff8161bb609a" title="Main entrance to program. Parses the command line arguments and starts a new chat or joins the existi..." alt="" coords="5,5,119,32"/>
 </map>
 </div>
@@ -298,9 +293,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_chat_pretty_printer_a7dfdd01fabd1fb860ae124cfea4c98cf_icgraph.png" border="0" usemap="#aclass_chat_pretty_printer_a7dfdd01fabd1fb860ae124cfea4c98cf_icgraph" alt=""/></div>
 <map name="aclass_chat_pretty_printer_a7dfdd01fabd1fb860ae124cfea4c98cf_icgraph" id="aclass_chat_pretty_printer_a7dfdd01fabd1fb860ae124cfea4c98cf_icgraph">
-<area shape="rect" title="Prints the has left chat string." alt="" coords="420,42,617,69"/>
+<area shape="rect" title="Prints the has left chat string." alt="" coords="420,13,617,39"/>
 <area shape="rect" href="class_receive_thread.html#a188141c0f01e6da60a8b0944e1eaf823" title="Handles a leave message. When a LeaveMessage is received, the Participant that that message was sent ..." alt="" coords="185,5,372,47"/>
-<area shape="rect" href="class_send_thread.html#a531cc28048d6b8c62fc998952be2d3b7" title="Interface method from Runnable &#45; starts the thread. Once started, iterates over each participant in t..." alt="" coords="221,71,336,98"/>
 <area shape="rect" href="class_receive_thread.html#aed761385f784aae81405b57987a9cfaa" title="Interface method from Runnable &#45; starts the thread. Receives the incomming message object and handles..." alt="" coords="5,13,137,39"/>
 </map>
 </div>
@@ -430,7 +424,6 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= <span class="stringliteral">&quot;&quot;</span></div>
-<div class="line">   +<span class="stringliteral">&quot;###  Chat Name: %s\n&quot;</span></div>
 <div class="line">   +<span class="stringliteral">&quot;###  IP: %s\n&quot;</span></div>
 <div class="line">   +<span class="stringliteral">&quot;###  Port: %d\n&quot;</span></div>
 <div class="line">   +<span class="stringliteral">&quot;##########################################################################&quot;</span></div>

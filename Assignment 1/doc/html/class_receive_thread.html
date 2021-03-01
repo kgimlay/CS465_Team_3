@@ -98,8 +98,8 @@ Inheritance diagram for ReceiveThread:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_receive_thread__inherit__graph.png" border="0" usemap="#a_receive_thread_inherit__map" alt="Inheritance graph"/></div>
 <map name="a_receive_thread_inherit__map" id="a_receive_thread_inherit__map">
-<area shape="rect" title="ReceiveThread handles receiving a message from a single connection in the topology...." alt="" coords="5,131,208,428"/>
-<area shape="rect" title=" " alt="" coords="68,5,145,83"/>
+<area shape="rect" title="ReceiveThread handles receiving a message from a single connection in the topology...." alt="" coords="5,131,204,428"/>
+<area shape="rect" title=" " alt="" coords="66,5,143,83"/>
 </map>
 </div>
 <div class="dynheader">
@@ -147,12 +147,12 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a03326d72c990f0e924e3ab54ef68a9fb"><td class="memItemLeft" align="right" valign="top">Socket&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_receive_thread.html#a03326d72c990f0e924e3ab54ef68a9fb">connection</a></td></tr>
 <tr class="memdesc:a03326d72c990f0e924e3ab54ef68a9fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Socket object for receiving the incomming message from.  <a href="class_receive_thread.html#a03326d72c990f0e924e3ab54ef68a9fb">More...</a><br /></td></tr>
 <tr class="separator:a03326d72c990f0e924e3ab54ef68a9fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79a4aba44201ae3a754fb2fd8e1b9500"><td class="memItemLeft" align="right" valign="top">ArrayList&lt; <a class="el" href="class_participant.html">Participant</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_receive_thread.html#a79a4aba44201ae3a754fb2fd8e1b9500">threadList</a></td></tr>
-<tr class="separator:a79a4aba44201ae3a754fb2fd8e1b9500"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b393d5bc1c257a02b44f032e3aefb3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_participant.html">Participant</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_receive_thread.html#a5b393d5bc1c257a02b44f032e3aefb3b">threadSelf</a></td></tr>
-<tr class="separator:a5b393d5bc1c257a02b44f032e3aefb3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a886bf3ceaab7de0e0c45f369725cf147"><td class="memItemLeft" align="right" valign="top">ObjectInputStream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_receive_thread.html#a886bf3ceaab7de0e0c45f369725cf147">fromClient</a></td></tr>
-<tr class="separator:a886bf3ceaab7de0e0c45f369725cf147"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f60fec4e310242307f10c4ca19ed96a"><td class="memItemLeft" align="right" valign="top">ArrayList&lt; <a class="el" href="class_participant.html">Participant</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_receive_thread.html#a4f60fec4e310242307f10c4ca19ed96a">participantList</a></td></tr>
+<tr class="separator:a4f60fec4e310242307f10c4ca19ed96a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfb0fb9ddce8f7d53b5ef1fa22df1692"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_participant.html">Participant</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_receive_thread.html#abfb0fb9ddce8f7d53b5ef1fa22df1692">selfParticipant</a></td></tr>
+<tr class="separator:abfb0fb9ddce8f7d53b5ef1fa22df1692"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4646abad217cf2960a7625ec6844f78c"><td class="memItemLeft" align="right" valign="top">ObjectInputStream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_receive_thread.html#a4646abad217cf2960a7625ec6844f78c">fromPeer</a></td></tr>
+<tr class="separator:a4646abad217cf2960a7625ec6844f78c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_receive_thread.html" title="ReceiveThread handles receiving a message from a single connection in the topology....">ReceiveThread</a> handles receiving a message from a single connection in the topology. A <a class="el" href="class_receive_thread.html" title="ReceiveThread handles receiving a message from a single connection in the topology....">ReceiveThread</a> is spawned on the acceptance of an incomming connection request, it reads in the incomming message, and reacts to that message however is appropriate: <a class="el" href="class_chat_message.html" title="ChatMessage is the subtype that carries a message string between peers. This is the &#39;message&#39; you wou...">ChatMessage</a> - print to print stream (console) <a class="el" href="class_join_message.html" title="JoinMessage is the subtype of Message that is sent from a node that wants to join the chat,...">JoinMessage</a> - responds with a <a class="el" href="class_participant.html" title="Participant stores the public name, port, and ip address of a single connection within the chat topol...">Participant</a> list <a class="el" href="class_joined_message.html" title="JoinedMessage is the subtype of message that is used to signal to a receiving node that the sending n...">JoinedMessage</a> - adds the sending node to the <a class="el" href="class_participant.html" title="Participant stores the public name, port, and ip address of a single connection within the chat topol...">Participant</a> list <a class="el" href="class_leave_message.html" title="LeaveMessage is the message subtype that is used to signal to nodes that the sending node is leaving ...">LeaveMessage</a> - removes the node from the <a class="el" href="class_participant.html" title="Participant stores the public name, port, and ip address of a single connection within the chat topol...">Participant</a> list. The thread terminates once the sending side of the connection closes the connection. </p>
@@ -436,8 +436,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a886bf3ceaab7de0e0c45f369725cf147"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a886bf3ceaab7de0e0c45f369725cf147">&#9670;&nbsp;</a></span>fromClient</h2>
+<a id="a4646abad217cf2960a7625ec6844f78c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4646abad217cf2960a7625ec6844f78c">&#9670;&nbsp;</a></span>fromPeer</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -446,7 +446,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">ObjectInputStream ReceiveThread.fromClient</td>
+          <td class="memname">ObjectInputStream ReceiveThread.fromPeer</td>
         </tr>
       </table>
   </td>
@@ -458,8 +458,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a79a4aba44201ae3a754fb2fd8e1b9500"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79a4aba44201ae3a754fb2fd8e1b9500">&#9670;&nbsp;</a></span>threadList</h2>
+<a id="a4f60fec4e310242307f10c4ca19ed96a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f60fec4e310242307f10c4ca19ed96a">&#9670;&nbsp;</a></span>participantList</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -468,7 +468,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">ArrayList&lt;<a class="el" href="class_participant.html">Participant</a>&gt; ReceiveThread.threadList</td>
+          <td class="memname">ArrayList&lt;<a class="el" href="class_participant.html">Participant</a>&gt; ReceiveThread.participantList</td>
         </tr>
       </table>
   </td>
@@ -480,8 +480,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a5b393d5bc1c257a02b44f032e3aefb3b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b393d5bc1c257a02b44f032e3aefb3b">&#9670;&nbsp;</a></span>threadSelf</h2>
+<a id="abfb0fb9ddce8f7d53b5ef1fa22df1692"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfb0fb9ddce8f7d53b5ef1fa22df1692">&#9670;&nbsp;</a></span>selfParticipant</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -490,7 +490,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_participant.html">Participant</a> ReceiveThread.threadSelf</td>
+          <td class="memname"><a class="el" href="class_participant.html">Participant</a> ReceiveThread.selfParticipant</td>
         </tr>
       </table>
   </td>
