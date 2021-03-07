@@ -1,12 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @authors Kevin Imlay, Randy Duerinck, Yasmin Vega, Matthew Flanders
+ * @date 3/7/21
  */
 package team_3.transactionserver_team_3;
 
 /**
- *
+ * Initializes server by reading properties, according to which all managers
+ * are created/initialized and then runs the multi-threaded server loop.
+ * 
  * @author kevinimlay
  */
 public class TransactionServerMain {
