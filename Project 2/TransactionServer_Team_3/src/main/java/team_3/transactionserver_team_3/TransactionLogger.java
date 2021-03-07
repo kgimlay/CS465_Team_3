@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ServerSide;
+package team_3.transactionserver_team_3;
 
 /**
  *
  * @author kevinimlay
  */
-public class TransactionServer {
+public class TransactionLogger {
     
 }
