@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ClientSide;
+package team_3.transactionserver_team_3;
 
 /**
  *
  * @author kevinimlay
  */
-public class TransactionClient {
-    
+public class TransactionClientMain {
+    public static void main(String args[])
+    {
+        
+    }
 }
