@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.IOException;
 
+
 /** Transaction client server proxy as a layer between the client and the
  * transaction server.
  * 
@@ -51,7 +52,7 @@ public class TransactionClientServerProxy {
      * 
      * Sends an open transaction message to the transaction server.
      * 
-     * @throws IOException.
+     * @throws IOException. See above todo.
      */
     public void openTransaction()
     {
@@ -63,7 +64,7 @@ public class TransactionClientServerProxy {
      * 
      * Sends a close transaction message to the transaction server.
      * 
-     * @throws IOException.
+     * @throws IOException. See above todo.
      */
     public void closeTransaction()
     {
@@ -76,7 +77,7 @@ public class TransactionClientServerProxy {
      * Sends a write message to the transaction server with the specified
      * account ID and new balance to write.
      * 
-     * @throws IOException.
+     * @throws IOException. See above todo.
      */
     public void write(int accountID, int newBalance)
     {
@@ -92,7 +93,7 @@ public class TransactionClientServerProxy {
      * 
      * @return int - The balance of the account.
      * 
-     * @throws IOException.
+     * @throws IOException. See above todo.
      */
     public int read(int accountID)
     {
