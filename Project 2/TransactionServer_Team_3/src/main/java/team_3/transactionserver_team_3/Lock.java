@@ -29,10 +29,11 @@
               {
                   wait();
               }
-              catch(interruptedException e)
+              catch(InterruptedException e)
               {
                   
               }
+              break; // to let compile
           }
   
           /*no TIDs hold lock*/
