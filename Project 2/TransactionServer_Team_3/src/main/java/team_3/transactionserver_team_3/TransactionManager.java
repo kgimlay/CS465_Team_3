@@ -6,38 +6,35 @@
 package team_3.transactionserver_team_3;
 
 // imports
-import java.net.ServerSocket;
-import java.lang.Runnable;
-import java.util.ArrayList;
+import java.net.Socket;
+import java.util.Vector;
 
 /**
-  * @brief Oversees all transactions and spawns TransactionManagerWorkers to
-  * handle incoming transactions.
+  * @brief Oversees all transactions. When a socket object is received 
+  * openTransaction() is called with the socket object as the parameter 
+  * and a new worker thread is created and passed the socket object.
   * 
   * @author Matthew Flanders
   */
-public class TransactionManager implements Runnable
+public class TransactionManager
 {
     // initialize objects and variables
-    private static ServerSocket serverSocket;
-    private ArrayList<TransactionManagerWorker> activeTransactions;
-    private int counter;
-        
-    public TransactionManager( ServerSocket serverSocket)
-    {
-        
-    }
+    private Vector<Transaction> transactions;
     
-    public void run()
+    public TransactionManager()
     {
-        
-    }
+        // initialize varibales
+        this.transactions = new Vector<Transaction>();        
+    }    
     
     /**
-     * @brief takes socket to client and gives it to TransactionManagerWorker
+     * @brief takes socket object from the transaction server and gives it to
+     * a newly created TransactionManagerWorker thread.
      */
-    public void handoff()
+    public void openTransaction( Socket socket )
     {
+        // create a new TransactionManagerWorker thread with socket object
         
+        // create new transaction object and add to active transactions vector 
     }
 }

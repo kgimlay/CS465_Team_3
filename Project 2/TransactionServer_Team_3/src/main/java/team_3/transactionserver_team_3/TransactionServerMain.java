@@ -5,39 +5,42 @@
 package team_3.transactionserver_team_3;
 
 // imports
-import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
- * @brief Initializes server by reading properties, according to which all 
- * managers are created/initialized and then runs the multi-threaded 
- * server loop.
+ * @brief Initializes server by reading properties, according to which the 
+ * TransactionManager, and AcountManager are created/initialized and then 
+ * runs the multi-threaded server loop.
  * 
  * @author Matthew Flanders
  */
-public class TransactionServerMain {
-    
-    // initialize objects
-    private static AccountManager accountManager;
-    private static TransactionManager transactionManager;
-    private static ServerSocket serverSocket;   
-    
+public class TransactionServerMain
+{         
     /**
      * @brief uses command line arguments to initialize objects
      * and begin to run the specified number of transactions
-     *  
      */
     public static void main(String args[])
     {
+        // initialize objects
+        int accountCount;
+        AccountManager accountManager;
+        TransactionManager transactionManager;
+        Socket Socket;
+        
+        // check if arguments are valid
+        
+            // if not valid args stop and return error message and exit
+        
         // read args passed
-        
-        // create accounts
-        
-        // create account managers
+            
+        // initialize account manager with number or accounts parameter
         
         // open server
                 
-        // begin server loop 
+        // begin server loop
         
-        
+            // when recieving a new connection/socket call openTransaction
+            // method in TransactionManager        
     }
 }
