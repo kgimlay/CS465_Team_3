@@ -12,8 +12,9 @@
     */
   public class AccountManager
   {
+      // manages the list of accounts that will be created
       ArrayList<Account> accounts;
-      // Need to be calling on Lock Manager to try to set a read lock before
+      // need to be calling on Lock Manager to try to set a read lock before
       // it reads, and will try to set a write lock before it writes
       LockManager lockManager;
       boolean lockingActive;
@@ -25,7 +26,7 @@
           
       }
   
-      int read(int accountNum)
+      int read(int accountNum, Transaction transaction)
       {
           // loop through accounts to find account associated w/ the accoutNum
           // try to set a reading lock
@@ -33,7 +34,7 @@
           return 0;
       }
   
-      void write(int accountNum, int amount)
+      void write(int accountNum, Transaction transaction)
       {
           // loop through accounts to find account associated w/ the accountNum
           // try to set a writing lock
