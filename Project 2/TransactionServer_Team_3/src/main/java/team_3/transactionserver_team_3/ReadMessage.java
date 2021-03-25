@@ -4,23 +4,21 @@
   */
 package team_3.transactionserver_team_3;
 
+import java.util.Optional;
+
 /**
  *
  * @author Randy
+ * @author Kevin Imlay
  */
-public class ReadMessage 
+public class ReadMessage extends Message
 {
     int accountNum;
-    int bal;
+    Optional bal;
     
-    public ReadMessage(int accountNum, int bal)
+    public ReadMessage(int accountNum, Integer balance)
     {
-        accountNum = 0;
-        bal = 0;
-        // if proxy is sending it the message
-           //then pass on acct number
-        
-        //if its being sent back to the proxy
-           //bal is set to a value
+        this.accountNum = accountNum;
+        this.bal = Optional.ofNullable(balance);
     }
 }

@@ -1,12 +1,13 @@
 /**
   * @authors Kevin Imlay
-  * @date 3/14/21
+  * @date 3/14/21, 3/24/21
   */
 
 package team_3.transactionserver_team_3;
 
 import java.net.ServerSocket;
 import java.net.InetAddress;
+import java.io.IOException;
 
 
 /** Transaction Client is the main entrance to the client application for the
@@ -28,6 +29,8 @@ public class TransactionClientMain {
      * well.
      * 
      * For command line arguments format, see getConfigurationFromArgs
+     * 
+     * @param args - String array of arguments from command line.
      */
     public static void main(String args[])
     {
@@ -37,14 +40,25 @@ public class TransactionClientMain {
         // exit if the configurations are not correct
         if (clientConfig == null)
         {
+            System.out.println("Configuration given is invalid!");
             System.exit(1);
         }
         
         // start client, generate randoms and list of transactions/instructions
         // to perform
+        try
+        {
+            serverSocket = new ServerSocket();
+        }
+        catch (IOException ioE)
+        {
+            System.out.println("An error occured trying to open the server "
+                    + "socket!\n\n" + ioE);
+            System.exit(1);
+        }
         
-        
-        // loop and perform transactions
+        // perform transactions
+        // to be threaded? Looped? I'm not sure yet!
         
     }
     
@@ -81,29 +95,35 @@ public class TransactionClientMain {
         int numAccounts;
         
         // transaction server IP and port
-        InetAddress ipPort;
+        String serverIpStr;
+        int serverPort;
         
-        // the maximum number to transfer (optional, defaults to $100)
-        int maxTransfer = 100;
-        
-        // the minimum number to transfer (optional, defaults to $1)
-        int minTransfer = 1;
+        // bounds on how much money to transfer
+        int maxTransfer;
+        int minTransfer;
         
         
         /** Construct a Config object with the configurations needed for the
          * client.
          * 
-         * @param numTrans
-         * @param numAccounts
-         * @param ipString
-         * @param port
-         * @param minToTransfer
-         * @param maxToTransfer
+         * @param numTrans - The number of transactions to perform.
+         * @param numAccounts - Upper bound to keep from trying to access
+         *                      accounts that don't exist. (account nums will
+         *                      always start from 0, incrementing by 1)
+         * @param ipString - String representation of the IP to find the server.
+         * @param port - Integer port number of the server.
+         * @param minToTransfer - Lower bound of how much money to transfer.
+         * @param maxToTransfer - Upper bound of how much money to transfer.
          */
         Config(int numTrans, int numAccounts, String ipString, int port, 
                 int minToTransfer, int maxToTransfer)
         {
-            
+            this.numTransactions = numTrans;
+            this.numAccounts = numAccounts;
+            this.serverIpStr = ipString;
+            this.serverPort = port;
+            this.minTransfer = minToTransfer;
+            this.maxTransfer = maxToTransfer;
         }
     }
 }

@@ -11,5 +11,5 @@ package team_3.transactionserver_team_3;
  */
 public abstract class Message 
 {
-       
+    
 }

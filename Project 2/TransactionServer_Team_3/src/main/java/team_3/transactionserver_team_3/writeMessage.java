@@ -8,15 +8,16 @@ package team_3.transactionserver_team_3;
 /**
  *
  * @author Randy
+ * @author Kevin Imlay
  */
-public class writeMessage 
+public class WriteMessage extends Message
 {
     int accountNum;
     int value; //this is integer amount to write to the acct.
     
-    public writeMessage(int accountNum, int value)
+    public WriteMessage(int accountNum, int value)
     {
-       accountNum = 0;
-       value = 0;
+       this.accountNum = accountNum;
+       this.value = value;
     }
 }
