@@ -9,20 +9,18 @@
   
   /**
     * Implements high-level operations (read, write) on Account objects.
+    * need to be calling on Lock Manager to try to set a read lock before
+      it reads, and will try to set a write lock before it writes
     */
   public class AccountManager
   {
       // manages the list of accounts that will be created
       ArrayList<Account> accounts;
-      // need to be calling on Lock Manager to try to set a read lock before
-      // it reads, and will try to set a write lock before it writes
-      LockManager lockManager;
       boolean lockingActive;
   
       AccountManager()
       {
           this.accounts = new ArrayList<Account>();
-          this.lockManager = new LockManager();
           
       }
   
@@ -34,7 +32,7 @@
           return 0;
       }
   
-      void write(int accountNum, Transaction transaction)
+      void write(int accountNum, Transaction transaction, int balance)
       {
           // loop through accounts to find account associated w/ the accountNum
           // try to set a writing lock
