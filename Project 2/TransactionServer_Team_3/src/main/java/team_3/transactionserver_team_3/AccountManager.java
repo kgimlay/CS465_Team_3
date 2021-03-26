@@ -21,7 +21,7 @@
       AccountManager()
       {
           this.accounts = new ArrayList<Account>();
-          
+          // generate accounts?
       }
   
       int read(int accountNum, Transaction transaction)
