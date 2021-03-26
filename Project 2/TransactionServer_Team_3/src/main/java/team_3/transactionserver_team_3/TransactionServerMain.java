@@ -17,18 +17,11 @@ import java.net.Socket;
 public class TransactionServerMain
 {
     // initialize objects
-<<<<<<< Updated upstream
-    int accountCount;
-    AccountManager accountManager = new AccountManager();
-    TransactionManager transactionManager = new TransactionManager();
-    Socket Socket;
-    static LockManager lockManager = new LockManager();
-=======
         AccountManager accountManager;
         TransactionManager transactionManager;
         Socket Socket;
+        static LockManager lockManager = new LockManager();
     
->>>>>>> Stashed changes
     /**
      * @brief uses command line arguments to initialize objects
      * and begin to run the specified number of transactions
@@ -37,7 +30,6 @@ public class TransactionServerMain
      * 
      */
     public static void main(String args[])
-<<<<<<< Updated upstream
     {
         
         // check if arguments are valid
@@ -45,8 +37,7 @@ public class TransactionServerMain
             // if not valid args stop and return error message and exit
         
         // read args passed
-=======
-    {        
+            
         // check if argument length is valid
         if( args.length != 2 )
         {
@@ -56,7 +47,6 @@ public class TransactionServerMain
             System.exit(1);
         }
         checkArgs( args[0], args[1] );
->>>>>>> Stashed changes
             
         // initialize account manager with number or accounts parameter
 //        accountManager = new AccountManager( numberOfAccounts );
