@@ -5,7 +5,9 @@
 package team_3.transactionserver_team_3;
 
 // imports
-import java.net.Socket;
+import java.net.ServerSocket;
+import java.net.InetAddress;
+import java.io.IOException;
 
 /**
  * @brief Initializes server by reading properties, according to which the 
@@ -17,10 +19,12 @@ import java.net.Socket;
 public class TransactionServerMain
 {
     // initialize objects
-        AccountManager accountManager;
-        TransactionManager transactionManager;
-        Socket Socket;
-        static LockManager lockManager = new LockManager();
+    static AccountManager accountManager;
+    static TransactionManager transactionManager;
+    static ServerSocket socket;
+    static LockManager lockManager = new LockManager();
+    static int numAccounts;
+    static int portNum;
     
     /**
      * @brief uses command line arguments to initialize objects
@@ -32,12 +36,6 @@ public class TransactionServerMain
     public static void main(String args[])
     {
         
-        // check if arguments are valid
-        
-            // if not valid args stop and return error message and exit
-        
-        // read args passed
-            
         // check if argument length is valid
         if( args.length != 2 )
         {
@@ -46,24 +44,43 @@ public class TransactionServerMain
                     " < (int) number of accounts>");
             System.exit(1);
         }
-        checkArgs( args[0], args[1] );
+        checkArgs( args[0], args[1], numAccounts, portNum );
             
-        // initialize account manager with number or accounts parameter
-//        accountManager = new AccountManager( numberOfAccounts );
+        // initialize account manager with number of accounts parameter
+//        accountManager = new AccountManager( numAccounts );
         
         // open server
-                
+        try
+        {
+            socket = new ServerSocket( portNum, -1, 
+                                       InetAddress.getByName("localhost"));
+        }
+        catch( IOException ioE )
+        {
+            System.out.println("Error occured opening socket.");
+            System.exit(1);
+        }       
         // begin server loop
-        
+        while( true )
+        {
             // when recieving a new connection/socket call openTransaction
-            // method in TransactionManager        
+            // method in TransactionManager 
+            try
+            {
+                transactionManager.openTransaction(socket.accept());
+            }
+            catch( IOException ioE )
+            {
+                System.out.println("Error occured while waiting for next"+
+                        " transaction");
+                System.exit(1);
+            }
+        }      
     }
     
-    private static void checkArgs( String arg0, String arg1 )
+    private static void checkArgs( String arg0, String arg1, int numAcc, 
+            int portNum )
     {
-        // initialize variables
-        int portNum;
-        int numberOfAccounts;
         
         // read the port number
         try
@@ -84,9 +101,9 @@ public class TransactionServerMain
         // read number of accounts
         try
         {
-            numberOfAccounts = Integer.parseInt( arg1 );
+            numAcc = Integer.parseInt( arg1 );
             // consider limiting number of accounts
-            if( 0 < numberOfAccounts )
+            if( 0 > numAcc )
             {
                 System.out.println("Number of accounts must be positive.");
                 System.exit(1);

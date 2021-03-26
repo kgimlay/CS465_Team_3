@@ -53,7 +53,7 @@ public class TransactionManager
     public void removeTransaction( Transaction toBeRemoved )
     {
         // may not need this conditional, since transactions remove
-        // themselves
+        // themselves, but can be good for checking for errors
         // if the remove is successful it returns true
         if( transactions.remove( toBeRemoved ) )
         {
