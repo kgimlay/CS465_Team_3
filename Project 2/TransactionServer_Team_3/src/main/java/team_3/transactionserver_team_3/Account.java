@@ -10,24 +10,20 @@
     * An Account object holds within it a balance and account number.
     */
   public class Account
-  {
-      // Accounts are assigned the value that counter currently holds
-      static int counter = 0;
-      
+  {  
       // Account object specific values
       int accountNum;
       int balance;
   
-      Account(int balanceAmount)
+      Account(int accountNum, int balanceAmount)
       {
           // Initialize Account fields
-  
+          
+          // set account number
+          this.accountNum = accountNum;
           // Set the configurable balance
           this.balance = balanceAmount;
           // Account's number will be initialized to current counter value
-          this.accountNum = counter;
-          // Advance current counter value for next Account creation
-          counter ++;
       }
       
       public int getBalance()
