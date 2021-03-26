@@ -17,9 +17,11 @@ public class Transaction
     int id;
     ArrayList<Lock> heldLocks;
     ArrayList<String> log;
+    static int transactionCounter = 0;
     
-    public Transaction( int id )
+    public Transaction()
     {
-        this.id = id;
+        transactionCounter ++;
+        this.id = transactionCounter;
     }
 }

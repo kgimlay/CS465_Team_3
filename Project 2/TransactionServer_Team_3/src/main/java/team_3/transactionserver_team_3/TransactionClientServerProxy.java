@@ -59,11 +59,11 @@ public class TransactionClientServerProxy {
      *          handle.
      * @throws java.io.IOException
      * @throws team_3.transactionserver_team_3.UnexpectedResponseMessageException
-     * @throws team_3.transactionserver_team_3.MalformedResponseMessageException
+     * @throws team_3.transactionserver_team_3.MalformedMessageException
      */
     public int openTransaction() throws NonMessageObjectRecievedException,
              IOException, UnexpectedResponseMessageException,
-             MalformedResponseMessageException
+             MalformedMessageException
     {
         // send an open transaction message to the server and wait for the
         // response
@@ -91,7 +91,7 @@ public class TransactionClientServerProxy {
         catch (NoSuchElementException nseE)
         {
             // the transaction ID was not returned in the message
-            throw new MalformedResponseMessageException("The transaction ID "
+            throw new MalformedMessageException("The transaction ID "
                 + "was not found!\n\n" + nseE);
         }
     }
@@ -170,13 +170,13 @@ public class TransactionClientServerProxy {
      * @throws team_3.transactionserver_team_3.NonMessageObjectRecievedException
      * @throws java.io.IOException
      * @throws team_3.transactionserver_team_3.UnexpectedResponseMessageException
-     * @throws team_3.transactionserver_team_3.MalformedResponseMessageException
+     * @throws team_3.transactionserver_team_3.MalformedMessageException
      * 
      * @throws IOException. See above todo.
      */
     public int read(int accountID) throws NonMessageObjectRecievedException,
              IOException, UnexpectedResponseMessageException,
-             MalformedResponseMessageException
+             MalformedMessageException
     {
         // send read message and wait for the response that contains the value
         // read
@@ -205,7 +205,7 @@ public class TransactionClientServerProxy {
         catch (NoSuchElementException nseE)
         {
             // the balance was not returned in the message
-            throw new MalformedResponseMessageException("The balance value "
+            throw new MalformedMessageException("The balance value "
                 + "was not found!\n\n" + nseE);
         }
     }

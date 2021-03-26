@@ -7,9 +7,9 @@ package team_3.transactionserver_team_3;
 /**
  * 
  */
-public class MalformedResponseMessageException extends Exception
+public class MalformedMessageException extends Exception
 {
-    public MalformedResponseMessageException(String message)
+    public MalformedMessageException(String message)
     {
         super(message);
     }
