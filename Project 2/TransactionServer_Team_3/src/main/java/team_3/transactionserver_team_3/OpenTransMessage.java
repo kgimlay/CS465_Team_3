@@ -20,4 +20,10 @@ public class OpenTransMessage extends Message
     {
         this.transID = Optional.ofNullable(transactionID);
     }
+    
+    @Override
+    public String toString()
+    {
+        return "Open Transaction Message";
+    }
 }

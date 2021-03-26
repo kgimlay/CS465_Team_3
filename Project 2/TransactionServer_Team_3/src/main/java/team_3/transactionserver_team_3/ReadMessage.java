@@ -21,4 +21,11 @@ public class ReadMessage extends Message
         this.accountNum = accountNum;
         this.bal = Optional.ofNullable(balance);
     }
+    
+    @Override
+    public String toString()
+    {
+        return "Read Message - Account: " + this.accountNum + 
+                " Balance:" + this.bal;
+    }
 }

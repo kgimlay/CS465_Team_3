@@ -20,4 +20,11 @@ public class WriteMessage extends Message
        this.accountNum = accountNum;
        this.value = value;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "Read Message - Account: " + this.accountNum + 
+                " Value:" + this.value;
+    }
 }
