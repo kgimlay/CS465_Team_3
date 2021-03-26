@@ -15,19 +15,19 @@ import java.net.Socket;
  * @author Matthew Flanders
  */
 public class TransactionServerMain
-{         
+{
+    // initialize objects
+    int accountCount;
+    AccountManager accountManager = new AccountManager();
+    TransactionManager transactionManager = new TransactionManager();
+    Socket Socket;
+    static LockManager lockManager = new LockManager();
     /**
      * @brief uses command line arguments to initialize objects
      * and begin to run the specified number of transactions
      */
     public static void main(String args[])
     {
-        // initialize objects
-        int accountCount;
-        AccountManager accountManager = new AccountManager();
-        TransactionManager transactionManager = new TransactionManager();
-        Socket Socket;
-        LockManager lockManager = new LockManager();
         
         // check if arguments are valid
         
