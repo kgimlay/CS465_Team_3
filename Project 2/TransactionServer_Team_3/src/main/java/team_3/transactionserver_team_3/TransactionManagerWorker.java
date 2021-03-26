@@ -35,10 +35,11 @@ public class TransactionManagerWorker implements Runnable
      * @brief initialization of worker
      * @param socket socket connection to the client
      * @param transaction unique transaction object 
+     * @param accManager reference to account manager
      */
-    public void TransactionManagerWorker( Socket socket, 
-                                          Transaction transaction, 
-                                          AccountManager accManager)
+    public void TransactionManagerWorker( Socket socket,  
+                                          Transaction transaction,
+                                          AccountManager accManager )
     {
         // initialize variables
         this.workerTransaction = transaction;
@@ -49,7 +50,7 @@ public class TransactionManagerWorker implements Runnable
             inObjStream = new ObjectInputStream( socket.getInputStream() );
             outObjStream = new ObjectOutputStream( socket.getOutputStream() );
         }
-        catch (IOException ioE)
+        catch ( IOException ioE )
         {
             System.out.println("An IO Exception has occured!\n\n" + ioE);
             // handle exception
@@ -74,39 +75,54 @@ public class TransactionManagerWorker implements Runnable
             {        
                 // read object from client and get the message type
                 Object messageObj = inObjStream.readObject();
-                // translate low level message into high level action   
-
+                // translate low level message into high level action 
                 // if the message was a close message
                 if( messageObj instanceof CloseTransMessage )
                 {
                     // respond to client with confirm close message
-                    // need close confirm message
-
+                                                                        // TO-DO
+                                                                        // need to create close confirm message 
+                    // ack be sending back original message
+                    outObjStream.writeObject( messageObj );
+                    
                     // end loop, set loop flag to false
                     noCloseMessage = false;
                 }
                 // if not a close then some other message
-                // if open message disregard message
-                else if( messageObj instanceof OpenTransMessage)
+                // if message is of open type, disregard message
+                else if( messageObj instanceof OpenTransMessage )
                 {
-                    outObjStream.writeObject(new OpenTransMessage( 0 ));
+                    outObjStream.writeObject( 
+                            new OpenTransMessage( workerTransaction.id )); 
                 }
-                // else read send read message
-                else if( messageObj instanceof ReadMessage)
+                // if message is of read type
+                else if( messageObj instanceof ReadMessage )
                 {
+                    // read the account number
+                    int accNum = (( ReadMessage ) messageObj).accountNum;                  
+                    // get the account ballance
+                    int accBal = accManager.read( accNum, workerTransaction );
                     
-                    //read the account number from transaction
+                    // accManager.read may throw errors later if account 
+                    // does not exist
+                    
+                    // create response message
+                    ReadMessage response = new ReadMessage( accNum, accBal );
+                    // respond to client with ballance
+                    outObjStream.writeObject( response );
+                }
+                // if message is of write type
+                else if( messageObj instanceof WriteMessage )
+                {
+                    // read account number from message
                     int accNum = ((ReadMessage) messageObj).accountNum;
-                    //read bal
+                    // read ballance
                     Object tempBal = ((ReadMessage) messageObj).bal.get();                        
                     int bal = (int) tempBal;
-                    
-                    AccountManager.read( accNum, workerTransaction);
-                }
-                // else write send write message
-                else if( messageObj instanceof WriteMessage)
-                {
-                    accManager.WriteMessage();
+                    // write to the account
+                    accManager.write( accNum, workerTransaction, bal );
+                    // ack be sending back original message
+                    outObjStream.writeObject( messageObj );
                 }
             }
         }
@@ -118,6 +134,5 @@ public class TransactionManagerWorker implements Runnable
         {
             System.out.println("Error in recieving incoming message. " + clE);
         }
-        
     }
 }
