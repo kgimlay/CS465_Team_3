@@ -32,12 +32,12 @@
       
       public int getBalance()
       {
-          return this.balance;
+          return balance;
       }
       
-      public void setBalance(int amount)
+      public void setBalance(int newBalance)
       {
-          this.balance += amount;
+          balance = newBalance;
       }
   }
   
