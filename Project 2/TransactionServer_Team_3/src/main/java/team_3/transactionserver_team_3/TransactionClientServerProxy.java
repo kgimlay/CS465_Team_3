@@ -81,8 +81,12 @@ public class TransactionClientServerProxy {
         // return the transaction ID that is returned.
         try
         {
-            Object transID = ((OpenTransMessage)response).transID.get();
-            return (int)transID;
+            // casting to int would normally throw a ClassCastException under
+            // the right circumstances, but will never here because the
+            // constructor for OpenTransMessage will only allow an Integer to
+            // be used to set the transID attribute
+            int transID = (int)((OpenTransMessage)response).transID.get();
+            return transID;
         }
         catch (NoSuchElementException nseE)
         {
@@ -191,8 +195,12 @@ public class TransactionClientServerProxy {
         // return the value of the balance
         try
         {
-            Object balanceVal = ((OpenTransMessage)response).transID.get();
-            return (int)balanceVal;
+            // casting to int would normally throw a ClassCastException under
+            // the right circumstances, but will never here because the
+            // constructor for ReadMessage will only allow an Integer to
+            // be used to set the transID attribute
+            int balanceVal = (int)((ReadMessage)response).bal.get();
+            return balanceVal;
         }
         catch (NoSuchElementException nseE)
         {
