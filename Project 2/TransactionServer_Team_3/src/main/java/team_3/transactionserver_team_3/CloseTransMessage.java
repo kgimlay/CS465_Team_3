@@ -14,4 +14,10 @@ public class CloseTransMessage extends Message
     {
         
     }
+    
+    @Override
+    public String toString()
+    {
+        return "Close Transaction Message";
+    }
 }
