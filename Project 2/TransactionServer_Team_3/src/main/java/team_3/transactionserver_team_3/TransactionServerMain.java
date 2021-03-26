@@ -24,9 +24,10 @@ public class TransactionServerMain
     {
         // initialize objects
         int accountCount;
-        AccountManager accountManager;
-        TransactionManager transactionManager;
+        AccountManager accountManager = new AccountManager();
+        TransactionManager transactionManager = new TransactionManager();
         Socket Socket;
+        LockManager lockManager = new LockManager();
         
         // check if arguments are valid
         
