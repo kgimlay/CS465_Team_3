@@ -29,5 +29,15 @@
           // Advance current counter value for next Account creation
           counter ++;
       }
+      
+      public int getBalance()
+      {
+          return this.balance;
+      }
+      
+      public void setBalance(int amount)
+      {
+          this.balance += amount;
+      }
   }
   
