@@ -42,8 +42,7 @@ public class TransactionManagerWorker implements Runnable
     {
         // initialize variables
         this.workerTransaction = transaction;
-        this.accManager = accManager;
-        
+        this.accManager = accManager;        
         // create object streams for communication with message objects
         try
         {
@@ -95,26 +94,19 @@ public class TransactionManagerWorker implements Runnable
                 // else read send read message
                 else if( messageObj instanceof ReadMessage)
                 {
+                    
                     //read the account number from transaction
                     int accNum = ((ReadMessage) messageObj).accountNum;
+                    //read bal
+                    Object tempBal = ((ReadMessage) messageObj).bal.get();                        
+                    int bal = (int) tempBal;
                     
-                    try
-                    {
-                        Object tempBal = ((ReadMessage) messageObj).bal.get();                        
-                        int bal = (int) tempBal;
-                    }
-                    catch (NoSuchElementException nseE)
-                    {
-                        // the transaction ID was not returned in the message
-                        throw new MalformedMessageException(""
-                        + "was not found!\n\n" + nseE);
-                    }
-                    AccountManager.read( accNum, bal);
+                    AccountManager.read( accNum, workerTransaction);
                 }
                 // else write send write message
-                else if( messageObj instanceof OpenTransMessage)
+                else if( messageObj instanceof WriteMessage)
                 {
-                    accManager.read();
+                    accManager.WriteMessage();
                 }
             }
         }
