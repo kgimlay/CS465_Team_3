@@ -8,6 +8,7 @@ package team_3.transactionserver_team_3;
 // imports
 import java.net.Socket;
 import java.util.Vector;
+import java.lang.Thread;
 
 /**
   * @brief Oversees all transactions. When a socket object is received 
@@ -20,21 +21,47 @@ public class TransactionManager
 {
     // initialize objects and variables
     private Vector<Transaction> transactions;
+    private AccountManager accManager;
     
-    public TransactionManager()
+    public TransactionManager( AccountManager accManager )
     {
         // initialize varibales
-        this.transactions = new Vector<Transaction>();        
+        this.transactions = new Vector<Transaction>();
+        this.accManager = accManager;
     }    
     
     /**
-     * @brief takes socket object from the transaction server and gives it to
-     * a newly created TransactionManagerWorker thread.
+     * @brief creates a new transaction object adds it to the transaction list
+     * then takes socket object from the transaction server and gives it 
+     * to a newly created TransactionManagerWorker.
      */
     public void openTransaction( Socket socket )
     {
-        // create a new TransactionManagerWorker thread with socket object
-        
-        // create new transaction object and add to active transactions vector 
+        // new transaction added to transactions vector and new worker thread
+        Transaction newTransaction = new Transaction();
+        transactions.add(newTransaction);
+        Thread workerThread = new Thread( new TransactionManagerWorker
+                                                ( socket, 
+                                                 newTransaction, 
+                                                 accManager) );
+    }
+    
+    /**
+     * @brief removes a passed in transaction from the transactions vector
+     * @param toBeRemoved 
+     */
+    public void removeTransaction( Transaction toBeRemoved )
+    {
+        // may not need this conditional, since transactions remove
+        // themselves
+        // if the remove is successful it returns true
+        if( transactions.remove( toBeRemoved ) )
+        {
+            // send a confirm?
+        }
+        else
+        {
+            // send an error?
+        }
     }
 }

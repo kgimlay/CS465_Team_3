@@ -12,7 +12,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.lang.ClassNotFoundException;
-import java.util.NoSuchElementException;
 
 /**
  * @brief A single thread used to handle a transaction between two accounts. 
@@ -37,9 +36,9 @@ public class TransactionManagerWorker implements Runnable
      * @param transaction unique transaction object 
      * @param accManager reference to account manager
      */
-    public void TransactionManagerWorker( Socket socket,  
-                                          Transaction transaction,
-                                          AccountManager accManager )
+    public TransactionManagerWorker( Socket socket,  
+                                     Transaction transaction,
+                                     AccountManager accManager )
     {
         // initialize variables
         this.workerTransaction = transaction;
@@ -82,6 +81,7 @@ public class TransactionManagerWorker implements Runnable
                     // respond to client with confirm close message
                                                                         // TO-DO
                                                                         // need to create close confirm message 
+                                                                        // or not if replying back with same message is enough
                     // ack be sending back original message
                     outObjStream.writeObject( messageObj );
                     
@@ -116,7 +116,7 @@ public class TransactionManagerWorker implements Runnable
                 {
                     // read account number from message
                     int accNum = ((ReadMessage) messageObj).accountNum;
-                    // read ballance
+                    // read balance
                     Object tempBal = ((ReadMessage) messageObj).bal.get();                        
                     int bal = (int) tempBal;
                     // write to the account
