@@ -66,7 +66,7 @@
 
       public void promote()
       {
-        // upgrade lock type in current object
+        // upgrade lock type on current object
         // read to write
 
       }
