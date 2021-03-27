@@ -45,7 +45,16 @@ public class TransactionServerMain
             System.exit(1);
         }
         checkArgs( args[0], args[1], numAccounts, portNum );
-            
+        try
+        {
+            portNum = Integer.parseInt( args[1] );
+        }
+        catch( NumberFormatException nfException )
+        {
+            System.out.println("Error in parsing port number to integer.");
+            System.exit(1);
+        }
+        
         // initialize account manager with number of accounts parameter
         accountManager = new AccountManager( numAccounts , 10 );
         transactionManager = new TransactionManager( accountManager );

@@ -46,8 +46,8 @@ public class TransactionManagerWorker implements Runnable
         // create object streams for communication with message objects
         try
         {
-            inObjStream = new ObjectInputStream( socket.getInputStream() );
             outObjStream = new ObjectOutputStream( socket.getOutputStream() );
+            inObjStream = new ObjectInputStream( socket.getInputStream() );
         }
         catch ( IOException ioE )
         {
