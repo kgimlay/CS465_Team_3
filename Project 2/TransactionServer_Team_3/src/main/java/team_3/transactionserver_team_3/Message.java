@@ -5,11 +5,13 @@
 
 package team_3.transactionserver_team_3;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Randy
  */
-public abstract class Message 
+public abstract class Message implements Serializable
 {
     @Override
     public String toString()

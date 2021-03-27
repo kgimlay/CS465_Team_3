@@ -42,13 +42,13 @@ public class DummyClientForTestingPurposes
             // if appropriate message, wait for response and print message
             switch (userInput) {
                 case "open":
-                    System.out.println(sendAndGet(new OpenTransMessage(null)));
+                    System.out.println(sendAndGet(new OpenTransMessage()));
                     break;
                 case "close":
                     System.out.println(sendAndGet(new CloseTransMessage()));
                     break;
                 case "read":
-                    System.out.println(sendAndGet(new ReadMessage(0,null)));
+                    System.out.println(sendAndGet(new ReadMessage(0)));
                     break;
                 case "write":
                     System.out.println(sendAndGet(new WriteMessage(0,0)));

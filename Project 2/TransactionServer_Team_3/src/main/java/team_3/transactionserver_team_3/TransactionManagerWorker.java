@@ -46,8 +46,8 @@ public class TransactionManagerWorker implements Runnable
         // create object streams for communication with message objects
         try
         {
-            outObjStream = new ObjectOutputStream( socket.getOutputStream() );
-            inObjStream = new ObjectInputStream( socket.getInputStream() );
+            this.outObjStream = new ObjectOutputStream( socket.getOutputStream() );
+            this.inObjStream = new ObjectInputStream( socket.getInputStream() );
         }
         catch ( IOException ioE )
         {
@@ -78,6 +78,7 @@ public class TransactionManagerWorker implements Runnable
                 // if the message was a close message
                 if( messageObj instanceof CloseTransMessage )
                 {
+                    System.out.println("Close");
                     // respond to client with confirm close message
                                                                         // TO-DO
                                                                         // need to create close confirm message 
@@ -92,12 +93,14 @@ public class TransactionManagerWorker implements Runnable
                 // if message is of open type, disregard message
                 else if( messageObj instanceof OpenTransMessage )
                 {
+                    System.out.println("Open");
                     outObjStream.writeObject( 
-                            new OpenTransMessage( workerTransaction.id )); 
+                            new OpenTransMessage()); 
                 }
                 // if message is of read type
                 else if( messageObj instanceof ReadMessage )
                 {
+                    System.out.println("read");
                     // read the account number
                     int accNum = (( ReadMessage ) messageObj).accountNum;                  
                     // get the account ballance
@@ -114,11 +117,11 @@ public class TransactionManagerWorker implements Runnable
                 // if message is of write type
                 else if( messageObj instanceof WriteMessage )
                 {
+                    System.out.println("write");
                     // read account number from message
                     int accNum = ((ReadMessage) messageObj).accountNum;
-                    // read balance
-                    Object tempBal = ((ReadMessage) messageObj).bal.get();                        
-                    int bal = (int) tempBal;
+                    // read balance                      
+                    int bal = ((ResponseMessage) messageObj).returnIntVal;
                     // write to the account
                     accManager.write( accNum, workerTransaction, bal );
                     // ack be sending back original message

@@ -47,7 +47,7 @@ public class TransactionServerMain
         checkArgs( args[0], args[1], numAccounts, portNum );
         try
         {
-            portNum = Integer.parseInt( args[1] );
+            portNum = Integer.parseInt( args[0] );
         }
         catch( NumberFormatException nfException )
         {
@@ -64,10 +64,11 @@ public class TransactionServerMain
         {
             serverSocket = new ServerSocket( portNum, -1, 
                                        InetAddress.getByName("localhost"));
+            System.out.println(serverSocket);
         }
         catch( IOException ioE )
         {
-            System.out.println("Error occured opening socket.");
+            System.out.println("Error occured opening socket." + ioE);
             System.exit(1);
         }       
         // begin server loop

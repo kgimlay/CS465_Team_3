@@ -14,12 +14,18 @@ import java.util.Optional;
 public class ReadMessage extends Message
 {
     int accountNum;
-    Optional bal;
+    int bal;
     
-    public ReadMessage(int accountNum, Integer balance)
+    public ReadMessage(int accountNum)
     {
         this.accountNum = accountNum;
-        this.bal = Optional.ofNullable(balance);
+        this.bal = 0;
+    }
+    
+    public ReadMessage(int accountNum, int balance)
+    {
+        this.accountNum = accountNum;
+        this.bal = balance;
     }
     
     @Override
