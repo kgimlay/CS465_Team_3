@@ -40,7 +40,6 @@ public class TransactionClientMain {
         // exit if the configurations are not correct
         if (clientConfig == null)
         {
-            System.out.println("Configuration given is invalid!");
             System.exit(1);
         }
         
@@ -72,19 +71,111 @@ public class TransactionClientMain {
      * @return Configuration object or Null if the configurations were not
      * correct.
      * 
-     * @todo Command line arguments format.
+     *//* Command Line Arguments Format: <number of transactions>
+     *      <number of accounts> <ip address of server> <port of server>
+     *      <minimum amount to transfer> <maximum amount to transfer>
      */
     private static Config getConfigurationFromArgs(String arguments[])
     {
-        // reutrn null if config incorrect
+        // if correct number of arguments
+        // check to avoid out of bounds exception
+        if (arguments.length == 6)
+        {
+            //try
+            //{
+                // number of transactions to run
+                int numTrans = parseNumTransArg(arguments[0]);
+
+                // number of accounts
+                int numAccounts = parseNumAccountsArg(arguments[1]);
+
+                // string of IP
+                String ipString = parseIpArg(arguments[2]);
+
+                // port
+                int port = parsePortArg(arguments[3]);
+
+                // minimum amount to transfer
+                int minToTransfer = parseMinTransferArg(arguments[4]);
+
+                // maximum amount to transfer
+                int maxToTransfer = parseMaxTransferArg(arguments[5]);
+
+                // create config and pass back
+                Config config = new Config(numTrans, numAccounts, ipString, port, 
+                        minToTransfer, maxToTransfer);
+                return config;
+            //}
+            //catch (MalformedCommandLineArgumentException mclaE)
+            //{
+                // 
+            //}
+        }
+        else
+        {
+            // print usage and reutrn null if config incorrect
+            System.out.println("Usage <number of transactions> <number of "
+                    + "accounts> <ip address of server> <port of server> "
+                    + "<minimum amount to transfer> <maximum amount to "
+                    + "transfer>");
+        }
         return null;
+    }
+    
+    
+    /**
+     * 
+     */
+    private static int parseNumTransArg(String arg)
+    {
+        return 0;
+    }
+    
+    /**
+     * 
+     */
+    private static int parseNumAccountsArg(String arg)
+    {
+        return 0;
+    }
+    
+    /**
+     * 
+     */
+    private static String parseIpArg(String arg)
+    {
+        return "";
+    }
+    
+    /**
+     * 
+     */
+    private static int parsePortArg(String arg)
+    {
+        return 0;
+    }
+    
+    /**
+     * 
+     */
+    private static int parseMinTransferArg(String arg)
+    {
+        return 0;
+    }
+    
+    /**
+     * 
+     */
+    private static int parseMaxTransferArg(String arg)
+    {
+        return 0;
     }
     
     
     /** Configuration class to use with passing the configurations from the
      * getConfigurationFromArgs method.
      */
-    private class Config {
+    private static class Config {
         
         // number of transactions to perform
         int numTransactions;

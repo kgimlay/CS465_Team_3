@@ -12,13 +12,10 @@ import java.util.Optional;
  * @author Kevin Imlay
  */
 public class OpenTransMessage extends Message
-{
-    // transaction ID for use in responding
-    public Optional transID;
-    
-    public OpenTransMessage(Integer transactionID)
+{   
+    public OpenTransMessage()
     {
-        this.transID = Optional.ofNullable(transactionID);
+        
     }
     
     @Override

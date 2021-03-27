@@ -67,10 +67,10 @@ public class TransactionClientServerProxy {
     {
         // send an open transaction message to the server and wait for the
         // response
-        Message response = messageAndWait( new OpenTransMessage(null) );
+        Message response = messageAndWait( new OpenTransMessage() );
         
         // check to make sure the response message is the correct message type
-        if (!(response instanceof OpenTransMessage))
+        if (!(response instanceof ResponseMessage))
         {
             // not correct message expected, throw exception
             throw new UnexpectedResponseMessageException("An unexpected message"
@@ -81,11 +81,7 @@ public class TransactionClientServerProxy {
         // return the transaction ID that is returned.
         try
         {
-            // casting to int would normally throw a ClassCastException under
-            // the right circumstances, but will never here because the
-            // constructor for OpenTransMessage will only allow an Integer to
-            // be used to set the transID attribute
-            int transID = (int)((OpenTransMessage)response).transID.get();
+            int transID = ((ResponseMessage)response).returnIntVal;
             return transID;
         }
         catch (NoSuchElementException nseE)
@@ -181,10 +177,10 @@ public class TransactionClientServerProxy {
         // send read message and wait for the response that contains the value
         // read
         Message response = messageAndWait( 
-                new ReadMessage(accountID, null) );
+                new ReadMessage(accountID) );
         
         // check to make sure the response message is the right type
-        if (!(response instanceof ReadMessage))
+        if (!(response instanceof ResponseMessage))
         {
             // not correct message expected, throw exception
             throw new UnexpectedResponseMessageException("An unexpected message"
@@ -195,11 +191,7 @@ public class TransactionClientServerProxy {
         // return the value of the balance
         try
         {
-            // casting to int would normally throw a ClassCastException under
-            // the right circumstances, but will never here because the
-            // constructor for ReadMessage will only allow an Integer to
-            // be used to set the transID attribute
-            int balanceVal = (int)((ReadMessage)response).bal.get();
+            int balanceVal = ((ResponseMessage)response).returnIntVal;
             return balanceVal;
         }
         catch (NoSuchElementException nseE)
