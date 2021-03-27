@@ -103,7 +103,7 @@ public class TransactionManagerWorker implements Runnable
                 {
                     System.out.println("Worker recieves open message.");
                     outObjStream.writeObject(
-                            new OpenTransMessage( workerTransaction.id ));
+                            new OpenTransMessage());
                     System.out.println("Worker responds back to open"+
                             " transaction.");
                 }
