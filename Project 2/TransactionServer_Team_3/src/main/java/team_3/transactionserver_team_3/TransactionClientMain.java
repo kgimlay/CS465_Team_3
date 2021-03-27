@@ -57,8 +57,8 @@ public class TransactionClientMain {
         }
         
         // perform transactions
-        // to be threaded? Looped? I'm not sure yet!
-        
+        // create client workers in threads to run the transactions
+        System.out.println("Made it!");
     }
     
     
@@ -81,8 +81,8 @@ public class TransactionClientMain {
         // check to avoid out of bounds exception
         if (arguments.length == 6)
         {
-            //try
-            //{
+            try
+            {
                 // number of transactions to run
                 int numTrans = parseNumTransArg(arguments[0]);
 
@@ -102,14 +102,13 @@ public class TransactionClientMain {
                 int maxToTransfer = parseMaxTransferArg(arguments[5]);
 
                 // create config and pass back
-                Config config = new Config(numTrans, numAccounts, ipString, port, 
-                        minToTransfer, maxToTransfer);
-                return config;
-            //}
-            //catch (MalformedCommandLineArgumentException mclaE)
-            //{
-                // 
-            //}
+                return (new Config(numTrans, numAccounts, ipString, 
+                        port, minToTransfer, maxToTransfer));
+            }
+            catch (MalformedCommandLineArgumentException mclaE)
+            {
+                System.out.println(mclaE.getMessage());
+            }
         }
         else
         {
@@ -126,49 +125,127 @@ public class TransactionClientMain {
     /**
      * 
      */
-    private static int parseNumTransArg(String arg)
+    private static int parseNumTransArg(String arg) 
+            throws MalformedCommandLineArgumentException
     {
-        return 0;
+        try
+        {
+            return Integer.parseInt(arg);
+        }
+        catch (NumberFormatException nfE)
+        {
+            throw new MalformedCommandLineArgumentException("Bad number of "
+                + "transactions! Value: " + arg);
+        }
     }
     
     /**
      * 
      */
-    private static int parseNumAccountsArg(String arg)
+    private static int parseNumAccountsArg(String arg) 
+            throws MalformedCommandLineArgumentException
     {
-        return 0;
+        try
+        {
+            int numAccounts = Integer.parseInt(arg);
+            if (numAccounts < 0)
+            {
+                throw new MalformedCommandLineArgumentException("Cannot "
+                    + "have less than zero accounts! Value: " + arg);
+            }
+            return numAccounts;
+        }
+        catch (NumberFormatException nfE)
+        {
+            throw new MalformedCommandLineArgumentException("Bad number of "
+                + "accounts! Value: " + arg);
+        }
     }
     
     /**
      * 
      */
-    private static String parseIpArg(String arg)
+    private static String parseIpArg(String arg) 
+            throws MalformedCommandLineArgumentException
     {
-        return "";
+        try
+        {
+            return arg;
+        }
+        catch (NumberFormatException nfE)
+        {
+            throw new MalformedCommandLineArgumentException("Bad IP address!"
+                +  " Value: " + arg);
+        }
     }
     
     /**
      * 
      */
-    private static int parsePortArg(String arg)
+    private static int parsePortArg(String arg) 
+            throws MalformedCommandLineArgumentException
     {
-        return 0;
+        try
+        {
+            int portNum = Integer.parseInt(arg);
+            if (portNum < 0 || portNum > 65525)
+            {
+                throw new MalformedCommandLineArgumentException("Port number "
+                    + "not in range! Value: " + arg);
+            }
+            return portNum;
+        }
+        catch (NumberFormatException nfE) 
+        {
+            throw new MalformedCommandLineArgumentException("Bad port number!"
+                + " Value: " + arg);
+        }
     }
     
     /**
      * 
      */
-    private static int parseMinTransferArg(String arg)
+    private static int parseMinTransferArg(String arg) 
+            throws MalformedCommandLineArgumentException
     {
-        return 0;
+        try
+        {
+            int minTransfer = Integer.parseInt(arg);
+            if (minTransfer < 0)
+            {
+                throw new MalformedCommandLineArgumentException("Cannot "
+                    + "transfer less than zero! Value: " + arg);
+            }
+            return minTransfer;
+        }
+        catch (NumberFormatException nfE)
+        {
+            throw new MalformedCommandLineArgumentException("Bad minimum "
+                + "amount to transfer! Value: " + arg);
+        }
     }
     
     /**
      * 
      */
-    private static int parseMaxTransferArg(String arg)
+    private static int parseMaxTransferArg(String arg) 
+            throws MalformedCommandLineArgumentException
     {
-        return 0;
+        try
+        {
+            int maxTransfer = Integer.parseInt(arg);
+            if (maxTransfer < 0)
+            {
+                throw new MalformedCommandLineArgumentException("Cannot "
+                    + "transfer less than zero! Value: " + arg);
+            }
+            return maxTransfer;
+        }
+        catch (NumberFormatException nfE)
+        {
+            throw new MalformedCommandLineArgumentException("Bad maximum "
+                + "amount to transfer! Value: " + arg);
+        }
     }
     
     
