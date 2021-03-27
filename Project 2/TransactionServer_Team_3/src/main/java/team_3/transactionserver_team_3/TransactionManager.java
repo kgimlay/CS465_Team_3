@@ -44,6 +44,7 @@ public class TransactionManager
                                                 ( socket, 
                                                  newTransaction, 
                                                  accManager) );
+        workerThread.start();
     }
     
     /**

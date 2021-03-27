@@ -21,7 +21,7 @@ public class TransactionServerMain
     // initialize objects
     static AccountManager accountManager;
     static TransactionManager transactionManager;
-    static ServerSocket socket;
+    static ServerSocket serverSocket;
     static LockManager lockManager = new LockManager();
     static int numAccounts;
     static int portNum;
@@ -47,12 +47,13 @@ public class TransactionServerMain
         checkArgs( args[0], args[1], numAccounts, portNum );
             
         // initialize account manager with number of accounts parameter
-//        accountManager = new AccountManager( numAccounts );
+        accountManager = new AccountManager( numAccounts , 10 );
+        transactionManager = new TransactionManager( accountManager );
         
         // open server
         try
         {
-            socket = new ServerSocket( portNum, -1, 
+            serverSocket = new ServerSocket( portNum, -1, 
                                        InetAddress.getByName("localhost"));
         }
         catch( IOException ioE )
@@ -67,7 +68,7 @@ public class TransactionServerMain
             // method in TransactionManager 
             try
             {
-                transactionManager.openTransaction(socket.accept());
+                transactionManager.openTransaction( serverSocket.accept());
             }
             catch( IOException ioE )
             {
