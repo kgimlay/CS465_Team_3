@@ -37,6 +37,7 @@ public class TransactionManager
      */
     public void openTransaction( Socket socket )
     {
+        System.out.println("Open transaction called");
         // new transaction added to transactions vector and new worker thread
         Transaction newTransaction = new Transaction();
         transactions.add(newTransaction);
@@ -45,6 +46,7 @@ public class TransactionManager
                                                  newTransaction, 
                                                  accManager) );
         workerThread.start();
+        System.out.println("New transaction started with new worker.");
     }
     
     /**
@@ -53,16 +55,19 @@ public class TransactionManager
      */
     public void removeTransaction( Transaction toBeRemoved )
     {
+        System.out.println("Remove transaction called.");
         // may not need this conditional, since transactions remove
         // themselves, but can be good for checking for errors
         // if the remove is successful it returns true
         if( transactions.remove( toBeRemoved ) )
         {
             // send a confirm?
+            System.out.println("Transaction removed successfuly.");
         }
         else
         {
             // send an error?
+            System.out.println("Removal to transaction failed.");
         }
     }
 }

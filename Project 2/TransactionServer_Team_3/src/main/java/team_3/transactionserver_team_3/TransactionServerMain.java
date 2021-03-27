@@ -35,27 +35,24 @@ public class TransactionServerMain
      */
     public static void main(String args[])
     {
-        
         // check if argument length is valid
         if( args.length != 2 )
         {
-            System.out.println("Incorrect parameters.\n" +
+            System.out.println("Incorrect number of parameters.\n" +
                     " Please pass 2 parameters: < (int) port>"+
                     " < (int) number of accounts>");
             System.exit(1);
         }
-        checkArgs( args[0], args[1], numAccounts, portNum );
-        try
-        {
-            portNum = Integer.parseInt( args[1] );
-        }
-        catch( NumberFormatException nfException )
-        {
-            System.out.println("Error in parsing port number to integer.");
-            System.exit(1);
-        }
+        
+        checkArgs( args[0], args[1], portNum, numAccounts );
+        
+        portNum = Integer.parseInt( args[0] );
         
         // initialize account manager with number of accounts parameter
+        
+        // value 10 in currently hard coded for testing, may need to
+        // change in the furure to allow starting account ballances to
+        // be passed in
         accountManager = new AccountManager( numAccounts , 10 );
         transactionManager = new TransactionManager( accountManager );
         
@@ -64,10 +61,11 @@ public class TransactionServerMain
         {
             serverSocket = new ServerSocket( portNum, -1, 
                                        InetAddress.getByName("localhost"));
+            System.out.println("Server opened successfuly.");
         }
         catch( IOException ioE )
         {
-            System.out.println("Error occured opening socket.");
+            System.out.println("Error occured opening server socket." + ioE );
             System.exit(1);
         }       
         // begin server loop
@@ -82,16 +80,15 @@ public class TransactionServerMain
             catch( IOException ioE )
             {
                 System.out.println("Error occured while waiting for next"+
-                        " transaction");
+                        " transaction" + ioE);
                 System.exit(1);
             }
         }      
     }
     
-    private static void checkArgs( String arg0, String arg1, int numAcc, 
-            int portNum )
-    {
-        
+    private static void checkArgs( String arg0, String arg1, int portNum,
+                                   int numAcc)
+    {        
         // read the port number
         try
         {
@@ -100,11 +97,12 @@ public class TransactionServerMain
             {
                 System.out.println("Port must be between 0 and 65535.");
                 System.exit(1);
-            }            
+            }
         }
         catch( NumberFormatException nfException )
         {
-            System.out.println("Error in parsing port number to integer.");
+            System.out.println("Error in parsing port number to integer."+
+                                nfException);
             System.exit(1);
         }
         
@@ -122,7 +120,7 @@ public class TransactionServerMain
         catch( NumberFormatException nfException )
         {
             System.out.println("Error in parsing number of accounts argument"+
-                    " to integer.");
+                    " to integer." + nfException );
             System.exit(1);
         }
     }
