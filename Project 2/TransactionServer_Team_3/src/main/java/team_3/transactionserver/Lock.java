@@ -20,11 +20,11 @@
       enum LockType{READ, WRITE, NONE};
       LockType lockType;
       // The account the lock is associated with
-      int accountNum;
+      Object account;
       
-      public Lock(int accountNum, LockType lockType)
+      public Lock(Object account, LockType lockType)
       {
-          this.accountNum = accountNum;
+          this.account = account;
           this.lockType = lockType;
       }
   
@@ -33,7 +33,7 @@
           // if lock holders is empty, current trans only one in holders,
           // or if lock type is read then all of that is not conflicting
           // while(/*another transaction holds the lock in conflicting mode*/)
-          while((!(holders.isEmpty()) && !(aLockType == LockType.READ))
+          while((!(this.holders.isEmpty()) && !(aLockType == LockType.READ))
                  || !((holders.size() == 1) && (holders.contains(transaction))))
           {
               try

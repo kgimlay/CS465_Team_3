@@ -134,7 +134,7 @@ public class TransactionManagerWorker implements Runnable
                     //try
                     //{
                         // get the account ballance
-                        //int accBal = accManager.read( accNum, workerTransaction );
+                        int accBal = accManager.read( accNum, workerTransaction );
 
                         // log
                         //this.workerTransaction.log(locStr, readAccStr

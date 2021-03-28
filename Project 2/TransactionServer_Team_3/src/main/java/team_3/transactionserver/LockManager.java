@@ -11,11 +11,11 @@
   public class LockManager
   {
       // maps accounts to Locks
-      private Hashtable<Object, Lock> lockTable = new Hashtable<>();
+      private Hashtable<Object, Lock> lockTable;
       
       public LockManager()
       {
-
+          lockTable = new Hashtable<>();
       }
       
       // have to find lock that pertains to the account
@@ -26,7 +26,7 @@
           synchronized(this)
           {
               // find the lock that pertains to the account number(object)
-              if(lockTable.containsKey(object))
+              if(this.lockTable.containsKey(object))
               {
                   // once found, try to acquire that lock
                   foundLock = lockTable.get(object);
@@ -35,7 +35,7 @@
               // if there isn't one, create it and add to the hashtable
               else
               {
-                  Lock newLock = new Lock((int)object, lockType);
+                  Lock newLock = new Lock(object, lockType);
                   lockTable.put(object, newLock);
                   foundLock = newLock;
               }
