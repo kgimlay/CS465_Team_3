@@ -13,15 +13,46 @@ import java.util.ArrayList;
  */
 public class Transaction
 {
-    // initialize variables/objects
-    int id;
-    ArrayList<Lock> heldLocks;
-    ArrayList<String> log;
-    static int transactionCounter = 0;
+    public int id;
+    public ArrayList<Lock> heldLocks;
+    public ArrayList<String> log;
+    private static int transactionCounter = 0;
     
+    /**
+     * 
+     */
     public Transaction()
     {
         transactionCounter ++;
         this.id = transactionCounter;
+        this.log = new ArrayList<String>();
+    }
+    
+    /**
+     * 
+     * @param callLoc
+     * @param logMessage 
+     */
+    public void log(String callLoc, String logMessage)
+    {
+        // save and also print
+        String logPrtStr = "Transaction #" + this.id + " [" + callLoc + "] " 
+                + logMessage;
+        System.out.println(logPrtStr);
+        this.log.add(logMessage);   // yep, saving just the message
+    }
+    
+    /**
+     * 
+     */
+    public void printLog()
+    {
+        String printStr = "\nTransaction #" + this.id + " commited. Log:\n";
+        for (int index = 0; index < this.log.size(); index++)
+        {
+            printStr += "-----" + this.log.get(index) + "\n";
+        }
+        
+        System.out.println(printStr);
     }
 }
