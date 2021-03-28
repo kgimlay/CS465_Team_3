@@ -16,6 +16,6 @@ public abstract class Message implements Serializable
     @Override
     public String toString()
     {
-        return "Generic Message";
+        return "Generic Message"; //Dummy return 
     }
 }

@@ -13,12 +13,12 @@ import java.util.Optional;
  */
 public class ReadMessage extends Message
 {
-    int accountNum;
-    int bal;
+    int accountNum; //account number
+    int bal; //account balance
     
     public ReadMessage(int accountNum)
     {
-        this.accountNum = accountNum;
+        this.accountNum = accountNum; 
         this.bal = 0;
     }
     

@@ -12,7 +12,7 @@ package team_3.transactionserver;
  */
 public class WriteMessage extends Message
 {
-    int accountNum;
+    int accountNum; //account number 
     int value; //this is integer amount to write to the acct.
     
     public WriteMessage(int accountNum, int value)
