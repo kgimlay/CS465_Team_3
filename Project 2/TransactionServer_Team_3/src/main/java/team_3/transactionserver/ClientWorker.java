@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package team_3.transactionserver_team_3;
+package team_3.transactionserver;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -21,7 +21,7 @@ public class ClientWorker implements Runnable
     String serverIp;
     int serverPort;
     Socket connection;
-    TransactionClientServerProxy proxy;
+    ServerProxy proxy;
     
     public ClientWorker(int withAccId, int depAccId, int transAmount,
             String ip, int port)
@@ -40,7 +40,7 @@ public class ClientWorker implements Runnable
         try
         {
             connection = new Socket(this.serverIp, this.serverPort);
-            this.proxy = new TransactionClientServerProxy(connection);
+            this.proxy = new ServerProxy(connection);
         }
         catch (UnknownHostException uhE)
         {

@@ -3,7 +3,7 @@
   * @date 3/14/21, 3/24/21
   */
 
-package team_3.transactionserver_team_3;
+package team_3.transactionserver;
 
 import java.net.Socket;
 import java.io.ObjectInputStream;
@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
  * @todo Need to figure out how to handle trying to access accounts that don't
  * exist.
  */
-public class TransactionClientServerProxy {
+public class ServerProxy {
     
     private Socket connSocket;
     private ObjectInputStream inObjStream;
@@ -33,7 +33,7 @@ public class TransactionClientServerProxy {
      * @param socket - Socket object for communication with the transaction
      * server.
      */
-    public TransactionClientServerProxy(Socket socket)
+    public ServerProxy(Socket socket)
     {
         this.connSocket = socket;
         
@@ -58,8 +58,8 @@ public class TransactionClientServerProxy {
      * @throws NonMessageObjectRecievedException - passes along to client to
      *          handle.
      * @throws java.io.IOException
-     * @throws team_3.transactionserver_team_3.UnexpectedResponseMessageException
-     * @throws team_3.transactionserver_team_3.MalformedMessageException
+     * @throws team_3.transactionserver.UnexpectedResponseMessageException
+     * @throws team_3.transactionserver.MalformedMessageException
      */
     public int openTransaction() throws NonMessageObjectRecievedException,
              IOException, UnexpectedResponseMessageException,
@@ -96,9 +96,9 @@ public class TransactionClientServerProxy {
     /** *  Close the transaction with the transaction server.Sends a close 
      * transaction message to the transaction server.
      *
-     * @throws team_3.transactionserver_team_3.NonMessageObjectRecievedException 
+     * @throws team_3.transactionserver.NonMessageObjectRecievedException 
      * @throws java.io.IOException 
-     * @throws team_3.transactionserver_team_3.UnexpectedResponseMessageException 
+     * @throws team_3.transactionserver.UnexpectedResponseMessageException 
      * @throws IOException.
      * @throws NonMessageObjectRecievedException.
      */
@@ -130,9 +130,9 @@ public class TransactionClientServerProxy {
      *
      * @param accountID - ID of the account to write to.
      * @param newBalance  - Dollar amount to write as the new balance.
-     * @throws team_3.transactionserver_team_3.NonMessageObjectRecievedException 
+     * @throws team_3.transactionserver.NonMessageObjectRecievedException 
      * @throws java.io.IOException 
-     * @throws team_3.transactionserver_team_3.UnexpectedResponseMessageException 
+     * @throws team_3.transactionserver.UnexpectedResponseMessageException 
      * @throws IOException. See above todo.
      */
     public void write(int accountID, int newBalance) 
@@ -163,10 +163,10 @@ public class TransactionClientServerProxy {
      *
      * @param accountID - ID of the account to read from.
      * @return int - The balance of the account.
-     * @throws team_3.transactionserver_team_3.NonMessageObjectRecievedException
+     * @throws team_3.transactionserver.NonMessageObjectRecievedException
      * @throws java.io.IOException
-     * @throws team_3.transactionserver_team_3.UnexpectedResponseMessageException
-     * @throws team_3.transactionserver_team_3.MalformedMessageException
+     * @throws team_3.transactionserver.UnexpectedResponseMessageException
+     * @throws team_3.transactionserver.MalformedMessageException
      * 
      * @throws IOException. See above todo.
      */

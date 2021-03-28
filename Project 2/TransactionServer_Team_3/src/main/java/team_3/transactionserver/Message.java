@@ -3,7 +3,7 @@
   * @date: March 14, 2021
   */
 
-package team_3.transactionserver_team_3;
+package team_3.transactionserver;
 
 import java.io.Serializable;
 

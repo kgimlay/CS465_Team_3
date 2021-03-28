@@ -1,7 +1,7 @@
 /**
  * 
  */
-package team_3.transactionserver_team_3;
+package team_3.transactionserver;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,7 +12,7 @@ import java.util.Scanner;
 /**
  * @author kevinimlay
  */
-public class DummyClientForTestingPurposes
+public class DummyClient
 {
     static ObjectInputStream in;
     static ObjectOutputStream out;

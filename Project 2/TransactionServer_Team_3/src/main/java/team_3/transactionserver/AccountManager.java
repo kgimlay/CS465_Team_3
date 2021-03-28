@@ -3,7 +3,7 @@
   * @date: 3-14-21
   */
 
-  package team_3.transactionserver_team_3;
+  package team_3.transactionserver;
 
   import java.util.ArrayList;
   
@@ -73,7 +73,7 @@
         // loop through accounts to find account associated w/ the accoutNum
         Account account = getAccount(accountNum);
         // try to set a reading lock
-        TransactionServerMain.lockManager.lock(account, transaction, Lock.LockType.READ);
+        TransactionServer.lockManager.lock(account, transaction, Lock.LockType.READ);
         // if successful (after waiting or no deadlock), return account's balance
         return account.balance;
       }
@@ -93,7 +93,7 @@
           // loop through accounts to find account associated w/ the accountNum
           Account account = getAccount(accountNum);
           // try to set a writing lock
-          TransactionServerMain.lockManager.lock(account, transaction, Lock.LockType.WRITE);
+          TransactionServer.lockManager.lock(account, transaction, Lock.LockType.WRITE);
           // update balance if successful (after waiting or no deadlock)
           account.setBalance(balance);
       }

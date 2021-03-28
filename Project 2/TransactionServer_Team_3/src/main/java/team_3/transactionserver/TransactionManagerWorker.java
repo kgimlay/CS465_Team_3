@@ -3,7 +3,7 @@
  * @date 3/7/21
  *
  */
-package team_3.transactionserver_team_3;
+package team_3.transactionserver;
 
 // imports
 import java.net.Socket;

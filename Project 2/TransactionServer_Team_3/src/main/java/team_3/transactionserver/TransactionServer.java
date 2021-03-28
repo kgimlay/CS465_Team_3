@@ -2,7 +2,7 @@
  * @authors Kevin Imlay, Randy Duerinck, Yasmin Vega, Matthew Flanders
  * @date 3/7/21
  */
-package team_3.transactionserver_team_3;
+package team_3.transactionserver;
 
 // imports
 import java.net.ServerSocket;
@@ -16,7 +16,7 @@ import java.io.IOException;
  *
  * @author Matthew Flanders
  */
-public class TransactionServerMain
+public class TransactionServer
 {
     // initialize objects
     static AccountManager accountManager;

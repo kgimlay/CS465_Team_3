@@ -1,7 +1,7 @@
 /**
  * 
  */
-package team_3.transactionserver_team_3;
+package team_3.transactionserver;
 
 /**
  * @author kevinimlay

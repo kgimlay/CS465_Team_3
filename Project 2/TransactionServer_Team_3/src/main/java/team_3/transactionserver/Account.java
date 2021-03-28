@@ -3,7 +3,7 @@
   * @date: 3-14-21
   */
 
-  package team_3.transactionserver_team_3;
+  package team_3.transactionserver;
 
   /**
     * Account will be manipulated by Transactions and managed by AccountManager.

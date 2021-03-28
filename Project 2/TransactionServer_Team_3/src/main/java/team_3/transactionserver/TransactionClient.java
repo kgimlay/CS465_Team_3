@@ -3,10 +3,9 @@
   * @date 3/14/21, 3/24/21
   */
 
-package team_3.transactionserver_team_3;
+package team_3.transactionserver;
 
 import java.net.ServerSocket;
-import java.io.IOException;
 import java.util.Random;
 
 
@@ -16,7 +15,7 @@ import java.util.Random;
  * Configurable number of transactions to run. Randomly selects values for how
  * much to transfer.
  */
-public class TransactionClientMain {
+public class TransactionClient {
     
     private static ServerSocket serverSocket;
     
@@ -43,39 +42,38 @@ public class TransactionClientMain {
             System.exit(1);
         }
         
-        // start client
-        try
-        {
-            serverSocket = new ServerSocket();
-        }
-        catch (IOException ioE)
-        {
-            System.out.println("An error occured trying to open the server "
-                    + "socket!\n\n" + ioE);
-            System.exit(1);
-        }
+        // start the client
+        runClient(clientConfig);
+    }
+    
+    
+    /**
+     * 
+     * @param config 
+     */
+    private static void runClient(Config config)
+    {
+        // random generator for picking account numbers and amount to transfer
+        // between accounts
         Random random = new Random();
         
-        // perform transactions
         // create client workers in threads to run the transactions
-        for (int counter = 0; counter < clientConfig.numTransactions; counter++)
+        for (int counter = 0; counter < config.numTransactions; counter++)
         {
             // generate random values for transactions
-            int withdrawAccountNum = random
-                    .nextInt(clientConfig.minTransfer 
-                            + clientConfig.maxTransfer + 1) 
-                    - clientConfig.minTransfer;
-            int depositAccountNum = random.nextInt(clientConfig.numAccounts + 1);
-            int ammountToTransfer = random.nextInt(clientConfig.numAccounts + 1);
+            int withdrawAccountNum = random.nextInt(
+                    config.minTransfer + config.maxTransfer + 1) 
+                    - config.minTransfer;
+            int depositAccountNum = random.nextInt(config.numAccounts + 1); // can pick same account to transfer out of and into
+            int ammountToTransfer = random.nextInt(config.numAccounts + 1); // can pick same account to transfer out of and into
             
             // start workers to carry out transactions
             ClientWorker worker = new ClientWorker(withdrawAccountNum, 
                     depositAccountNum, 
                     ammountToTransfer, 
-                    clientConfig.serverIpStr, 
-                    clientConfig.serverPort);
-            Thread workerThread = new Thread( worker );
-            workerThread.start();   // todo: start in another loop to let start closer to gether in time!
+                    config.serverIpStr, 
+                    config.serverPort);
+            new Thread( worker ).start();
         }
     }
     
