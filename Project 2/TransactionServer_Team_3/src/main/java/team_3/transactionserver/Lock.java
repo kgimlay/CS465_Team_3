@@ -26,6 +26,8 @@
       {
           this.account = account;
           this.lockType = lockType;
+          this.holders = new Vector();
+          this.requestors = new Vector();
       }
   
       public synchronized void acquire(Transaction transaction, LockType aLockType)
