@@ -11,32 +11,48 @@
   public class LockManager
   {
       // maps accounts to Locks
-      private Hashtable lockTable;
+      private Hashtable<Object, Lock> lockTable = new Hashtable<>();
+      
+      public LockManager()
+      {
+
+      }
       
       // have to find lock that pertains to the account
       public void lock(Object object, Transaction transaction, Lock.LockType lockType)
       {
-          // change this to the found lock instead of null
-          Lock foundLock = null;
+          // change this to the found lock
+          Lock foundLock;
           synchronized(this)
           {
-              // find the lock that pertains to the account (object)
-              // once found, try to acquire that lock
+              // find the lock that pertains to the account number(object)
+              if(lockTable.containsKey(object))
+              {
+                  // once found, try to acquire that lock
+                  foundLock = lockTable.get(object);
+              }
+
               // if there isn't one, create it and add to the hashtable
+              else
+              {
+                  Lock newLock = new Lock((int)object, lockType);
+                  lockTable.put(object, newLock);
+                  foundLock = newLock;
+              }
           }
           foundLock.acquire(transaction, lockType);
       }
 
-      // synchronize this one because we want to remove all entires
-      // all the transaction's locks are realesed at once
+      // synchronize this one because we want to remove all entries
+      // all the transaction's locks are released at once
       public synchronized void unLock(Transaction transaction)
       {
           Enumeration e = lockTable.elements();
           while(e.hasMoreElements())
           {
               Lock aLock = (Lock) (e.nextElement());
-              // remember to take off true since this is a placeholder
-              if(true/* trans is a holder of this lock*/)
+              /* transaction is a holder of this lock*/
+              if(transaction.heldLocks.contains(aLock))
               {
                   aLock.release(transaction);
               }
