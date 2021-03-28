@@ -12,6 +12,7 @@ import java.net.UnknownHostException;
 /**
  *
  * @author Randy Duerinck
+ * @author Kevin Imlay
  */
 public class ClientWorker implements Runnable
 {
@@ -36,11 +37,14 @@ public class ClientWorker implements Runnable
     @Override
     public void run()
     {
+        Boolean isConnected = false;
+        
         // open connection with server
         try
         {
             connection = new Socket(this.serverIp, this.serverPort);
             this.proxy = new ServerProxy(connection);
+            isConnected = true;
         }
         catch (UnknownHostException uhE)
         {
@@ -52,49 +56,56 @@ public class ClientWorker implements Runnable
                     + "\n\n" + ioE);
         }
         
-        // run the transaction by calling on the proxy
-        try
+        if (isConnected)
         {
-            // open a transaction
-            int transactionId = this.proxy.openTransaction();
-            
-            // withdraw from fist account
-            int withdrawAccBal = this.proxy.read(this.withdrawAccountId);
-            this.proxy.write(this.withdrawAccountId, 
-                    withdrawAccBal - this.transferAmount);
-            
-            // deposit into second account
-            int depositAccBal = this.proxy.read(this.depositAccountId);
-            this.proxy.write(this.depositAccountId, 
-                    depositAccBal + this.transferAmount);
-            
-            // close the transaction
-            this.proxy.closeTransaction();
+            // run the transaction by calling on the proxy
+            try
+            {
+                // open a transaction
+                int transactionId = this.proxy.openTransaction();
+
+                // withdraw from fist account
+                int withdrawAccBal = this.proxy.read(this.withdrawAccountId);
+                this.proxy.write(this.withdrawAccountId, 
+                        withdrawAccBal - this.transferAmount);
+
+                // deposit into second account
+                int depositAccBal = this.proxy.read(this.depositAccountId);
+                this.proxy.write(this.depositAccountId, 
+                        depositAccBal + this.transferAmount);
+
+                // close the transaction
+                this.proxy.closeTransaction();
+            }
+
+            // A message object was not returned, uh oh! this should never happen!
+            catch (NonMessageObjectRecievedException nmorE)
+            {
+                System.out.println(nmorE);
+            }
+
+            // likely an issue with the connection to the server
+            catch (IOException ioE)
+            {
+                System.out.println(ioE);
+            }
+
+            // the message received was not of the correct type or was an error
+            // message
+            catch (UnexpectedResponseMessageException urmE)
+            {
+                System.out.println(urmE);
+            }
+
+            // the message returned was not formatted correctly!
+            catch (MalformedMessageException mmE)
+            {
+                System.out.println(mmE);
+            }
         }
-        
-        // A message object was not returned, uh oh! this should never happen!
-        catch (NonMessageObjectRecievedException nmorE)
+        else
         {
-            System.out.println(nmorE);
-        }
-        
-        // likely an issue with the connection to the server
-        catch (IOException ioE)
-        {
-            System.out.println(ioE);
-        }
-        
-        // the message received was not of the correct type or was an error
-        // message
-        catch (UnexpectedResponseMessageException urmE)
-        {
-            System.out.println(urmE);
-        }
-        
-        // the message returned was not formatted correctly!
-        catch (MalformedMessageException mmE)
-        {
-            System.out.println(mmE);
+            // do something about it
         }
     }
     

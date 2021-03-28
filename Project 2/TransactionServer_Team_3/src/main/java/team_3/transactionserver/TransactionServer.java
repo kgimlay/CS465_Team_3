@@ -36,7 +36,7 @@ public class TransactionServer
     public static void main(String args[])
     {
         // check args and assign if they pass
-        checkArgs( args, portNum, numAccounts );
+        checkArgs( args );
 
         // value 10 in currently hard coded for testing, may need to
         // change in the furure to allow starting account ballances to
@@ -47,9 +47,10 @@ public class TransactionServer
         // open server
         try
         {
+            System.out.println(portNum);
             serverSocket = new ServerSocket( portNum, -1,
                                        InetAddress.getByName("localhost"));
-            System.out.println("Server opened successfuly.");
+            System.out.println("Server opened successfuly. " + serverSocket);
         }
         catch( IOException ioE )
         {
@@ -64,6 +65,7 @@ public class TransactionServer
             try
             {
                 transactionManager.newWorkerThread( serverSocket.accept());
+                System.out.println("Here");
             }
             catch( IOException ioE )
             {
@@ -74,8 +76,7 @@ public class TransactionServer
         }
     }
 
-    private static void checkArgs( String arg[], int portNum,
-                                   int numAcc)
+    private static void checkArgs( String arg[] )
     {
         // check if argument length is valid
         if( arg.length != 2 )
@@ -106,9 +107,9 @@ public class TransactionServer
         // read number of accounts
         try
         {
-            numAcc = Integer.parseInt( arg[1] );
+            numAccounts = Integer.parseInt( arg[1] );
             // consider limiting number of accounts
-            if( 0 > numAcc )
+            if( 0 > numAccounts )
             {
                 System.out.println("Number of accounts must be positive.");
                 System.exit(1);

@@ -87,8 +87,8 @@ public class TransactionManagerWorker implements Runnable
                 if( messageObj instanceof OpenTransMessage )
                 {
                     // log
-                    this.workerTransaction.log(locStr, openTransStr);
                     workerTransaction = transManager.newTransaction();
+                    this.workerTransaction.log(locStr, openTransStr);
 
                     // TODO: create transaction object here actually
                     isOpened = true;

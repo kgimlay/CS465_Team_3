@@ -47,9 +47,14 @@ public class TransactionClient {
     }
     
     
-    /**
+    /** Runs the client - called after argument checking is passed.
      * 
-     * @param config 
+     * Spawns client workers in threads to carry out the operations of the 
+     * transactions. Gives each worker the information such as the accounts to
+     * transfer between and how much to transfer, and lets the worker go to
+     * complete its task.
+     * 
+     * @param config - Config object of the command line arguments passed in.
      */
     private static void runClient(Config config)
     {
@@ -148,8 +153,13 @@ public class TransactionClient {
     }
     
     
-    /**
+    /** Parses the number of transactions out of the string given. If the number
+     * of transactions cannot be parsed, a malformed command line argument
+     * exception is thrown. This can happen if the number of transactions to
+     * perform is less than 1 or if there integer is not parse-able from the
+     * string.
      * 
+     * @throws MalformedCommandLineArgumentException.
      */
     private static int parseNumTransArg(String arg) 
             throws MalformedCommandLineArgumentException
@@ -157,10 +167,10 @@ public class TransactionClient {
         try
         {
             int numTrans = Integer.parseInt(arg);
-            if (numTrans < 0)
+            if (numTrans < 1)
             {
                 throw new MalformedCommandLineArgumentException("Cannot "
-                    + "have less than zero transactions! Value: " + arg);
+                    + "have less than one transaction! Value: " + arg);
             }
             return numTrans;
         }
@@ -171,8 +181,13 @@ public class TransactionClient {
         }
     }
     
-    /**
+    /** Parses the number of accounts out of the string given. If the number
+     * of accounts cannot be parsed, a malformed command line argument
+     * exception is thrown. This can happen if the number of accounts
+     * is less than 1 or if there integer is not parse-able from the
+     * string.
      * 
+     * @throws MalformedCommandLineArgumentException.
      */
     private static int parseNumAccountsArg(String arg) 
             throws MalformedCommandLineArgumentException
@@ -180,10 +195,10 @@ public class TransactionClient {
         try
         {
             int numAccounts = Integer.parseInt(arg);
-            if (numAccounts < 0)
+            if (numAccounts < 1)
             {
                 throw new MalformedCommandLineArgumentException("Cannot "
-                    + "have less than zero accounts! Value: " + arg);
+                    + "have less than one account! Value: " + arg);
             }
             return numAccounts;
         }
@@ -194,8 +209,11 @@ public class TransactionClient {
         }
     }
     
-    /**
+    /** Parses the port number out of the string given. If the port number is
+     * not in the correct range or the port number is not parse-able to an
+     * integer, then a malformed command line argument exception is thrown.
      * 
+     * @throws MalformedCommandLineArgumentException.
      */
     private static int parsePortArg(String arg) 
             throws MalformedCommandLineArgumentException
@@ -217,8 +235,12 @@ public class TransactionClient {
         }
     }
     
-    /**
+    /** Parses the minimum amount acceptable to transfer for the random choosing
+     * of the amount to transfer. Throws a malformed command line argument
+     * exception if the number is not parse-able to an integer or if the minimum
+     * is less than one dollar.
      * 
+     * @throws MalformedCommandLineArgumentException.
      */
     private static int parseMinTransferArg(String arg) 
             throws MalformedCommandLineArgumentException
@@ -226,10 +248,10 @@ public class TransactionClient {
         try
         {
             int minTransfer = Integer.parseInt(arg);
-            if (minTransfer < 0)
+            if (minTransfer < 1)
             {
                 throw new MalformedCommandLineArgumentException("Cannot "
-                    + "transfer less than zero! Value: " + arg);
+                    + "transfer less than one! Value: " + arg);
             }
             return minTransfer;
         }
