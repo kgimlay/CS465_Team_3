@@ -11,5 +11,5 @@ package team_3.transactionserver_team_3;
  */
 public enum MessageType {
     OPEN_TRANSACTION_MESSAGE, CLOSE_TRANSACTION_MESSAGE, WRITE_MESSAGE, 
-    READ_MESSAGE
+    READ_MESSAGE, ERROR_MESSAGE
 }

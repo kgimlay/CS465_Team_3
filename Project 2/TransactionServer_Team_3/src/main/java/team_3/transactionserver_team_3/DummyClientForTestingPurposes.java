@@ -32,6 +32,7 @@ public class DummyClientForTestingPurposes
         out = new ObjectOutputStream(connection.getOutputStream());
         Scanner scanner = new Scanner(System.in);
         String userInput;
+        System.out.print("Connected\n\n");
         
         while (true)
         {
@@ -42,16 +43,16 @@ public class DummyClientForTestingPurposes
             // if appropriate message, wait for response and print message
             switch (userInput) {
                 case "open":
-                    System.out.println(sendAndGet(new OpenTransMessage()));
+                    System.out.println((ResponseMessage)sendAndGet(new OpenTransMessage()));
                     break;
                 case "close":
-                    System.out.println(sendAndGet(new CloseTransMessage()));
+                    System.out.println((ResponseMessage)sendAndGet(new CloseTransMessage()));
                     break;
                 case "read":
-                    System.out.println(sendAndGet(new ReadMessage(0)));
+                    System.out.println((ResponseMessage)sendAndGet(new ReadMessage(0)));
                     break;
                 case "write":
-                    System.out.println(sendAndGet(new WriteMessage(0,0)));
+                    System.out.println((ResponseMessage)sendAndGet(new WriteMessage(0,0)));
                     break;
                 default:
                     System.out.println(userInput + " is not a message type!");

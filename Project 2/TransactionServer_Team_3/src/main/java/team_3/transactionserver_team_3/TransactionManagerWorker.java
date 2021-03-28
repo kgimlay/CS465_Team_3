@@ -65,90 +65,130 @@ public class TransactionManagerWorker implements Runnable
      * @brief run method to establish connection to client and loop until
      * a close message has been received
      */
+    @Override
     public void run()
     {
         // try/catch to read network messages
         try
         {
-            System.out.println("Worker reading network messages.");
+            System.out.println("Worker spawned.");
             // initialize loop flag to true
-            boolean noCloseMessage = true;
+            boolean isOpened = false;
+            boolean isClosed = false;
 
             // begin loop
-            while( noCloseMessage )
+            while( !isClosed )
             {
                 // read object from client and get the message type
                 Object messageObj = inObjStream.readObject();
+                
+                // if message is of open type, disregard message
+                if( messageObj instanceof OpenTransMessage )
+                {
+                    System.out.println("Received open transaction message");
+                    
+                    // TODO: create transaction object here actually
+                    isOpened = true;
+                    
+                    
+                    // respond to client with transaction ID
+                    Message responseMessage =
+                            new ResponseMessage(MessageType
+                                    .OPEN_TRANSACTION_MESSAGE, 0);  // 0 will be replaced with the transaciton ID
+                    outObjStream.writeObject( responseMessage );
+                }
 
                 // translate low level message into high level action
                 // if the message was a close message
-                if( messageObj instanceof CloseTransMessage )
+                else if( messageObj instanceof CloseTransMessage && isOpened )
                 {
-                    System.out.println("Worker recieves close message.");
+                    System.out.println("Received close transaction message.");
                     // respond to client with confirm close message
-                                                                        // TO-DO
-                                                                        // need to create close confirm message
-                                                                        // or not if replying back with same message is enough
-                    // ack be sending back original message
-                    outObjStream.writeObject( messageObj );
-                    System.out.println("Worker replies back with close message");
+                    Message responseMessage =
+                            new ResponseMessage(MessageType
+                                    .CLOSE_TRANSACTION_MESSAGE);
+                    outObjStream.writeObject(  responseMessage );
 
                     // end loop, set loop flag to false
-                    noCloseMessage = false;
-                }
-
-                // if not a close then some other message
-                // if message is of open type, disregard message
-                else if( messageObj instanceof OpenTransMessage )
-                {
-                    System.out.println("Worker recieves open message.");
-                    outObjStream.writeObject(
-                            new OpenTransMessage());
-                    System.out.println("Worker responds back to open"+
-                            " transaction.");
+                    isClosed = true;
                 }
 
                 // if message is of read type
-                else if( messageObj instanceof ReadMessage )
+                else if( messageObj instanceof ReadMessage && isOpened )
                 {
-                    System.out.println("Worker recieves read message.");
+                    System.out.println("Received read message");
                     // read the account number
                     int accNum = (( ReadMessage ) messageObj).accountNum;
+                    Message responseMessage;
 
-                    // get the account ballance
-                    int accBal = accManager.read( accNum, workerTransaction );
-                    System.out.println("Worker calls account manager for"+
-                            " account ballance.");
-                    // accManager.read may throw errors later if account
-                    // does not exist
+                    //try
+                    //{
+                        // get the account ballance
+                        //int accBal = accManager.read( accNum, workerTransaction );
 
-                    // create response message
-                    ReadMessage response = new ReadMessage( accNum, accBal );
+
+                        // create response message with balace
+                        responseMessage =
+                                new ResponseMessage(MessageType
+                                        .READ_MESSAGE, 0);  // 0 will be replaced with the blanace read
+                    //}
+                    // account does not exist, create error response message
+                    // intead
+                    //catch (NonExistantAccountException neaE)
+                    //{
+                        responseMessage =
+                                new ResponseMessage(MessageType.ERROR_MESSAGE,
+                                "That account does not exist!");
+                    //}
 
                     // respond to client with ballance
-                    outObjStream.writeObject( response );
-                    System.out.println("Worker responds to read message.");
+                    outObjStream.writeObject( responseMessage );
                 }
 
                 // if message is of write type
-                else if( messageObj instanceof WriteMessage )
+                else if( messageObj instanceof WriteMessage && isOpened )
                 {
-                    System.out.println("worker recieves write message");
+                    System.out.println("Received write message");
                     // read account number from message
                     int accNum = ((WriteMessage) messageObj).accountNum;
+                    Message responseMessage;
 
                     // read value
                     Object tempVal = ((WriteMessage) messageObj).value;
                     int value = (int) tempVal;
 
-                    // write to the account
-                    accManager.write( accNum, workerTransaction, value );
-                    System.out.println("Worker calls to account manager "+
-                            "to write a value.");
+                    //try
+                    //{
+                        // write to the account
+                        //accManager.write( accNum, workerTransaction, value );
 
-                    // ack be sending back original message
-                    outObjStream.writeObject( messageObj );
-                    System.out.println("Worker responds to write message.");
+
+                        // create response message with balace
+                        responseMessage =
+                                new ResponseMessage(MessageType
+                                        .READ_MESSAGE, 0);  // 0 will be replaced with the blanace read
+                    //}
+                    // account does not exist, create error response message
+                    // intead
+                    //catch (NonExistantAccountException neaE)
+                    //{
+                        responseMessage =
+                                new ResponseMessage(MessageType.ERROR_MESSAGE,
+                                "That account does not exist!");
+                    //}
+
+                    // respond to client with ballance
+                    outObjStream.writeObject( responseMessage );
+                }
+                
+                // else, the transaction was never opened
+                // send error message
+                else
+                {
+                    Message responseMessage = 
+                            new ResponseMessage(MessageType.ERROR_MESSAGE,
+                            "Transaction not open!");
+                    outObjStream.writeObject( responseMessage );
                 }
             }
         }

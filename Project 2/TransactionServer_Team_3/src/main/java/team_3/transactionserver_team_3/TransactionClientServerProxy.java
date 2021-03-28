@@ -111,7 +111,7 @@ public class TransactionClientServerProxy {
         
         // check to make sure the response message is saying its good to close
         // the connection
-        if (!(response instanceof CloseTransMessage))
+        if (!(response instanceof ResponseMessage))
         {
             // not correct message expected, throw exception
             throw new UnexpectedResponseMessageException("An unexpected message"
@@ -146,7 +146,7 @@ public class TransactionClientServerProxy {
         
         // check to make sure the response message is saying the write has
         // completed
-        if (!(response instanceof WriteMessage))
+        if (!(response instanceof ResponseMessage))
         {
             // not correct message expected, throw exception
             throw new UnexpectedResponseMessageException("An unexpected message"
