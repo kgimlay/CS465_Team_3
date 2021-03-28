@@ -27,6 +27,12 @@ public class TransactionManagerWorker implements Runnable
     private Transaction workerTransaction;
     private ObjectInputStream inObjStream;
     private ObjectOutputStream outObjStream;
+    private final String locStr = "TransactionManagerWorker";
+    private final String openTransStr = "OPEN TRANSACTION";
+    private final String closeTransStr = "CLOSE TRANSACTION";
+    private final String readAccStr = "READ BALANCE OF ACCOUNT";
+    private final String writeAccStr = "WRITE ACCOUNT BALANCE";
+    private final String errStr = "";
 
     /**
      * @brief initialization of worker
@@ -45,12 +51,9 @@ public class TransactionManagerWorker implements Runnable
         // create object streams for communication with message objects
         try
         {
-            System.out.println("Worker attempting to open streams.");
             this.outObjStream = new ObjectOutputStream(
                                             socket.getOutputStream() );
-            System.out.println("Output stream successful.");
             this.inObjStream = new ObjectInputStream( socket.getInputStream() );
-            System.out.println("Input stream successful.");
         }
         catch ( IOException ioE )
         {
@@ -69,7 +72,6 @@ public class TransactionManagerWorker implements Runnable
         // try/catch to read network messages
         try
         {
-            System.out.println("Worker spawned.");
             // initialize loop flag to true
             boolean isOpened = false;
             boolean isClosed = false;
@@ -83,7 +85,8 @@ public class TransactionManagerWorker implements Runnable
                 // if message is of open type, disregard message
                 if( messageObj instanceof OpenTransMessage )
                 {
-                    System.out.println("Received open transaction message");
+                    // log
+                    this.workerTransaction.log(locStr, openTransStr);
                     
                     // TODO: create transaction object here actually
                     isOpened = true;
@@ -100,12 +103,17 @@ public class TransactionManagerWorker implements Runnable
                 // if the message was a close message
                 else if( messageObj instanceof CloseTransMessage && isOpened )
                 {
-                    System.out.println("Received close transaction message.");
+                    // log
+                    this.workerTransaction.log(locStr, closeTransStr);
+                    
                     // respond to client with confirm close message
                     Message responseMessage =
                             new ResponseMessage(MessageType
                                     .CLOSE_TRANSACTION_MESSAGE);
                     outObjStream.writeObject(  responseMessage );
+                    
+                    // print log for transaction
+                    this.workerTransaction.printLog();
 
                     // end loop, set loop flag to false
                     isClosed = true;
@@ -114,7 +122,9 @@ public class TransactionManagerWorker implements Runnable
                 // if message is of read type
                 else if( messageObj instanceof ReadMessage && isOpened )
                 {
-                    System.out.println("Received read message");
+                    // log
+                    this.workerTransaction.log(locStr, readAccStr); // todo: remove later
+                    
                     // read the account number
                     int accNum = (( ReadMessage ) messageObj).accountNum;
                     Message responseMessage;
@@ -123,7 +133,10 @@ public class TransactionManagerWorker implements Runnable
                     //{
                         // get the account ballance
                         //int accBal = accManager.read( accNum, workerTransaction );
-
+                        
+                        // log
+                        //this.workerTransaction.log(locStr, readAccStr
+                        //+ " Account #" + accNum + " with balance $" + accBal);
 
                         // create response message with balace
                         responseMessage =
@@ -146,7 +159,9 @@ public class TransactionManagerWorker implements Runnable
                 // if message is of write type
                 else if( messageObj instanceof WriteMessage && isOpened )
                 {
-                    System.out.println("Received write message");
+                    // log
+                    this.workerTransaction.log(locStr, writeAccStr);    // todo: remove later
+                    
                     // read account number from message
                     int accNum = ((WriteMessage) messageObj).accountNum;
                     Message responseMessage;
@@ -159,7 +174,10 @@ public class TransactionManagerWorker implements Runnable
                     //{
                         // write to the account
                         //accManager.write( accNum, workerTransaction, value );
-
+                        
+                        // log
+                        //this.workerTransaction.log(locStr, writeAccStr
+                        //+ " Account #" + accNum + " with balance $" + value);
 
                         // create response message with balace
                         responseMessage =
@@ -182,7 +200,7 @@ public class TransactionManagerWorker implements Runnable
                 // else, the transaction was never opened
                 // send error message
                 else
-                {
+                {   
                     Message responseMessage = 
                             new ResponseMessage(MessageType.ERROR_MESSAGE,
                             "Transaction not open!");
