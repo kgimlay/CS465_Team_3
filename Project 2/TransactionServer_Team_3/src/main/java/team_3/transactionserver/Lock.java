@@ -13,14 +13,20 @@
 
       // List of transactions who hold a lock
       // if there are more than 1, it could only be read lock
-      Vector holders;
+      static Vector holders;
       // List of transactions who need a lock
-      Vector requestors;
+      static Vector requestors;
       // types of locks a transaction can have
       enum LockType{READ, WRITE, NONE};
       LockType lockType;
       // The account the lock is associated with
       int accountNum;
+      
+      public Lock(int accountNum, LockType lockType)
+      {
+          this.accountNum = accountNum;
+          this.lockType = lockType;
+      }
   
       public synchronized void acquire(Transaction transaction, LockType aLockType)
       {
