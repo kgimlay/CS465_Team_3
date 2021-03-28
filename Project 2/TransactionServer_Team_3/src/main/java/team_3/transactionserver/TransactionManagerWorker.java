@@ -101,7 +101,6 @@ public class TransactionManagerWorker implements Runnable
                     outObjStream.writeObject( responseMessage );
                 }
 
-                // translate low level message into high level action
                 // if the message was a close message
                 else if( messageObj instanceof CloseTransMessage && isOpened )
                 {
@@ -124,35 +123,33 @@ public class TransactionManagerWorker implements Runnable
                 // if message is of read type
                 else if( messageObj instanceof ReadMessage && isOpened )
                 {
-                    // log
-                    this.workerTransaction.log(locStr, readAccStr); // todo: remove later
-
                     // read the account number
                     int accNum = (( ReadMessage ) messageObj).accountNum;
                     Message responseMessage;
 
-                    //try
-                    //{
+                    try
+                    {
                         // get the account ballance
+                        System.out.println("reading account " + accNum);
                         int accBal = accManager.read( accNum, workerTransaction );
 
                         // log
-                        //this.workerTransaction.log(locStr, readAccStr
-                        //+ " Account #" + accNum + " with balance $" + accBal);
+                        this.workerTransaction.log(locStr, readAccStr
+                        + " Account #" + accNum + " with balance $" + accBal);
 
                         // create response message with balace
                         responseMessage =
                                 new ResponseMessage(MessageType
                                         .READ_MESSAGE, 0);  // 0 will be replaced with the blanace read
-                    //}
+                    }
                     // account does not exist, create error response message
                     // intead
-                    //catch (NonExistantAccountException neaE)
-                    //{
-                        //responseMessage =
-                        //        new ResponseMessage(MessageType.ERROR_MESSAGE,
-                        //        "That account does not exist!");
-                    //}
+                    catch (NonExistantAccountException neaE)
+                    {
+                        responseMessage =
+                                new ResponseMessage(MessageType.ERROR_MESSAGE,
+                                "That account does not exist!");
+                    }
 
                     // respond to client with ballance
                     outObjStream.writeObject( responseMessage );
@@ -161,9 +158,6 @@ public class TransactionManagerWorker implements Runnable
                 // if message is of write type
                 else if( messageObj instanceof WriteMessage && isOpened )
                 {
-                    // log
-                    this.workerTransaction.log(locStr, writeAccStr);    // todo: remove later
-
                     // read account number from message
                     int accNum = ((WriteMessage) messageObj).accountNum;
                     Message responseMessage;
@@ -172,28 +166,30 @@ public class TransactionManagerWorker implements Runnable
                     Object tempVal = ((WriteMessage) messageObj).value;
                     int value = (int) tempVal;
 
-                    //try
-                    //{
+                    try
+                    {
                         // write to the account
-                        //accManager.write( accNum, workerTransaction, value );
+                        System.out.println("writing to account " + accNum
+                            + " balance " + value);
+                        accManager.write( accNum, workerTransaction, value );
 
                         // log
-                        //this.workerTransaction.log(locStr, writeAccStr
-                        //+ " Account #" + accNum + " with balance $" + value);
+                        this.workerTransaction.log(locStr, writeAccStr
+                        + " Account #" + accNum + " with balance $" + value);
 
                         // create response message with balace
                         responseMessage =
                                 new ResponseMessage(MessageType
                                         .READ_MESSAGE, 0);  // 0 will be replaced with the blanace read
-                    //}
+                    }
                     // account does not exist, create error response message
                     // intead
-                    //catch (NonExistantAccountException neaE)
-                    //{
-                        //responseMessage =
-                        //        new ResponseMessage(MessageType.ERROR_MESSAGE,
-                        //        "That account does not exist!");
-                    //}
+                    catch (NonExistantAccountException neaE)
+                    {
+                        responseMessage =
+                                new ResponseMessage(MessageType.ERROR_MESSAGE,
+                                "That account does not exist!");
+                    }
 
                     // respond to client with ballance
                     outObjStream.writeObject( responseMessage );

@@ -66,11 +66,11 @@ public class TransactionClient {
         for (int counter = 0; counter < config.numTransactions; counter++)
         {
             // generate random values for transactions
-            int withdrawAccountNum = random.nextInt(
-                    config.minTransfer + config.maxTransfer + 1) 
-                    - config.minTransfer;
-            int depositAccountNum = random.nextInt(config.numAccounts + 1); // can pick same account to transfer out of and into
-            int ammountToTransfer = random.nextInt(config.numAccounts + 1); // can pick same account to transfer out of and into
+            int withdrawAccountNum = random.nextInt(config.numAccounts);    // can pick same account to transfer out of and into
+            int depositAccountNum = random.nextInt(config.numAccounts);     // can pick same account to transfer out of and into
+            int ammountToTransfer = random.nextInt(
+                    config.minTransfer + config.maxTransfer) 
+                    - config.minTransfer + 1;
             
             // start workers to carry out transactions
             ClientWorker worker = new ClientWorker(withdrawAccountNum, 

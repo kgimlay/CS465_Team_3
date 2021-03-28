@@ -12,6 +12,9 @@
   {
       // maps accounts to Locks
       private Hashtable<Object, Lock> lockTable;
+      private final String locStr = "LockManager";
+      private final String lockStr = "LOCKING";
+      private final String unlockStr = "UNLOCKING";
       
       public LockManager()
       {
@@ -25,6 +28,10 @@
           Lock foundLock;
           synchronized(this)
           {
+              // log
+              transaction.log(locStr, lockStr 
+                + " Account " + ((Account)object).accountNum + " type " + lockType);
+              
               // find the lock that pertains to the account number(object)
               if(this.lockTable.containsKey(object))
               {
@@ -49,12 +56,15 @@
       {
           Enumeration e = this.lockTable.elements();
           while(e.hasMoreElements())
-          {
+          {   
               Lock aLock = (Lock) (e.nextElement());
               /* transaction is a holder of this lock*/
               if(transaction.heldLocks.contains(aLock))
               {
                   aLock.release(transaction);
+                  
+                    // log
+                    transaction.log(locStr, unlockStr);
               }
           }
       }

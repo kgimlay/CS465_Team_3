@@ -19,6 +19,9 @@
       boolean lockingActive;
       int numOfAccounts;
       int initialBalance;
+      private final String locStr = "AccountManager";
+      private final String readStr = "READ ACCOUNT BALANCE";
+      private final String writeStr = "WRITE ACCOUNT BALANCE";
 
      /** Create a new AccountManager object. 
      * 
@@ -37,6 +40,7 @@
               // add newly created account to accounts array list @ num index
               accounts.add(num, new Account(num, initialBalance));
           }
+          System.out.println("Created " + numOfAccounts + " accounts.");
           
       }
       
@@ -46,8 +50,10 @@
      * @param accountNum - Number of the account to look for.
      * @return Account - The account object that was found.
      * @return null - The account was not found
+     * 
+     * @throws 
      */
-      Account getAccount(int accountNum)
+      Account getAccount(int accountNum) throws NonExistantAccountException
       {
           for(int index = 0; index < accounts.size(); index++)
           {
@@ -56,7 +62,7 @@
                   return accounts.get(index);
               }
           }
-          return null;
+          throw new NonExistantAccountException("");
       }
      /** Looks for the account associated with the specified account number,
       * then attempts to set a read lock on that account. The account balance
@@ -69,13 +75,16 @@
      * @return int - The account's balance
      */
       int read(int accountNum, Transaction transaction)
+              throws NonExistantAccountException
       {
-        // loop through accounts to find account associated w/ the accoutNum
-        Account account = getAccount(accountNum);
-        // try to set a reading lock
-        TransactionServer.lockManager.lock(account, transaction, Lock.LockType.READ);
-        // if successful (after waiting or no deadlock), return account's balance
-        return account.balance;
+          // log
+          transaction.log(locStr, readStr);
+          // loop through accounts to find account associated w/ the accoutNum
+          Account account = getAccount(accountNum);
+          // try to set a reading lock
+          TransactionServer.lockManager.lock(account, transaction, Lock.LockType.READ);
+          // if successful (after waiting or no deadlock), return account's balance
+          return account.balance;
       }
       
      /** Looks for the account associated with the specified account number,
@@ -89,7 +98,10 @@
      * @param balance - The account's new balance
      */
       void write(int accountNum, Transaction transaction, int balance)
+              throws NonExistantAccountException
       {
+          // log
+          transaction.log(locStr, writeStr);
           // loop through accounts to find account associated w/ the accountNum
           Account account = getAccount(accountNum);
           // try to set a writing lock
