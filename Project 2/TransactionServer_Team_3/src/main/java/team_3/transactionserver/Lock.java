@@ -29,14 +29,29 @@
           this.holders = new Vector();
           this.requestors = new Vector();
       }
-  
+
+      public isHoldersNotEmpty()
+      {
+          return !(this.holders.isEmpty()
+      }
+
+      public isLockTypeNotRead()
+      {
+          return !(aLockType == LockType.READ)
+      }
+
+      public isTransNotAloneInHolders()
+      {
+          return  !((this.holders.size() == 1) && (this.holders.contains(transaction)))
+      }
+
       public synchronized void acquire(Transaction transaction, LockType aLockType)
       {
           // if lock holders is empty, current trans only one in holders,
           // or if lock type is read then all of that is not conflicting
           // while(/*another transaction holds the lock in conflicting mode*/)
-          while((!(this.holders.isEmpty()) || !(aLockType == LockType.READ))
-                 || !((this.holders.size() == 1) && (this.holders.contains(transaction))))
+          while( isHoldersNotEmpty() || isLockTypeNotRead()
+                 || isTransNotAloneInHolders())
           {
               try
               {
