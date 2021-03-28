@@ -29,14 +29,14 @@
               if(this.lockTable.containsKey(object))
               {
                   // once found, try to acquire that lock
-                  foundLock = lockTable.get(object);
+                  foundLock = this.lockTable.get(object);
               }
 
               // if there isn't one, create it and add to the hashtable
               else
               {
                   Lock newLock = new Lock(object, lockType);
-                  lockTable.put(object, newLock);
+                  this.lockTable.put(object, newLock);
                   foundLock = newLock;
               }
           }
@@ -47,7 +47,7 @@
       // all the transaction's locks are released at once
       public synchronized void unLock(Transaction transaction)
       {
-          Enumeration e = lockTable.elements();
+          Enumeration e = this.lockTable.elements();
           while(e.hasMoreElements())
           {
               Lock aLock = (Lock) (e.nextElement());
