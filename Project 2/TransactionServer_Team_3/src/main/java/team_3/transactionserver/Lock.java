@@ -13,9 +13,9 @@
 
       // List of transactions who hold a lock
       // if there are more than 1, it could only be read lock
-      static Vector holders;
+      Vector holders;
       // List of transactions who need a lock
-      static Vector requestors;
+      Vector requestors;
       // types of locks a transaction can have
       enum LockType{READ, WRITE, NONE};
       LockType lockType;
@@ -33,17 +33,17 @@
           // if lock holders is empty, current trans only one in holders,
           // or if lock type is read then all of that is not conflicting
           // while(/*another transaction holds the lock in conflicting mode*/)
-          while((!(this.holders.isEmpty()) && !(aLockType == LockType.READ))
-                 || !((holders.size() == 1) && (holders.contains(transaction))))
+          while((!(this.holders.isEmpty()) || !(aLockType == LockType.READ))
+                 || !((this.holders.size() == 1) && (this.holders.contains(transaction))))
           {
               try
               {
                   // add trans to list of requestors
-                  requestors.addElement(transaction);
+                  this.requestors.addElement(transaction);
                   // while in conflict, wait
                   wait();
                   // when we exit wait, remove trans from list of requestors
-                  requestors.removeElement(transaction);
+                  this.requestors.removeElement(transaction);
               }
               catch(InterruptedException e)
               {
@@ -53,25 +53,25 @@
           }
   
           /*no TIDs hold lock*/
-          if(holders.isEmpty())
+          if(this.holders.isEmpty())
           {
-              holders.addElement(transaction);
+              this.holders.addElement(transaction);
               lockType = aLockType;
           }
           
           /*another transaction holds the read lock, share it*/
-          else if(!(holders.isEmpty()) && aLockType == LockType.READ)
+          else if(!(this.holders.isEmpty()) && aLockType == LockType.READ)
           {
               /*this transaction not a holder*/
-              if(!(holders.contains(transaction)))
+              if(!(this.holders.contains(transaction)))
               {
-                  holders.addElement(transaction);
+                  this.holders.addElement(transaction);
               }
           }
           
           /*this transaction is a holder but needs a more exclusive lock*/
-          else if((holders.contains(transaction) && aLockType == LockType.WRITE)
-                                               && holders.isEmpty())
+          else if((this.holders.contains(transaction) && aLockType == LockType.WRITE)
+                                               && this.holders.isEmpty())
           {
               this.promote();
           }
@@ -92,7 +92,7 @@
       public synchronized void release(Transaction transaction)
       {
           // remove this holder
-          holders.removeElement(transaction);
+          this.holders.removeElement(transaction);
           // set locktype to none
           this.lockType = LockType.NONE;
           
