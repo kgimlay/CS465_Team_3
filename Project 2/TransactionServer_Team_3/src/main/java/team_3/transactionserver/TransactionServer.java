@@ -85,12 +85,19 @@ public class TransactionServer
                     " Please pass 2 parameters: < (int) port>"+
                     " < (int) number of accounts>");
             System.exit(1);
-        }
+        }       
+        
         
         // read the port number
         try
         {
-            portNum = Integer.parseInt( arg[0] );
+            String[] split_arg0 = arg[0].split("=");
+            if( split_arg0[0] != "port" )
+            {
+                System.out.println("Please pass first argument as <port=#>.");
+                System.exit(1);
+            }
+            portNum = Integer.parseInt( split_arg0[1] );
             if( portNum < 0 || portNum > 65535 )
             {
                 System.out.println("Port must be between 0 and 65535.");
@@ -107,7 +114,15 @@ public class TransactionServer
         // read number of accounts
         try
         {
-            numAccounts = Integer.parseInt( arg[1] );
+            String[] split_arg1 = arg[1].split("=");
+            if( split_arg1[0] != "numAccounts" )
+            {
+                System.out.println("Please pass second argument as"+
+                        " <numAccounts=#>.");
+                System.exit(1);
+            }
+            
+            numAccounts = Integer.parseInt( split_arg1[1] );
             // consider limiting number of accounts
             if( 0 > numAccounts )
             {
