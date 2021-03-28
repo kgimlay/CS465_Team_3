@@ -75,7 +75,7 @@ public class TransactionServer
             // method in TransactionManager
             try
             {
-                transactionManager.openTransaction( serverSocket.accept());
+                transactionManager.newWorkerThread( serverSocket.accept());
             }
             catch( IOException ioE )
             {

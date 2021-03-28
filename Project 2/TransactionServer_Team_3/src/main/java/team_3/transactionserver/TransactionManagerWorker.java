@@ -27,6 +27,7 @@ public class TransactionManagerWorker implements Runnable
     private Transaction workerTransaction;
     private ObjectInputStream inObjStream;
     private ObjectOutputStream outObjStream;
+    private TransactionManager transManager;
 
     /**
      * @brief initialization of worker
@@ -35,11 +36,11 @@ public class TransactionManagerWorker implements Runnable
      * @param accManager reference to account manager
      */
     public TransactionManagerWorker( Socket socket,
-                                     Transaction transaction,
+                                     TransactionManager transManager,
                                      AccountManager accManager )
     {
         // initialize variables
-        this.workerTransaction = transaction;
+        this.transManager = transManager;
         this.accManager = accManager;
 
         // create object streams for communication with message objects
@@ -84,11 +85,8 @@ public class TransactionManagerWorker implements Runnable
                 if( messageObj instanceof OpenTransMessage )
                 {
                     System.out.println("Received open transaction message");
-                    
-                    // TODO: create transaction object here actually
-                    isOpened = true;
-                    
-                    
+                    workerTransaction = transManager.newTransaction();
+                    isOpened = true; 
                     // respond to client with transaction ID
                     Message responseMessage =
                             new ResponseMessage(MessageType

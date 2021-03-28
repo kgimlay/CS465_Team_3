@@ -31,22 +31,29 @@ public class TransactionManager
     }    
     
     /**
-     * @brief creates a new transaction object adds it to the transaction list
-     * then takes socket object from the transaction server and gives it 
-     * to a newly created TransactionManagerWorker.
+     * @brief creates a new TransactionManagerWorker, to handle a transaction
      */
-    public void openTransaction( Socket socket )
+    public void newWorkerThread( Socket socket )
     {
         System.out.println("Open transaction called");
-        // new transaction added to transactions vector and new worker thread
-        Transaction newTransaction = new Transaction();
-        transactions.add(newTransaction);
         Thread workerThread = new Thread( new TransactionManagerWorker
                                                 ( socket, 
-                                                 newTransaction, 
-                                                 accManager) );
+                                                  this, 
+                                                  accManager) );
         workerThread.start();
         System.out.println("New transaction started with new worker.");
+    }
+    
+    /**
+     * @brief creates/returns a new transaction object and adds it the the 
+     * transactions vector
+     * @return a new unique transaction object
+     */
+    public Transaction newTransaction()
+    {
+        Transaction newTransaction = new Transaction();
+        transactions.add(newTransaction);
+        return newTransaction;
     }
     
     /**
@@ -67,7 +74,7 @@ public class TransactionManager
         else
         {
             // send an error?
-            System.out.println("Removal to transaction failed.");
+            System.out.println("Removal of transaction failed.");
         }
     }
 }
