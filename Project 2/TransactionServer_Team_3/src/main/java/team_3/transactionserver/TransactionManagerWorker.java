@@ -25,6 +25,7 @@ public class TransactionManagerWorker implements Runnable
     // initialize variables and objects
     private AccountManager accManager;
     private Transaction workerTransaction;
+    private TransactionManager transManager;
     private ObjectInputStream inObjStream;
     private ObjectOutputStream outObjStream;
     private final String locStr = "TransactionManagerWorker";
@@ -87,6 +88,7 @@ public class TransactionManagerWorker implements Runnable
                 {
                     // log
                     this.workerTransaction.log(locStr, openTransStr);
+                    workerTransaction = transManager.newTransaction();
 
                     // TODO: create transaction object here actually
                     isOpened = true;
