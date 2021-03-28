@@ -92,7 +92,7 @@ public class TransactionServer
         try
         {
             String[] split_arg0 = arg[0].split("=");
-            if( split_arg0[0] != "port" )
+            if( split_arg0[0].equals("port"))
             {
                 System.out.println("Please pass first argument as <port=#>.");
                 System.exit(1);
@@ -115,7 +115,7 @@ public class TransactionServer
         try
         {
             String[] split_arg1 = arg[1].split("=");
-            if( split_arg1[0] != "numAccounts" )
+            if( split_arg1[0].equals("numAccounts"))
             {
                 System.out.println("Please pass second argument as"+
                         " <numAccounts=#>.");
