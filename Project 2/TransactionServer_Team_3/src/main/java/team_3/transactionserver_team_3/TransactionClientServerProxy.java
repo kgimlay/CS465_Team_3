@@ -210,7 +210,8 @@ public class TransactionClientServerProxy {
      * @throws IOException.
      */
     private Message messageAndWait(Message message) 
-            throws NonMessageObjectRecievedException, IOException
+            throws NonMessageObjectRecievedException, IOException, 
+            UnexpectedResponseMessageException
     {
         try
         {
@@ -224,6 +225,16 @@ public class TransactionClientServerProxy {
                 // this is really just to pass on the handling to the catch
                 // statement below
                 throw new ClassNotFoundException();
+            }
+            
+            // if an error message, throw an exception
+            if (recievedObj instanceof ResponseMessage
+                    && ((ResponseMessage)recievedObj).msgType 
+                        == MessageType.ERROR_MESSAGE)
+            {
+                throw new UnexpectedResponseMessageException("An error message"
+                    + " was received!\n\n" 
+                    + ((ResponseMessage)recievedObj).message);
             }
 
             // return the message if there was no issue

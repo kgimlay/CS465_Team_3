@@ -6,8 +6,8 @@
 package team_3.transactionserver_team_3;
 
 import java.net.ServerSocket;
-import java.net.InetAddress;
 import java.io.IOException;
+import java.util.Random;
 
 
 /** Transaction Client is the main entrance to the client application for the
@@ -43,8 +43,7 @@ public class TransactionClientMain {
             System.exit(1);
         }
         
-        // start client, generate randoms and list of transactions/instructions
-        // to perform
+        // start client
         try
         {
             serverSocket = new ServerSocket();
@@ -55,10 +54,29 @@ public class TransactionClientMain {
                     + "socket!\n\n" + ioE);
             System.exit(1);
         }
+        Random random = new Random();
         
         // perform transactions
         // create client workers in threads to run the transactions
-        System.out.println("Made it!");
+        for (int counter = 0; counter < clientConfig.numTransactions; counter++)
+        {
+            // generate random values for transactions
+            int withdrawAccountNum = random
+                    .nextInt(clientConfig.minTransfer 
+                            + clientConfig.maxTransfer + 1) 
+                    - clientConfig.minTransfer;
+            int depositAccountNum = random.nextInt(clientConfig.numAccounts + 1);
+            int ammountToTransfer = random.nextInt(clientConfig.numAccounts + 1);
+            
+            // start workers to carry out transactions
+            ClientWorker worker = new ClientWorker(withdrawAccountNum, 
+                    depositAccountNum, 
+                    ammountToTransfer, 
+                    clientConfig.serverIpStr, 
+                    clientConfig.serverPort);
+            Thread workerThread = new Thread( worker );
+            workerThread.start();   // todo: start in another loop to let start closer to gether in time!
+        }
     }
     
     
@@ -90,7 +108,7 @@ public class TransactionClientMain {
                 int numAccounts = parseNumAccountsArg(arguments[1]);
 
                 // string of IP
-                String ipString = parseIpArg(arguments[2]);
+                String ipString = arguments[2];
 
                 // port
                 int port = parsePortArg(arguments[3]);
@@ -100,6 +118,16 @@ public class TransactionClientMain {
 
                 // maximum amount to transfer
                 int maxToTransfer = parseMaxTransferArg(arguments[5]);
+                
+                // check that all mins are not more than all maxes
+                // bounds of amount to transfer (only min-max for now)
+                if (minToTransfer > maxToTransfer)
+                {
+                    throw new MalformedCommandLineArgumentException("Maximum  "
+                    + "amount to transfer is less than the minimum amount"
+                    + " to transfer! Min: " + minToTransfer + " Max: " 
+                    + maxToTransfer);
+                }
 
                 // create config and pass back
                 return (new Config(numTrans, numAccounts, ipString, 
@@ -130,7 +158,13 @@ public class TransactionClientMain {
     {
         try
         {
-            return Integer.parseInt(arg);
+            int numTrans = Integer.parseInt(arg);
+            if (numTrans < 0)
+            {
+                throw new MalformedCommandLineArgumentException("Cannot "
+                    + "have less than zero transactions! Value: " + arg);
+            }
+            return numTrans;
         }
         catch (NumberFormatException nfE)
         {
@@ -159,23 +193,6 @@ public class TransactionClientMain {
         {
             throw new MalformedCommandLineArgumentException("Bad number of "
                 + "accounts! Value: " + arg);
-        }
-    }
-    
-    /**
-     * 
-     */
-    private static String parseIpArg(String arg) 
-            throws MalformedCommandLineArgumentException
-    {
-        try
-        {
-            return arg;
-        }
-        catch (NumberFormatException nfE)
-        {
-            throw new MalformedCommandLineArgumentException("Bad IP address!"
-                +  " Value: " + arg);
         }
     }
     
@@ -234,7 +251,7 @@ public class TransactionClientMain {
         try
         {
             int maxTransfer = Integer.parseInt(arg);
-            if (maxTransfer < 0)
+            if (maxTransfer < 0 )
             {
                 throw new MalformedCommandLineArgumentException("Cannot "
                     + "transfer less than zero! Value: " + arg);

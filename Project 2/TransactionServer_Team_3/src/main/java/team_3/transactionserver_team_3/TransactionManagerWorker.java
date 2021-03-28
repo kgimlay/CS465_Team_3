@@ -7,11 +7,9 @@ package team_3.transactionserver_team_3;
 
 // imports
 import java.net.Socket;
-import java.lang.Runnable;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.IOException;
-import java.lang.ClassNotFoundException;
 
 /**
  * @brief A single thread used to handle a transaction between two accounts.
@@ -136,9 +134,9 @@ public class TransactionManagerWorker implements Runnable
                     // intead
                     //catch (NonExistantAccountException neaE)
                     //{
-                        responseMessage =
-                                new ResponseMessage(MessageType.ERROR_MESSAGE,
-                                "That account does not exist!");
+                        //responseMessage =
+                        //        new ResponseMessage(MessageType.ERROR_MESSAGE,
+                        //        "That account does not exist!");
                     //}
 
                     // respond to client with ballance
@@ -172,9 +170,9 @@ public class TransactionManagerWorker implements Runnable
                     // intead
                     //catch (NonExistantAccountException neaE)
                     //{
-                        responseMessage =
-                                new ResponseMessage(MessageType.ERROR_MESSAGE,
-                                "That account does not exist!");
+                        //responseMessage =
+                        //        new ResponseMessage(MessageType.ERROR_MESSAGE,
+                        //        "That account does not exist!");
                     //}
 
                     // respond to client with ballance
@@ -194,11 +192,13 @@ public class TransactionManagerWorker implements Runnable
         }
         catch( IOException ioE )
         {
-            System.out.println("Error in recieving message"+ioE);
+            System.out.println("Error in recieving message "+ioE);
+            // todo: close the transaction at this point, if open
         }
         catch (ClassNotFoundException clE)
         {
             System.out.println("Error in recieving incoming message. " + clE);
+            // todo: close the transaction at this point, if open
         }
     }
 }
