@@ -35,20 +35,8 @@ public class TransactionServer
      */
     public static void main(String args[])
     {
-        // check if argument length is valid
-        if( args.length != 2 )
-        {
-            System.out.println("Incorrect number of parameters.\n" +
-                    " Please pass 2 parameters: < (int) port>"+
-                    " < (int) number of accounts>");
-            System.exit(1);
-        }
-
-        checkArgs( args[0], args[1], portNum, numAccounts );
-
-        portNum = Integer.parseInt( args[0] );
-
-        // initialize account manager with number of accounts parameter
+        // check args and assign if they pass
+        checkArgs( args, portNum, numAccounts );
 
         // value 10 in currently hard coded for testing, may need to
         // change in the furure to allow starting account ballances to
@@ -86,13 +74,22 @@ public class TransactionServer
         }
     }
 
-    private static void checkArgs( String arg0, String arg1, int portNum,
+    private static void checkArgs( String arg[], int portNum,
                                    int numAcc)
     {
+        // check if argument length is valid
+        if( arg.length != 2 )
+        {
+            System.out.println("Incorrect number of parameters.\n" +
+                    " Please pass 2 parameters: < (int) port>"+
+                    " < (int) number of accounts>");
+            System.exit(1);
+        }
+        
         // read the port number
         try
         {
-            portNum = Integer.parseInt( arg0 );
+            portNum = Integer.parseInt( arg[0] );
             if( portNum < 0 || portNum > 65535 )
             {
                 System.out.println("Port must be between 0 and 65535.");
@@ -109,7 +106,7 @@ public class TransactionServer
         // read number of accounts
         try
         {
-            numAcc = Integer.parseInt( arg1 );
+            numAcc = Integer.parseInt( arg[1] );
             // consider limiting number of accounts
             if( 0 > numAcc )
             {
