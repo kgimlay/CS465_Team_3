@@ -171,7 +171,15 @@ public class TransactionClient {
     {
         try
         {
-            int numTrans = Integer.parseInt(arg);
+            String[] split = arg.split("=");
+            if( !split[0].equals("numTrans"))
+            {
+                 throw new MalformedCommandLineArgumentException("Please pass"+
+                         " number of transactions argument as <numTrans=#>. "
+                         + arg);
+            }
+            
+            int numTrans = Integer.parseInt(split[1]);
             if (numTrans < 1)
             {
                 throw new MalformedCommandLineArgumentException("Cannot "
@@ -199,7 +207,14 @@ public class TransactionClient {
     {
         try
         {
-            int numAccounts = Integer.parseInt(arg);
+            String[] split = arg.split("=");
+            if( !split[0].equals("numAccounts"))
+            {
+                throw new MalformedCommandLineArgumentException("Please pass"+
+                         " number of accounts argument as <numAccounts=#>. "
+                         + arg);
+            }
+            int numAccounts = Integer.parseInt(split[1]);
             if (numAccounts < 1)
             {
                 throw new MalformedCommandLineArgumentException("Cannot "
@@ -225,7 +240,14 @@ public class TransactionClient {
     {
         try
         {
-            int portNum = Integer.parseInt(arg);
+            String[] split = arg.split("=");
+            if( !split[0].equals("port"))
+            {
+                throw new MalformedCommandLineArgumentException("Please pass"+
+                         " port number argument as <port=#>. "
+                         + arg);
+            }
+            int portNum = Integer.parseInt(split[1]);
             if (portNum < 0 || portNum > 65525)
             {
                 throw new MalformedCommandLineArgumentException("Port number "
@@ -252,7 +274,15 @@ public class TransactionClient {
     {
         try
         {
-            int minTransfer = Integer.parseInt(arg);
+            String[] split = arg.split("=");
+            if( !split[0].equals("minTransfer"))
+            {
+                throw new MalformedCommandLineArgumentException("Please pass"+
+                         " number of minimum transfers argument as "+
+                        "<minTransfer=#>. "
+                         + arg);
+            }
+            int minTransfer = Integer.parseInt(split[0]);
             if (minTransfer < 1)
             {
                 throw new MalformedCommandLineArgumentException("Cannot "
@@ -275,7 +305,15 @@ public class TransactionClient {
     {
         try
         {
-            int maxTransfer = Integer.parseInt(arg);
+            String[] split = arg.split("=");
+            if( !split[0].equals("maxTransfer"))
+            {
+                throw new MalformedCommandLineArgumentException("Please pass"+
+                         " number of maximum transfers argument as "+
+                        "<maxTransfer=#>. "
+                         + arg);
+            }
+            int maxTransfer = Integer.parseInt(split[1]);
             if (maxTransfer < 0 )
             {
                 throw new MalformedCommandLineArgumentException("Cannot "
