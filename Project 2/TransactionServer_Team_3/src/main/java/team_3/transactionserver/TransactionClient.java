@@ -62,6 +62,9 @@ public class TransactionClient {
         // random generator for picking account numbers and amount to transfer
         // between accounts
         Random random = new Random();
+        System.out.println("Running client with:");
+        System.out.println("Transactions: "+config.numTransactions);
+        System.out.println("Accounts: "+config.numAccounts);
         
         // create client workers in threads to run the transactions
         for (int counter = 0; counter < config.numTransactions; counter++)
@@ -317,7 +320,8 @@ public class TransactionClient {
     }
     
     /**
-     * 
+     * parses the maxTransferArg from the command line
+     * throws error if argument is not valid
      */
     private static int parseMaxTransferArg(String arg) 
             throws MalformedCommandLineArgumentException
