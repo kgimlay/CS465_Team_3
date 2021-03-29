@@ -48,7 +48,7 @@ public class Transaction
      */
     public void printLog()
     {
-        String printStr = "\nTransaction #" + this.id + " commited. Log:\n";
+        String printStr = "\nTransaction #" + this.id + " committed. Log:\n";
         for (int index = 0; index < this.log.size(); index++)
         {
             printStr += "   " + this.log.get(index) + "\n";
