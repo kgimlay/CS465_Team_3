@@ -47,7 +47,10 @@
                   foundLock = newLock;
               }
           }
+          
+          // get lock
           foundLock.acquire(transaction, lockType);
+          transaction.heldLocks.add(foundLock);
       }
 
       // synchronize this one because we want to remove all entries

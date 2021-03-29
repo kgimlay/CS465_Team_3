@@ -26,6 +26,7 @@ public class TransactionManagerWorker implements Runnable
     private AccountManager accManager;
     private Transaction workerTransaction;
     private TransactionManager transManager;
+    private LockManager lockManager;
     private ObjectInputStream inObjStream;
     private ObjectOutputStream outObjStream;
     private final String locStr = "TransactionManagerWorker";
@@ -37,17 +38,20 @@ public class TransactionManagerWorker implements Runnable
 
     /**
      * @brief initialization of worker
+     * @param lockManager
+     * @param transManager
      * @param socket socket connection to the client
-     * @param transaction unique transaction object
      * @param accManager reference to account manager
      */
     public TransactionManagerWorker( Socket socket,
                                      TransactionManager transManager,
-                                     AccountManager accManager )
+                                     AccountManager accManager,
+                                     LockManager lockManager)
     {
         // initialize variables
         this.transManager = transManager;
         this.accManager = accManager;
+        this.lockManager = lockManager;
 
         // create object streams for communication with message objects
         try
@@ -86,13 +90,12 @@ public class TransactionManagerWorker implements Runnable
                 // if message is of open type, disregard message
                 if( messageObj instanceof OpenTransMessage )
                 {
-                    // log
-                    workerTransaction = transManager.newTransaction();
-                    this.workerTransaction.log(locStr, openTransStr);
-
-                    // TODO: create transaction object here actually
+                    // create transaction object here actually
+                    this.workerTransaction = transManager.newTransaction();
                     isOpened = true;
 
+                    // log
+                    this.workerTransaction.log(locStr, openTransStr);
 
                     // respond to client with transaction ID
                     Message responseMessage =
@@ -115,6 +118,9 @@ public class TransactionManagerWorker implements Runnable
 
                     // print log for transaction
                     this.workerTransaction.printLog();
+                    
+                    // release locks
+                    this.lockManager.unLock(this.workerTransaction);
 
                     // end loop, set loop flag to false
                     isClosed = true;

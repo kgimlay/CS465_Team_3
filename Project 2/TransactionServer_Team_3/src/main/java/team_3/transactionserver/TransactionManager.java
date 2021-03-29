@@ -22,12 +22,15 @@ public class TransactionManager
     // initialize objects and variables
     private Vector<Transaction> transactions;
     private AccountManager accManager;
+    private LockManager lockManager;
     
-    public TransactionManager( AccountManager accManager )
+    public TransactionManager( AccountManager accManager, 
+            LockManager lockManager )
     {
         // initialize varibales
         this.transactions = new Vector<Transaction>();
         this.accManager = accManager;
+        this.lockManager = lockManager;
     }    
     
     /**
@@ -39,7 +42,8 @@ public class TransactionManager
         Thread workerThread = new Thread( new TransactionManagerWorker
                                                 ( socket, 
                                                   this, 
-                                                  accManager) );
+                                                  accManager,
+                                                  lockManager) );
         workerThread.start();
         System.out.println("New transaction started with new worker.");
     }

@@ -22,7 +22,7 @@ public class TransactionServer
     static AccountManager accountManager;
     static TransactionManager transactionManager;
     static ServerSocket serverSocket;
-    static LockManager lockManager = new LockManager();
+    static LockManager lockManager;
     static int numAccounts;
     static int portNum;
 
@@ -42,7 +42,9 @@ public class TransactionServer
         // change in the furure to allow starting account ballances to
         // be passed in
         accountManager = new AccountManager( numAccounts , 10 );
-        transactionManager = new TransactionManager( accountManager );
+        lockManager = new LockManager();
+        transactionManager = new TransactionManager( accountManager,
+                lockManager );
 
         // open server
         try
@@ -64,8 +66,7 @@ public class TransactionServer
             // method in TransactionManager
             try
             {
-                transactionManager.newWorkerThread( serverSocket.accept());
-                System.out.println("Here");
+                transactionManager.newWorkerThread( serverSocket.accept() );
             }
             catch( IOException ioE )
             {

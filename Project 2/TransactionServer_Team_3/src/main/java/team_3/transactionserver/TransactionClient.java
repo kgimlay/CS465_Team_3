@@ -66,8 +66,13 @@ public class TransactionClient {
         for (int counter = 0; counter < config.numTransactions; counter++)
         {
             // generate random values for transactions
-            int withdrawAccountNum = random.nextInt(config.numAccounts);    // can pick same account to transfer out of and into
-            int depositAccountNum = random.nextInt(config.numAccounts);     // can pick same account to transfer out of and into
+            int withdrawAccountNum = random.nextInt(config.numAccounts);
+            int depositAccountNum;
+            do
+            {
+                depositAccountNum = random.nextInt(config.numAccounts);
+            }
+            while (depositAccountNum == withdrawAccountNum);
             int ammountToTransfer = random.nextInt(
                     config.minTransfer + config.maxTransfer) 
                     - config.minTransfer + 1;

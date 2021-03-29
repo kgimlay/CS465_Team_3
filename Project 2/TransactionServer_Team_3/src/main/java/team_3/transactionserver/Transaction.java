@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class Transaction
 {
     public int id;
-    public ArrayList<Lock> heldLocks;
-    public ArrayList<String> log;
+    public ArrayList heldLocks;
+    public ArrayList log;
     private static int transactionCounter = 0;
     
     /**
@@ -26,6 +26,7 @@ public class Transaction
         transactionCounter ++;
         this.id = transactionCounter;
         this.log = new ArrayList<String>();
+        this.heldLocks = new ArrayList<Lock>();
     }
     
     /**
