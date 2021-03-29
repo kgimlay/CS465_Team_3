@@ -8,8 +8,6 @@ package team_3.transactionserver;
 import java.net.ServerSocket;
 import java.net.InetAddress;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @brief Initializes server by reading properties, according to which the
@@ -56,6 +54,15 @@ public class TransactionServer
             System.out.println("Server opened at " 
                     + serverSocket.getInetAddress() + ":"
                     + serverSocket.getLocalPort());
+            int branchTotal = 0;
+            for (int index = 0; index < accountManager.accounts.size(); index++)
+            {
+                branchTotal += accountManager.accounts.get(index).balance;
+                System.out.println("Account #" 
+                        + accountManager.accounts.get(index).accountNum 
+                        + "\tBalance: $" + accountManager.accounts.get(index).balance);
+            }
+            System.out.println("Accounts Total: $" + branchTotal);
             System.out.println("==========================================\n");
         }
         catch( IOException ioE )
