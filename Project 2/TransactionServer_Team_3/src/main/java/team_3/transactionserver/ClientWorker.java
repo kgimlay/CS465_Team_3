@@ -32,8 +32,6 @@ public class ClientWorker implements Runnable
      this.transferAmount = transAmount;
      this.serverIp = ip;
      this.serverPort = port;
-     
-     System.out.println(withAccId + " " + depAccId + " " + transAmount);
     }
             
     @Override

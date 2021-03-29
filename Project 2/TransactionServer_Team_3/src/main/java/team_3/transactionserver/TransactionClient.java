@@ -109,17 +109,17 @@ public class TransactionClient {
         {
             try
             {
-                // number of transactions to run
-                int numTrans = parseNumTransArg(arguments[0]);
-
-                // number of accounts
-                int numAccounts = parseNumAccountsArg(arguments[1]);
-
                 // string of IP
-                String ipString = arguments[2];
+                String ipString = parseIpAddressArg(arguments[0]);
 
                 // port
-                int port = parsePortArg(arguments[3]);
+                int port = parsePortArg(arguments[1]);
+                
+                // number of transactions to run
+                int numTrans = parseNumTransArg(arguments[2]);
+
+                // number of accounts
+                int numAccounts = parseNumAccountsArg(arguments[3]);
 
                 // minimum amount to transfer
                 int minToTransfer = parseMinTransferArg(arguments[4]);
@@ -149,10 +149,9 @@ public class TransactionClient {
         else
         {
             // print usage and reutrn null if config incorrect
-            System.out.println("Usage <number of transactions> <number of "
-                    + "accounts> <ip address of server> <port of server> "
-                    + "<minimum amount to transfer> <maximum amount to "
-                    + "transfer>");
+            System.out.println("Usage: <ipAddress=#> <port=#> "
+                    + "<numTrans=#> <numAccounts=#> "
+                    + "<minTransfer=#> <manTransfer=#>");
         }
         return null;
     }
@@ -229,6 +228,25 @@ public class TransactionClient {
         }
     }
     
+    /** Parses the IP address out of the string given. If the IP address
+     * cannot be parsed, a malformed command line argument
+     * exception is thrown.
+     * 
+     * @throws MalformedCommandLineArgumentException.
+     */
+    private static String parseIpAddressArg(String arg)
+            throws MalformedCommandLineArgumentException
+    {
+        String[] split = arg.split("=");
+        if( !split[0].equals("ipAddress"))
+        {
+            throw new MalformedCommandLineArgumentException("Please pass"+
+                     " the IP address as <ipAddress=#>. "
+                     + arg);
+        }
+        return split[1];
+    }
+    
     /** Parses the port number out of the string given. If the port number is
      * not in the correct range or the port number is not parse-able to an
      * integer, then a malformed command line argument exception is thrown.
@@ -282,7 +300,7 @@ public class TransactionClient {
                         "<minTransfer=#>. "
                          + arg);
             }
-            int minTransfer = Integer.parseInt(split[0]);
+            int minTransfer = Integer.parseInt(split[1]);
             if (minTransfer < 1)
             {
                 throw new MalformedCommandLineArgumentException("Cannot "
