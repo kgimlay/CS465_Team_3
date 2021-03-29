@@ -119,6 +119,9 @@ public class TransactionManagerWorker implements Runnable
                     
                     // release locks
                     this.lockManager.unLock(this.workerTransaction);
+                    
+                    // delete transaction object
+                    this.transManager.removeTransaction(workerTransaction);
 
                     // end loop, set loop flag to false
                     isClosed = true;

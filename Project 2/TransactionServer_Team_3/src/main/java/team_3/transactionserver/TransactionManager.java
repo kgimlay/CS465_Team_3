@@ -9,6 +9,7 @@ package team_3.transactionserver;
 import java.net.Socket;
 import java.util.Vector;
 import java.lang.Thread;
+import java.util.ArrayList;
 
 /**
   * @brief Oversees all transactions. When a socket object is received 
@@ -64,18 +65,14 @@ public class TransactionManager
      */
     public void removeTransaction( Transaction toBeRemoved )
     {
-        // may not need this conditional, since transactions remove
-        // themselves, but can be good for checking for errors
-        // if the remove is successful it returns true
-        if( transactions.remove( toBeRemoved ) )
-        {
-            // send a confirm?
-            System.out.println("Transaction removed successfuly.");
-        }
-        else
-        {
-            // send an error?
-            System.out.println("Removal of transaction failed.");
-        }
+        // remove transaction from list
+        this.transactions.remove(toBeRemoved);
+    }
+    
+    /** Getter for the transaction list.
+     */
+    public Vector getTransactions()
+    {
+        return this.transactions;
     }
 }

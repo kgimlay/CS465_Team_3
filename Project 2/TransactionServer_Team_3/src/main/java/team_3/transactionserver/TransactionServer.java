@@ -43,7 +43,7 @@ public class TransactionServer
         // value 10 in currently hard coded for testing, may need to
         // change in the future to allow starting account balances to
         // be passed in
-        accountManager = new AccountManager( numAccounts , 10 );
+        accountManager = new AccountManager( numAccounts, 10 );
         lockManager = new LockManager();
         transactionManager = new TransactionManager( accountManager,
                 lockManager );
@@ -53,7 +53,9 @@ public class TransactionServer
         {
             serverSocket = new ServerSocket( portNum, -1,
                                        InetAddress.getByName("localhost"));
-            System.out.println("Server opened successfuly. " + serverSocket);
+            System.out.println("Server opened at " 
+                    + serverSocket.getInetAddress() + ":"
+                    + serverSocket.getLocalPort());
             System.out.println("==========================================\n");
         }
         catch( IOException ioE )
@@ -77,7 +79,8 @@ public class TransactionServer
         }
         
         // sum and report and exit
-        System.out.print("\n\n");
+        System.out.println("\n==========================================");
+        System.out.println("\nAccounts Summary:");
         int branchTotal = 0;
         for (int index = 0; index < accountManager.accounts.size(); index++)
         {
@@ -87,7 +90,18 @@ public class TransactionServer
                     + "\tBalance: $" + accountManager.accounts.get(index).balance);
         }
         
-        System.out.println("Branch Total: $" + branchTotal);
+        System.out.println("\nAccounts Total: $" + branchTotal);
+        
+        System.out.println("\nTransactions suspected to be deadlocked:");
+        for (int index = 0; 
+                index < transactionManager.getTransactions().size(); 
+                index++)
+        {
+            System.out.println("Transaction #" 
+                    + ((Transaction)transactionManager
+                            .getTransactions().get(index)).id);
+        }
+        
         System.exit(0);
     }
 
