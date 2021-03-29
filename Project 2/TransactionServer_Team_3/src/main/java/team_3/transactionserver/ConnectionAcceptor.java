@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 /**
- *
+ * 
  * @author kevinimlay
  */
 public class ConnectionAcceptor implements Runnable
@@ -17,8 +17,8 @@ public class ConnectionAcceptor implements Runnable
     
     /**
      * 
-     * @param transManager
-     * @param serverSocket 
+     * @param transManager current transaction manager
+     * @param serverSocket server socket object
      */
     public ConnectionAcceptor(TransactionManager transManager, 
             ServerSocket serverSocket)
@@ -28,7 +28,7 @@ public class ConnectionAcceptor implements Runnable
     }
     
     /**
-     * 
+     * loops and accepts connections to pass to transaction manager
      */
     @Override
     public void run()
@@ -36,7 +36,7 @@ public class ConnectionAcceptor implements Runnable
         // begin server loop
         while( true )
         {
-            // when recieving a new connection/socket call openTransaction
+            // when recieving a new connection/socket call newWorkerThread
             // method in TransactionManager
             try
             {

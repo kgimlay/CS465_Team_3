@@ -5,7 +5,7 @@
 package team_3.transactionserver;
 
 /**
- *
+ * message used to close transaction
  * @author kevinimlay
  */
 public class CloseTransMessage extends Message

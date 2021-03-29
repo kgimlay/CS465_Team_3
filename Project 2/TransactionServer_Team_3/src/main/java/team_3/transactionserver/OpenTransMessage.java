@@ -13,6 +13,7 @@ import java.util.Optional;
  */
 public class OpenTransMessage extends Message
 {   
+    // empty constructor
     public OpenTransMessage()
     {
         

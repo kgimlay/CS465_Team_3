@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
- *
+ * @brief client worker is a single thread doing a transaction
  * @author Randy Duerinck
  * @author Kevin Imlay
  */

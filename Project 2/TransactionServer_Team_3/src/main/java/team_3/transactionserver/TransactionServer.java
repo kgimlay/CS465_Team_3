@@ -39,9 +39,7 @@ public class TransactionServer
         // check args and assign if they pass
         checkArgs( args );
 
-        // value 10 in currently hard coded for testing, may need to
-        // change in the future to allow starting account balances to
-        // be passed in
+        
         accountManager = new AccountManager( numAccounts, 10, doLock );
         lockManager = new LockManager();
         transactionManager = new TransactionManager( accountManager,
