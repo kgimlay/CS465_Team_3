@@ -21,6 +21,11 @@ public class Lock
     // The account the lock is associated with
     Object account;
 
+    private final String locStr = "Lock";
+    private final String waitWriteStr = "WAITING ON WRITE LOCK";
+    private final String waitReadStr = "WAITING ON READ LOCK";
+    private final String noReadLockStr = "NO READ LOCK HELD";
+
     public Lock(Object account, LockType lockType)
     {
         this.account = account;
@@ -64,7 +69,8 @@ public class Lock
         {
             try
             {
-                System.out.println("Waiting on write lock " + ((Account)this.account).accountNum);
+                //System.out.println("Waiting on write lock " + ((Account)this.account).accountNum);
+                transaction.log(locStr, waitWriteStr);
                 
                 // add trans to list of requestors
                 this.requestors.addElement(transaction);
@@ -104,7 +110,8 @@ public class Lock
                 {
                     try
                     {
-                        System.out.println("Waiting on read locks " + this.holders);
+//                        System.out.println("Waiting on read locks " + this.holders);
+                          transaction.log(locStr, waitReadStr);
                         
                         // add trans to list of requestors
                         this.requestors.addElement(transaction);
@@ -129,7 +136,8 @@ public class Lock
             // no read lock, problem!
             else
             {
-                System.out.println("Transaction does not hold a read lock!");
+//                System.out.println("Transaction does not hold a read lock!");
+                transaction.log(locStr, noReadLockStr);
             }
         }
     }
