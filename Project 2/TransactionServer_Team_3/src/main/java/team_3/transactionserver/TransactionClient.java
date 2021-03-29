@@ -44,6 +44,7 @@ public class TransactionClient {
         
         // start the client
         runClient(clientConfig);
+        
     }
     
     
@@ -151,7 +152,7 @@ public class TransactionClient {
             // print usage and reutrn null if config incorrect
             System.out.println("Usage: <ipAddress=#> <port=#> "
                     + "<numTrans=#> <numAccounts=#> "
-                    + "<minTransfer=#> <manTransfer=#>");
+                    + "<minTransfer=#> <maxTransfer=#>");
         }
         return null;
     }
