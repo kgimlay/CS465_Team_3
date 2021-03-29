@@ -77,13 +77,13 @@
       int read(int accountNum, Transaction transaction)
               throws NonExistantAccountException
       {
-          // log
-          transaction.log(locStr, readStr);
           // loop through accounts to find account associated w/ the accoutNum
           Account account = getAccount(accountNum);
           // try to set a reading lock
           TransactionServer.lockManager.lock(account, transaction, Lock.LockType.READ);
           // if successful (after waiting or no deadlock), return account's balance
+          transaction.log(locStr, readStr + " Account #" + accountNum
+            + " | Balance read $" + account.balance);
           return account.balance;
       }
       
@@ -100,14 +100,14 @@
       void write(int accountNum, Transaction transaction, int balance)
               throws NonExistantAccountException
       {
-          // log
-          transaction.log(locStr, writeStr);
           // loop through accounts to find account associated w/ the accountNum
           Account account = getAccount(accountNum);
           // try to set a writing lock
           TransactionServer.lockManager.lock(account, transaction, Lock.LockType.WRITE);
           // update balance if successful (after waiting or no deadlock)
           account.setBalance(balance);
+          transaction.log(locStr, writeStr + " Account #" + accountNum
+            + " | Balance wrote $" + account.balance);
       }
   }
   

@@ -79,10 +79,14 @@ public class TransactionServer
         }
         
         // sum and report and exit
+        System.out.print("\n\n");
         int branchTotal = 0;
         for (int index = 0; index < accountManager.accounts.size(); index++)
         {
             branchTotal += accountManager.accounts.get(index).balance;
+            System.out.println("Account #" 
+                    + accountManager.accounts.get(index).accountNum 
+                    + "Balance $" + accountManager.accounts.get(index).balance);
         }
         
         System.out.println("Branch Total: $" + branchTotal);

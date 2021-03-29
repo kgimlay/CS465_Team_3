@@ -38,14 +38,12 @@ public class TransactionManager
      */
     public void newWorkerThread( Socket socket )
     {
-        System.out.println("Open transaction called");
         Thread workerThread = new Thread( new TransactionManagerWorker
                                                 ( socket, 
                                                   this, 
                                                   accManager,
                                                   lockManager) );
         workerThread.start();
-        System.out.println("New transaction started with new worker.");
     }
     
     /**
@@ -66,7 +64,6 @@ public class TransactionManager
      */
     public void removeTransaction( Transaction toBeRemoved )
     {
-        System.out.println("Remove transaction called.");
         // may not need this conditional, since transactions remove
         // themselves, but can be good for checking for errors
         // if the remove is successful it returns true

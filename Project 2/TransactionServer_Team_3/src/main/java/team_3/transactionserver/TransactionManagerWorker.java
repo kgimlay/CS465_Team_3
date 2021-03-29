@@ -32,8 +32,6 @@ public class TransactionManagerWorker implements Runnable
     private final String locStr = "TransactionManagerWorker";
     private final String openTransStr = "OPEN TRANSACTION";
     private final String closeTransStr = "CLOSE TRANSACTION";
-    private final String readAccStr = "READ BALANCE OF ACCOUNT";
-    private final String writeAccStr = "WRITE ACCOUNT BALANCE";
     private final String errStr = "";
 
     /**
@@ -136,17 +134,12 @@ public class TransactionManagerWorker implements Runnable
                     try
                     {
                         // get the account ballance
-                        System.out.println("reading account " + accNum);
                         int accBal = accManager.read( accNum, workerTransaction );
-
-                        // log
-                        this.workerTransaction.log(locStr, readAccStr
-                        + " Account #" + accNum + " with balance $" + accBal);
 
                         // create response message with balace
                         responseMessage =
                                 new ResponseMessage(MessageType
-                                        .READ_MESSAGE, 0);  // 0 will be replaced with the blanace read
+                                        .READ_MESSAGE, accBal);
                     }
                     // account does not exist, create error response message
                     // intead
@@ -175,18 +168,12 @@ public class TransactionManagerWorker implements Runnable
                     try
                     {
                         // write to the account
-                        System.out.println("writing to account " + accNum
-                            + " balance " + value);
                         accManager.write( accNum, workerTransaction, value );
-
-                        // log
-                        this.workerTransaction.log(locStr, writeAccStr
-                        + " Account #" + accNum + " with balance $" + value);
 
                         // create response message with balace
                         responseMessage =
                                 new ResponseMessage(MessageType
-                                        .READ_MESSAGE, 0);  // 0 will be replaced with the blanace read
+                                        .READ_MESSAGE, 0);
                     }
                     // account does not exist, create error response message
                     // intead
