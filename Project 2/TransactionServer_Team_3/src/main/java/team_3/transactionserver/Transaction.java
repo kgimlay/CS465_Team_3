@@ -18,7 +18,7 @@ public class Transaction
     public ArrayList log;
     private static int transactionCounter = 0;
     
-    /**
+    /** Create a new Transaction object. 
      * 
      */
     public Transaction()
@@ -29,10 +29,11 @@ public class Transaction
         this.heldLocks = new ArrayList<Lock>();
     }
     
-    /**
+    /** Will print information relating to a specific transaction's actions.
+     * Saves the message as well to the log array list for later printing.
      * 
-     * @param callLoc
-     * @param logMessage 
+     * @param callLoc - The file name of where the action originated
+     * @param logMessage - Message specifying the action that occurred
      */
     public void log(String callLoc, String logMessage)
     {
@@ -43,7 +44,7 @@ public class Transaction
         this.log.add(logMessage);   // yep, saving just the message
     }
     
-    /**
+    /** Prints a transaction's actions that occurred in its lifetime.
      * 
      */
     public void printLog()
