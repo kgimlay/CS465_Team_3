@@ -21,32 +21,23 @@ public class Lock
     // The account the lock is associated with
     Object account;
 
+    // logging strings
     private final String locStr = "Lock";
     private final String waitWriteStr = "WAITING ON WRITE LOCK";
     private final String waitReadStr = "WAITING ON READ LOCK";
     private final String noReadLockStr = "NO READ LOCK HELD";
 
+     /** Create a new Lock object. 
+     * 
+     * @param account - account associated with the lock
+     * @param lockType - the lock type acquired
+     */
     public Lock(Object account, LockType lockType)
     {
         this.account = account;
         this.lockType = lockType;
         this.holders = new Vector();
         this.requestors = new Vector();
-    }
-
-    public boolean isHoldersNotEmpty()
-    {
-        return !(this.holders.isEmpty());
-    }
-
-    public boolean isLockTypeNotRead(LockType aLockType)
-    {
-        return !(aLockType == LockType.READ);
-    }
-
-    public boolean isTransNotAloneInHolders(Transaction transaction)
-    {
-        return  !((this.holders.size() == 1) && (this.holders.contains(transaction)));
     }
 
     /** Acquires a lock on an object (account in this context). If the lock
@@ -110,7 +101,6 @@ public class Lock
                 {
                     try
                     {
-//                        System.out.println("Waiting on read locks " + this.holders);
                           transaction.log(locStr, waitReadStr);
                         
                         // add trans to list of requestors
@@ -124,7 +114,7 @@ public class Lock
                     }
                     catch(InterruptedException e)
                     {
-                        //probably change
+                        //print exception
                         System.out.println("InterruptedException ocurred.");
                     }
                 }
@@ -136,14 +126,13 @@ public class Lock
             // no read lock, problem!
             else
             {
-//                System.out.println("Transaction does not hold a read lock!");
                 transaction.log(locStr, noReadLockStr);
             }
         }
     }
 
-    /**
-     * 
+    /** Will promote a read lock to a write lock
+     *
      */
     public void promote()
     {
@@ -155,9 +144,9 @@ public class Lock
       }
     }
 
-    /**
+    /** Release locks held by transaction
      * 
-     * @param transaction 
+     * @param transaction - the transaction whose locks are to be released
      */
     public synchronized void release(Transaction transaction)
     {
