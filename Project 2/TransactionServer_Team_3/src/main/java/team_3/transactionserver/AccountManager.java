@@ -19,6 +19,7 @@
 
       int numOfAccounts;
       int initialBalance;
+      Boolean lockingEnabled;
 
       // logging strings
       private final String locStr = "AccountManager";
@@ -30,11 +31,12 @@
      * @param numAccounts - number of accounts objects to create
      * @param initBalance - the initial balance of all account objects created
      */
-      AccountManager(int numAccounts, int initBalance)
+      AccountManager(int numAccounts, int initBalance, Boolean lockingEnabled)
       {
           // initialize fields
           numOfAccounts = numAccounts;
           initialBalance = initBalance;
+          this.lockingEnabled = lockingEnabled;
           
           // create number of accounts specified
           for(int num = 0; num < numOfAccounts; num++)
@@ -86,7 +88,10 @@
           // loop through accounts to find account associated w/ the accoutNum
           Account account = getAccount(accountNum);
           // try to set a reading lock
-          TransactionServer.lockManager.lock(account, transaction, Lock.LockType.READ);
+          if (this.lockingEnabled)
+          {
+            TransactionServer.lockManager.lock(account, transaction, Lock.LockType.READ);
+          }
           // if successful (after waiting or no deadlock), return account's balance
           transaction.log(locStr, readStr + " Account #" + accountNum
             + " | Balance read $" + account.balance);
@@ -109,7 +114,10 @@
           // loop through accounts to find account associated w/ the accountNum
           Account account = getAccount(accountNum);
           // try to set a writing lock
-          TransactionServer.lockManager.lock(account, transaction, Lock.LockType.WRITE);
+          if (this.lockingEnabled)
+          {
+            TransactionServer.lockManager.lock(account, transaction, Lock.LockType.WRITE);
+          }
           // update balance if successful (after waiting or no deadlock)
           account.setBalance(balance);
           transaction.log(locStr, writeStr + " Account #" + accountNum

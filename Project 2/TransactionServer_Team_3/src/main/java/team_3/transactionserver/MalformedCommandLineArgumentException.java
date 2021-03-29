@@ -11,6 +11,10 @@ package team_3.transactionserver;
  */
 public class MalformedCommandLineArgumentException extends Exception
 {
+    /** When this exception is thrown, the specified message will print.
+     * 
+     * @param message - specified message relating to the exception
+     */
     public MalformedCommandLineArgumentException(String message)
     {
         super(message);

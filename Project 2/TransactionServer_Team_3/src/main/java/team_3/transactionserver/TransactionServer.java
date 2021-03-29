@@ -25,6 +25,7 @@ public class TransactionServer
     static LockManager lockManager;
     static int numAccounts;
     static int portNum;
+    static Boolean doLock;
 
     /**
      * @brief uses command line arguments to initialize objects
@@ -38,10 +39,8 @@ public class TransactionServer
         // check args and assign if they pass
         checkArgs( args );
 
-        // value 10 in currently hard coded for testing, may need to
-        // change in the future to allow starting account balances to
-        // be passed in
-        accountManager = new AccountManager( numAccounts, 10 );
+        
+        accountManager = new AccountManager( numAccounts, 10, doLock );
         lockManager = new LockManager();
         transactionManager = new TransactionManager( accountManager,
                 lockManager );
@@ -115,7 +114,7 @@ public class TransactionServer
     private static void checkArgs( String arg[] )
     {
         // check if argument length is valid
-        if( arg.length != 2 )
+        if( arg.length != 3 )
         {
             System.out.println("Incorrect number of parameters.\n" +
                     " Please pass 2 parameters: < (int) port>"+
@@ -163,6 +162,38 @@ public class TransactionServer
             if( 0 > numAccounts )
             {
                 System.out.println("Number of accounts must be positive.");
+                System.exit(1);
+            }
+        }
+        catch( NumberFormatException nfException )
+        {
+            System.out.println("Error in parsing number of accounts argument"+
+                    " to integer." + nfException );
+            System.exit(1);
+        }
+        
+        // is locking enabled
+        try
+        {
+            String[] split_arg2 = arg[2].split("=");
+            if( !split_arg2[0].equals("doLock") )
+            {
+                System.out.println("Please pass third argument as"+
+                        " <doLock=#>.");
+                System.exit(1);
+            }
+            
+            if (split_arg2[1].equals("true") || split_arg2.equals("True"))
+            {
+                doLock = true;
+            }
+            else if (split_arg2[1].equals("false") || split_arg2.equals("False"))
+            {
+                doLock = false;
+            }
+            else
+            {
+                System.out.println("Do Lock must be true or false");
                 System.exit(1);
             }
         }
