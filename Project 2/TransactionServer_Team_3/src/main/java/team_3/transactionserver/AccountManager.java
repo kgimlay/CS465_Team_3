@@ -15,10 +15,12 @@
   public class AccountManager
   {
       // manages the list of accounts that will be created
-      ArrayList<Account> accounts = new ArrayList<Account>();;
-      boolean lockingActive;
+      ArrayList<Account> accounts = new ArrayList<Account>();
+
       int numOfAccounts;
       int initialBalance;
+
+      // logging strings
       private final String locStr = "AccountManager";
       private final String readStr = "READ ACCOUNT BALANCE";
       private final String writeStr = "WRITE ACCOUNT BALANCE";
@@ -40,6 +42,7 @@
               // add newly created account to accounts array list @ num index
               accounts.add(num, new Account(num, initialBalance));
           }
+          // log number of accounts created by AccountManager
           System.out.println("Created " + numOfAccounts + " accounts.");
           
       }
@@ -51,10 +54,11 @@
      * @return Account - The account object that was found.
      * @return null - The account was not found
      * 
-     * @throws 
+     * @throws team_3.transactionserver.NonExistantAccountException
      */
       Account getAccount(int accountNum) throws NonExistantAccountException
       {
+          // loop over accounts arraylist to find account w/ account num
           for(int index = 0; index < accounts.size(); index++)
           {
               if(accounts.get(index).accountNum == accountNum)
@@ -62,6 +66,8 @@
                   return accounts.get(index);
               }
           }
+
+          // account not found, throw exception
           throw new NonExistantAccountException("");
       }
      /** Looks for the account associated with the specified account number,
