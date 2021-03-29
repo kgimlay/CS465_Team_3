@@ -24,6 +24,12 @@ public class DummyClient
         return (Message)in.readObject();
     }
     
+    /**
+     * runs dummy client
+     * @param args command line arguments
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
     public static void main(String args[]) throws IOException, 
             ClassNotFoundException
     {

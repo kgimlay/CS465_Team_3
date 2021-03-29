@@ -6,7 +6,7 @@
 package team_3.transactionserver;
 
 /**
- *
+ * an exception for malformed command line arguments
  * @author kevinimlay
  */
 public class MalformedCommandLineArgumentException extends Exception
