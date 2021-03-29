@@ -84,7 +84,7 @@ public class TransactionServer
             branchTotal += accountManager.accounts.get(index).balance;
             System.out.println("Account #" 
                     + accountManager.accounts.get(index).accountNum 
-                    + "Balance $" + accountManager.accounts.get(index).balance);
+                    + "\tBalance: $" + accountManager.accounts.get(index).balance);
         }
         
         System.out.println("Branch Total: $" + branchTotal);
