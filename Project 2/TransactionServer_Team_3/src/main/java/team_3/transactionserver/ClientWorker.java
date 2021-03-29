@@ -63,19 +63,30 @@ public class ClientWorker implements Runnable
             {
                 // open a transaction
                 int transactionId = this.proxy.openTransaction();
+                System.out.println( transactionId + " has opened");
 
                 // withdraw from fist account
                 int withdrawAccBal = this.proxy.read(this.withdrawAccountId);
                 this.proxy.write(this.withdrawAccountId, 
                         withdrawAccBal - this.transferAmount);
-
+                System.out.println("Transaction number: "+transactionId+
+                        " has withdrawn $"+withdrawAccBal+" from account "+
+                        this.withdrawAccountId+", balance is now $"+
+                        (withdrawAccBal - this.transferAmount));
+                
                 // deposit into second account
                 int depositAccBal = this.proxy.read(this.depositAccountId);
                 this.proxy.write(this.depositAccountId, 
                         depositAccBal + this.transferAmount);
+                System.out.println("Transaction number: "+transactionId+
+                        " has deposited $"+depositAccBal+" into account "+
+                        this.depositAccountId+", balance is now $"+
+                        (depositAccBal + this.transferAmount));
 
                 // close the transaction
                 this.proxy.closeTransaction();
+                System.out.println( transactionId + " has closed.");
+                
             }
 
             // A message object was not returned, uh oh! this should never happen!
