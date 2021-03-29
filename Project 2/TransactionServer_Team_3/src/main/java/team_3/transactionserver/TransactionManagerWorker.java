@@ -98,7 +98,8 @@ public class TransactionManagerWorker implements Runnable
                     // respond to client with transaction ID
                     Message responseMessage =
                             new ResponseMessage(MessageType
-                                    .OPEN_TRANSACTION_MESSAGE, 0);  // 0 will be replaced with the transaciton ID
+                                    .OPEN_TRANSACTION_MESSAGE, 
+                                    this.workerTransaction.id);
                     outObjStream.writeObject( responseMessage );
                 }
 

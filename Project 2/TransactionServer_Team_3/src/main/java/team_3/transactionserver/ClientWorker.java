@@ -70,7 +70,7 @@ public class ClientWorker implements Runnable
                 this.proxy.write(this.withdrawAccountId, 
                         withdrawAccBal - this.transferAmount);
                 System.out.println("Transaction number: "+transactionId+
-                        " has withdrawn $"+withdrawAccBal+" from account "+
+                        " has withdrawn $"+this.transferAmount+" from account "+
                         this.withdrawAccountId+", balance is now $"+
                         (withdrawAccBal - this.transferAmount));
                 
@@ -79,7 +79,7 @@ public class ClientWorker implements Runnable
                 this.proxy.write(this.depositAccountId, 
                         depositAccBal + this.transferAmount);
                 System.out.println("Transaction number: "+transactionId+
-                        " has deposited $"+depositAccBal+" into account "+
+                        " has deposited $"+this.transferAmount+" into account "+
                         this.depositAccountId+", balance is now $"+
                         (depositAccBal + this.transferAmount));
 
