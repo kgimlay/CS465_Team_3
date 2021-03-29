@@ -39,17 +39,19 @@ public class TransactionServer
         checkArgs( args );
 
         // value 10 in currently hard coded for testing, may need to
-        // change in the furure to allow starting account ballances to
+        // change in the future to allow starting account balances to
         // be passed in
         accountManager = new AccountManager( numAccounts , 10 );
+        System.out.println("AccountManager created.");
         lockManager = new LockManager();
+        System.out.println("LockManager created.");
         transactionManager = new TransactionManager( accountManager,
                 lockManager );
+        System.out.println("TransactionManager created.");
 
         // open server
         try
         {
-            System.out.println(portNum);
             serverSocket = new ServerSocket( portNum, -1,
                                        InetAddress.getByName("localhost"));
             System.out.println("Server opened successfuly. " + serverSocket);
