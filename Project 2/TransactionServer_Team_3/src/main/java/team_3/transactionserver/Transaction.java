@@ -51,7 +51,7 @@ public class Transaction
         String printStr = "\nTransaction #" + this.id + " commited. Log:\n";
         for (int index = 0; index < this.log.size(); index++)
         {
-            printStr += "-----" + this.log.get(index) + "\n";
+            printStr += "   " + this.log.get(index) + "\n";
         }
         
         System.out.println(printStr);
