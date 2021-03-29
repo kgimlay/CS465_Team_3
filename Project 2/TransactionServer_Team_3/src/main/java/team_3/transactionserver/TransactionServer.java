@@ -63,7 +63,7 @@ public class TransactionServer
                         + accountManager.accounts.get(index).accountNum 
                         + "\tBalance: $" + accountManager.accounts.get(index).balance);
             }
-            System.out.println("Accounts Total: $" + branchTotal);
+            System.out.println("Branch Total: $" + branchTotal);
             System.out.println("==========================================\n");
         }
         catch( IOException ioE )
@@ -98,7 +98,7 @@ public class TransactionServer
                     + "\tBalance: $" + accountManager.accounts.get(index).balance);
         }
         
-        System.out.println("\nAccounts Total: $" + branchTotal);
+        System.out.println("Branch Total: $" + branchTotal);
         
         System.out.println("\nTransactions suspected to be deadlocked:");
         for (int index = 0; 
