@@ -113,7 +113,7 @@
           // update balance if successful (after waiting or no deadlock)
           account.setBalance(balance);
           transaction.log(locStr, writeStr + " Account #" + accountNum
-            + " | Balance wrote $" + account.balance);
+            + " | Balance written $" + account.balance);
       }
   }
   
