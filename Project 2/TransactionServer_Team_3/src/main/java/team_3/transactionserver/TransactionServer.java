@@ -8,6 +8,8 @@ package team_3.transactionserver;
 import java.net.ServerSocket;
 import java.net.InetAddress;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @brief Initializes server by reading properties, according to which the
@@ -61,22 +63,30 @@ public class TransactionServer
             System.out.println("Error occured opening server socket." + ioE );
             System.exit(1);
         }
-        // begin server loop
-        while( true )
+        
+        // accept connections in a thread
+        new Thread(new ConnectionAcceptor(transactionManager, 
+                serverSocket)).start();
+        
+        try 
         {
-            // when recieving a new connection/socket call openTransaction
-            // method in TransactionManager
-            try
-            {
-                transactionManager.newWorkerThread( serverSocket.accept() );
-            }
-            catch( IOException ioE )
-            {
-                System.out.println("Error occured while waiting for next"+
-                        " transaction" + ioE);
-                System.exit(1);
-            }
+            // sleep main thread for 10 seconds, then wake and sum total in 
+            // accounts and terminate
+            Thread.sleep(10000);
+        } 
+        catch (InterruptedException ex) {
+            // do nothing
         }
+        
+        // sum and report and exit
+        int branchTotal = 0;
+        for (int index = 0; index < accountManager.accounts.size(); index++)
+        {
+            branchTotal += accountManager.accounts.get(index).balance;
+        }
+        
+        System.out.println("Branch Total: $" + branchTotal);
+        System.exit(0);
     }
 
     private static void checkArgs( String arg[] )
