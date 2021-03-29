@@ -61,7 +61,9 @@ public class Lock
             try
             {
                 //System.out.println("Waiting on write lock " + ((Account)this.account).accountNum);
-                transaction.log(locStr, waitWriteStr);
+                transaction.log(locStr, waitWriteStr
+                    + " Held by account " 
+                    + ((Transaction)this.holders.elementAt(0)).id);
                 
                 // add trans to list of requestors
                 this.requestors.addElement(transaction);
@@ -75,7 +77,7 @@ public class Lock
             catch(InterruptedException e)
             {
                 //probably change
-                System.out.println("InterruptedException ocurred.");
+                System.out.println("InterruptedException occurred.");
             }
         }
         // at this point, there can only be no locks or read locks held
@@ -101,7 +103,19 @@ public class Lock
                 {
                     try
                     {
-                          transaction.log(locStr, waitReadStr);
+                          String tempStr = "";
+                          int idx;
+                          for (idx=0; idx<this.holders.size()-1; idx++)
+                          {
+                              tempStr += " #" 
+                                + ((Transaction)this.holders.elementAt(idx)).id
+                                + ",";
+                          }
+                          tempStr += " #" 
+                                + ((Transaction)this.holders.elementAt(idx)).id;
+                          
+                          transaction.log(locStr, waitReadStr
+                          + " Held by account(s)" + tempStr);
                         
                         // add trans to list of requestors
                         this.requestors.addElement(transaction);
