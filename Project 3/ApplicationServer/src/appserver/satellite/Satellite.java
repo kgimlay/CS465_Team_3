@@ -36,6 +36,8 @@ public class Satellite extends Thread {
     private PropertyHandler satelliteConfiguration = null;
     private PropertyHandler serverConfiguration = null;
     private PropertyHandler classLoaderConfiguration = null;
+    private ServerSocket serverSocket = null;
+    private int port = 0;
 
     public Satellite(String satellitePropertiesFile, String classLoaderPropertiesFile, String serverPropertiesFile) {
 
