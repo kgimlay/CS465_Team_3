@@ -193,7 +193,30 @@ public class Satellite extends Thread {
         Tool toolObject = null;
 
         // ...
+        if ((toolObject = (Tool)toolsCache.get(toolClassString)) == null) 
+        {
+            String toolClassStr = /*insert property handler obj*/.getProperty(toolClassString);
+            System.out.println("\nTool's Class: " + toolClassStr);
+            if (toolClassStr == null) 
+            {
+                throw new UnknownToolException();
+            }
 
+            Class<?> toolClass = classLoader.loadClass(toolClassStr);
+            try {
+                toolObject = (Tool) toolClass.getDeclaredConstructor().newInstance();
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(Satellite.class.getName()).log(Level.SEVERE, null, ex);
+                System.err.println("[Satellite] getToolObject() - InvocationTargetException");
+            }
+            toolsCache.put(toolClassString, toolObject);
+        } 
+        
+        else 
+        {
+            System.out.println("Tool: \"" + toolClassString + "\" already in Cache");
+        }
+        
         return toolObject;
     }
 
