@@ -18,6 +18,7 @@ import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.PropertyHandler;
+import java.util.*;
 
 /**
  * Class [Satellite] Instances of this class represent computing nodes that execute jobs by
@@ -32,30 +33,61 @@ public class Satellite extends Thread {
     private ConnectivityInfo serverInfo = new ConnectivityInfo();
     private HTTPClassLoader classLoader = null;
     private Hashtable toolsCache = null;
-    private int port;
-    private ServerSocket serverSocket;
+    private PropertyHandler satelliteConfiguration = null;
+    private PropertyHandler serverConfiguration = null;
+    private PropertyHandler classLoaderConfiguration = null;
 
     public Satellite(String satellitePropertiesFile, String classLoaderPropertiesFile, String serverPropertiesFile) {
 
         // read this satellite's properties and populate satelliteInfo object,
         // which later on will be sent to the server
         // ...
-        
-        
+
+        try {
+            satelliteConfiguration = new PropertyHandler(satellitePropertiesFile);
+        } catch (IOException e) {
+            // no use carrying on, so bailing out ...
+            System.err.println("No config file found, bailing out ...");
+            System.exit(1);
+        }
+        satelliteInfo.setName(satelliteConfiguration.getProperty("NAME"));
+        satelliteInfo.setPort(Integer.parseInt(satelliteConfiguration.getProperty("PORT")));
+
         // read properties of the application server and populate serverInfo object
         // other than satellites, the as doesn't have a human-readable name, so leave it out
         // ...
-        
-        
+
+        try {
+            serverConfiguration = new PropertyHandler(serverPropertiesFile);
+        } catch (IOException e) {
+            // no use carrying on, so bailing out ...
+            System.err.println("No config file found, bailing out ...");
+            System.exit(1);
+        }
+        serverInfo.setHost(serverConfiguration.getProperty("HOST"));
+        serverInfo.setPort(Integer.parseInt(serverConfiguration.getProperty("PORT")));
+
         // read properties of the code server and create class loader
         // -------------------
         // ...
 
-        
+        try {
+            classLoaderConfiguration = new PropertyHandler(classLoaderPropertiesFile);
+        } catch (IOException e) {
+            // no use carrying on, so bailing out ...
+            System.err.println("No config file found, bailing out ...");
+            System.exit(1);
+        }
+        String classLoaderHost = classLoaderConfiguration.getProperty("HOST");
+        int classLoaderPort = Integer.parseInt(serverConfiguration.getProperty("PORT"));
+        classLoader = new HTTPClassLoader(classLoaderHost, classLoaderPort);
+
+
         // create tools cache
         // -------------------
         // ...
-        
+        toolsCache = new Hashtable();
+
     }
 
     @Override
@@ -64,8 +96,8 @@ public class Satellite extends Thread {
         // register this satellite with the SatelliteManager on the server
         // ---------------------------------------------------------------
         // ...
-        
-        
+
+
         // create server socket
         // ---------------------------------------------------------------
         try {
@@ -74,14 +106,14 @@ public class Satellite extends Thread {
             System.out.println("[Satellite.run] An IO Exception occured starting "
                     + "the server socket\n\n" + ioE);
         }
-        
-        
+
+
         // start taking job requests in a server loop
         // ---------------------------------------------------------------
         while (true) {
             try {
                 new Thread(new SatelliteThread(
-                        this.serverSocket.accept(), 
+                        this.serverSocket.accept(),
                         this)); // not sure if this is right?
             } catch (IOException ioE) {
                 System.out.println("[Satellite.run] An IO Exception occured on "
@@ -118,7 +150,7 @@ public class Satellite extends Thread {
                     + "occured while creating input and output streams.\n\n"
                     + ioE);
             }
-            
+
             // reading message
             // -----------------------------------------------------------------
             try {
@@ -131,7 +163,7 @@ public class Satellite extends Thread {
                         + "Exception has occured while reading the incomming "
                         + "message.\n\n" + cnfE);
             }
-            
+
             switch (message.getType()) {
                 case JOB_REQUEST:
                     // processing job request
@@ -156,7 +188,7 @@ public class Satellite extends Thread {
         Tool toolObject = null;
 
         // ...
-        
+
         return toolObject;
     }
 
