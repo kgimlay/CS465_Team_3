@@ -117,7 +117,7 @@ public class Satellite extends Thread {
             try {
                 new Thread(new SatelliteThread(
                         serverSocket.accept(),
-                        this)); // not sure if this is right?
+                        this)).run(); // not sure if this is right?
             } catch (IOException ioE) {
                 System.out.println("[Satellite.run] An IO Exception occured on "
                     + "on accepting an incomming connection\n\n" + ioE);
@@ -141,6 +141,7 @@ public class Satellite extends Thread {
 
         @Override
         public void run() {
+            System.out.println("[SatelliteThread.run]");
             // setting up object streams
             // -----------------------------------------------------------------
             try {
@@ -158,6 +159,7 @@ public class Satellite extends Thread {
             // -----------------------------------------------------------------
             try {
                 message = (Message)this.readFromNet.readObject();
+                System.out.println(message);
             } catch (IOException ioE) {
                 System.out.println("[SatelliteThread.run] An IO Exception has "
                     + "occured while reading the incomming message.\n\n" + ioE);
