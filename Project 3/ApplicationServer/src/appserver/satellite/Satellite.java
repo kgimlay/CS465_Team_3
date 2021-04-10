@@ -32,6 +32,8 @@ public class Satellite extends Thread {
     private ConnectivityInfo serverInfo = new ConnectivityInfo();
     private HTTPClassLoader classLoader = null;
     private Hashtable toolsCache = null;
+    private int port;
+    private ServerSocket serverSocket;
 
     public Satellite(String satellitePropertiesFile, String classLoaderPropertiesFile, String serverPropertiesFile) {
 
@@ -66,12 +68,26 @@ public class Satellite extends Thread {
         
         // create server socket
         // ---------------------------------------------------------------
-        // ...
+        try {
+            this.serverSocket = new ServerSocket(this.port);
+        } catch (IOException ioE) {
+            System.out.println("[Satellite.run] An IO Exception occured starting "
+                    + "the server socket\n\n" + ioE);
+        }
         
         
         // start taking job requests in a server loop
         // ---------------------------------------------------------------
-        // ...
+        while (true) {
+            try {
+                new Thread(new SatelliteThread(
+                        this.serverSocket.accept(), 
+                        this)); // not sure if this is right?
+            } catch (IOException ioE) {
+                System.out.println("[Satellite.run] An IO Exception occured on "
+                    + "on accepting an incomming connection\n\n" + ioE);
+            }
+        }
     }
 
     // inner helper class that is instanciated in above server loop and processes single job requests
@@ -91,15 +107,37 @@ public class Satellite extends Thread {
         @Override
         public void run() {
             // setting up object streams
-            // ...
+            // -----------------------------------------------------------------
+            try {
+                readFromNet = new ObjectInputStream(
+                        this.jobRequest.getInputStream());
+                writeToNet = new ObjectOutputStream(
+                        this.jobRequest.getOutputStream());
+            } catch (IOException ioE) {
+                System.out.println("[SatelliteThread.run] An IO Exception has "
+                    + "occured while creating input and output streams.\n\n"
+                    + ioE);
+            }
             
             // reading message
-            // ...
+            // -----------------------------------------------------------------
+            try {
+                message = (Message)this.readFromNet.readObject();
+            } catch (IOException ioE) {
+                System.out.println("[SatelliteThread.run] An IO Exception has "
+                    + "occured while reading the incomming message.\n\n" + ioE);
+            } catch (ClassNotFoundException cnfE) {
+                System.out.println("[SatelliteThread.run] A Call Not Found "
+                        + "Exception has occured while reading the incomming "
+                        + "message.\n\n" + cnfE);
+            }
             
             switch (message.getType()) {
                 case JOB_REQUEST:
                     // processing job request
-                    // ...
+                    // ---------------------------------------------------------
+                    System.out.println("[SatelliteThread.run] Processing...");
+                    // todo - put more here
                     break;
 
                 default:
