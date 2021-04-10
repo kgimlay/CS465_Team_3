@@ -36,8 +36,6 @@ public class Satellite extends Thread {
     private PropertyHandler satelliteConfiguration = null;
     private PropertyHandler serverConfiguration = null;
     private PropertyHandler classLoaderConfiguration = null;
-    private ServerSocket serverSocket = null;
-    private int port = 0;
 
     public Satellite(String satellitePropertiesFile, String classLoaderPropertiesFile, String serverPropertiesFile) {
 
@@ -94,6 +92,7 @@ public class Satellite extends Thread {
 
     @Override
     public void run() {
+        ServerSocket serverSocket = null;
 
         // register this satellite with the SatelliteManager on the server
         // ---------------------------------------------------------------
@@ -103,7 +102,9 @@ public class Satellite extends Thread {
         // create server socket
         // ---------------------------------------------------------------
         try {
-            this.serverSocket = new ServerSocket(this.port);
+            serverSocket = new ServerSocket(this.serverInfo.getPort());
+            System.out.println("Opened at " + this.serverInfo.getHost()
+                + ":" + this.serverInfo.getPort());
         } catch (IOException ioE) {
             System.out.println("[Satellite.run] An IO Exception occured starting "
                     + "the server socket\n\n" + ioE);
@@ -115,7 +116,7 @@ public class Satellite extends Thread {
         while (true) {
             try {
                 new Thread(new SatelliteThread(
-                        this.serverSocket.accept(),
+                        serverSocket.accept(),
                         this)); // not sure if this is right?
             } catch (IOException ioE) {
                 System.out.println("[Satellite.run] An IO Exception occured on "
@@ -196,6 +197,7 @@ public class Satellite extends Thread {
 
     public static void main(String[] args) {
         // start the satellite
+        System.out.println("Started");
         Satellite satellite = new Satellite(args[0], args[1], args[2]);
         satellite.run();
     }
