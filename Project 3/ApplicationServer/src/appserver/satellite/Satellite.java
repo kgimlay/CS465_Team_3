@@ -206,7 +206,7 @@ public class Satellite extends Thread {
 //        // ...
 //        if ((toolObject = (Tool)toolsCache.get(toolClassString)) == null) 
 //        {
-//            String toolClassStr = /*insert property handler obj*/.getProperty(toolClassString);
+//            String toolClassStr = "appserver.job.impl.PlusOne";
 //            System.out.println("\nTool's Class: " + toolClassStr);
 //            if (toolClassStr == null) 
 //            {
