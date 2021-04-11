@@ -80,9 +80,9 @@ public class Satellite extends Thread {
             System.exit(1);
         }
         String classLoaderHost = classLoaderConfiguration.getProperty("HOST");
-        int classLoaderPort = Integer.parseInt(serverConfiguration.getProperty("PORT"));
+        int classLoaderPort = Integer.parseInt(classLoaderConfiguration.getProperty("PORT"));
         classLoader = new HTTPClassLoader(classLoaderHost, classLoaderPort);
-
+        System.out.println("Will connect to web server at: " + classLoaderHost + " : " + classLoaderPort);
 
         // create tools cache
         // -------------------
