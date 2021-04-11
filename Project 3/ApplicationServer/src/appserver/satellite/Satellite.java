@@ -104,8 +104,7 @@ public class Satellite extends Thread {
         // ---------------------------------------------------------------
         try {
             serverSocket = new ServerSocket(this.satelliteInfo.getPort());
-            System.out.println("Opened at " + this.satelliteInfo.getHost()
-                + ":" + this.satelliteInfo.getPort());
+            System.out.println("Port :" + this.satelliteInfo.getPort());
         } catch (IOException ioE) {
             System.out.println("[Satellite.run] An IO Exception occured starting "
                     + "the server socket\n\n" + ioE);
