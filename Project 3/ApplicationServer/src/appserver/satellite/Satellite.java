@@ -176,16 +176,17 @@ public class Satellite extends Thread {
                     // ---------------------------------------------------------
                     System.out.println("[SatelliteThread.run] Processing...");
                     
-                    // todo - put more here
-                    
-                    
-                    // send result back to client
-                    try {
-                        this.writeToNet.writeObject(0);
-                    } catch (IOException ioE) {
-                        System.out.println("[SatelliteThread.run] An IO Exception has "
-                    + "occured while writing the outgoing message.\n\n" + ioE);
-                    }
+//                    // get tool and calculate result
+//                    Tool tool = getToolObject("");
+//                    int result = (int)tool.go(message.getContent());
+//                    
+//                    // send result back to client
+//                    try {
+//                        this.writeToNet.writeObject(result);
+//                    } catch (IOException ioE) {
+//                        System.out.println("[SatelliteThread.run] An IO Exception has "
+//                        + "occured while writing the outgoing message.\n\n" + ioE);
+//                    }
                     break;
 
                 default:
@@ -198,8 +199,18 @@ public class Satellite extends Thread {
      * Aux method to get a tool object, given the fully qualified class string
      * If the tool has been used before, it is returned immediately out of the cache,
      * otherwise it is loaded dynamically
+     * @param toolClassString
+     * @return 
+     * @throws appserver.job.UnknownToolException 
+     * @throws java.lang.ClassNotFoundException 
+     * @throws java.lang.InstantiationException 
+     * @throws java.lang.IllegalAccessException 
+     * @throws java.lang.NoSuchMethodException 
      */
-//    public Tool getToolObject(String toolClassString) throws UnknownToolException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+//    public Tool getToolObject(String toolClassString) 
+//            throws UnknownToolException, ClassNotFoundException, 
+//            InstantiationException, IllegalAccessException, 
+//            NoSuchMethodException {
 //
 //        Tool toolObject = null;
 //
