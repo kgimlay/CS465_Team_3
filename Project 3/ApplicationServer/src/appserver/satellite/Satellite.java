@@ -42,7 +42,6 @@ public class Satellite extends Thread {
 
         // read this satellite's properties and populate satelliteInfo object,
         // which later on will be sent to the server
-        // ...
 
         try {
             satelliteConfiguration = new PropertyHandler(satellitePropertiesFile);
@@ -56,7 +55,6 @@ public class Satellite extends Thread {
 
         // read properties of the application server and populate serverInfo object
         // other than satellites, the as doesn't have a human-readable name, so leave it out
-        // ...
 
         try {
             serverConfiguration = new PropertyHandler(serverPropertiesFile);
@@ -65,13 +63,13 @@ public class Satellite extends Thread {
             System.err.println("No config file found, bailing out ...");
             System.exit(1);
         }
-        serverInfo.setHost(serverConfiguration.getProperty("HOST"));
+        // gives server the Host and Port information from properties file
+        
+        serverInfo.setHost(serverConfiguration.getProperty("HOST")); 
         serverInfo.setPort(Integer.parseInt(serverConfiguration.getProperty("PORT")));
 
         // read properties of the code server and create class loader
-        // -------------------
-        // ...
-
+        
         try {
             classLoaderConfiguration = new PropertyHandler(classLoaderPropertiesFile);
         } catch (IOException e) {
@@ -79,6 +77,7 @@ public class Satellite extends Thread {
             System.err.println("No config file found, bailing out ...");
             System.exit(1);
         }
+        
         String classLoaderHost = classLoaderConfiguration.getProperty("HOST");
         int classLoaderPort = Integer.parseInt(classLoaderConfiguration.getProperty("PORT"));
         classLoader = new HTTPClassLoader(classLoaderHost, classLoaderPort);
@@ -86,7 +85,7 @@ public class Satellite extends Thread {
 
         // create tools cache
         // -------------------
-        // ...
+  
         toolsCache = new Hashtable();
 
     }
@@ -117,7 +116,7 @@ public class Satellite extends Thread {
             try {
                 new Thread(new SatelliteThread(
                         serverSocket.accept(),
-                        this)).run(); // not sure if this is right?
+                        this)).start(); // not sure if this is right?
             } catch (IOException ioE) {
                 System.out.println("[Satellite.run] An IO Exception occured on "
                     + "on accepting an incomming connection\n\n" + ioE);
@@ -125,7 +124,7 @@ public class Satellite extends Thread {
         }
     }
 
-    // inner helper class that is instanciated in above server loop and processes single job requests
+    // inner helper class that is instantiated in above server loop and processes single job requests
     private class SatelliteThread extends Thread {
 
         Satellite satellite = null;
@@ -187,14 +186,19 @@ public class Satellite extends Thread {
                         tool = getToolObject(toolName);
                     } catch (UnknownToolException utE) {
                         System.out.println("[SatelliteThread.run] UnknownToolException\n\n" + utE);
+                        return;
                     } catch (ClassNotFoundException cnfE) {
                         System.out.println("[SatelliteThread.run] ClassNotFoundException\n\n" + cnfE);
+                        return;
                     } catch (InstantiationException iE) {
                         System.out.println("[SatelliteThread.run] InstantiationException\n\n" + iE);
+                        return;
                     } catch (IllegalAccessException iaE) {
                         System.out.println("[SatelliteThread.run] IllegalAccessException\n\n" + iaE);
+                        return;
                     } catch (NoSuchMethodException nsmE) {
                         System.out.println("[SatelliteThread.run] NoSuchMethodException\n\n" + nsmE);
+                        return;
                     }
                     
                     // get result
@@ -228,13 +232,13 @@ public class Satellite extends Thread {
      * @throws java.lang.NoSuchMethodException 
      */
     public Tool getToolObject(String toolClassString) 
-            throws UnknownToolException, ClassNotFoundException, 
-            InstantiationException, IllegalAccessException, 
-            NoSuchMethodException {
+        throws UnknownToolException, ClassNotFoundException, 
+        InstantiationException, IllegalAccessException, 
+        NoSuchMethodException {
 
         Tool toolObject = null;
 
-        // ...
+        // if tool object not already in cache, it will throw UnknownToolException
         if ((toolObject = (Tool)toolsCache.get(toolClassString)) == null) 
         {
             String toolClassStr = "appserver.job.impl.PlusOne";
