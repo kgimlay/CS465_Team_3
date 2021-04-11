@@ -178,9 +178,14 @@ public class Satellite extends Thread {
                     // ---------------------------------------------------------
                     System.out.println("[SatelliteThread.run] Processing...");
                     
+                    // get the job to run
+                    Job job = (Job)message.getContent();
+                    String toolName = job.getToolName();
+                    Object parameters = job.getParameters();
+                    
                     // get tool and calculate result
                     try {
-                        tool = getToolObject("");
+                        tool = getToolObject(toolName);
                     } catch (UnknownToolException utE) {
                         System.out.println("[SatelliteThread.run] UnknownToolException\n\n" + utE);
                     } catch (ClassNotFoundException cnfE) {
@@ -192,7 +197,9 @@ public class Satellite extends Thread {
                     } catch (NoSuchMethodException nsmE) {
                         System.out.println("[SatelliteThread.run] NoSuchMethodException\n\n" + nsmE);
                     }
-                    int result = (int)tool.go(message.getContent());
+                    
+                    // get result
+                    Object result = tool.go(parameters);
                     
                     // send result back to client
                     try {
