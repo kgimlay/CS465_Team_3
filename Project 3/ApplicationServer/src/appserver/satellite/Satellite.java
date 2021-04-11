@@ -10,6 +10,7 @@ import appserver.job.Tool;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -174,7 +175,17 @@ public class Satellite extends Thread {
                     // processing job request
                     // ---------------------------------------------------------
                     System.out.println("[SatelliteThread.run] Processing...");
+                    
                     // todo - put more here
+                    
+                    
+                    // send result back to client
+                    try {
+                        this.writeToNet.writeObject(0);
+                    } catch (IOException ioE) {
+                        System.out.println("[SatelliteThread.run] An IO Exception has "
+                    + "occured while writing the outgoing message.\n\n" + ioE);
+                    }
                     break;
 
                 default:
@@ -188,37 +199,37 @@ public class Satellite extends Thread {
      * If the tool has been used before, it is returned immediately out of the cache,
      * otherwise it is loaded dynamically
      */
-    public Tool getToolObject(String toolClassString) throws UnknownToolException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-
-        Tool toolObject = null;
-
-        // ...
-        if ((toolObject = (Tool)toolsCache.get(toolClassString)) == null) 
-        {
-            String toolClassStr = /*insert property handler obj*/.getProperty(toolClassString);
-            System.out.println("\nTool's Class: " + toolClassStr);
-            if (toolClassStr == null) 
-            {
-                throw new UnknownToolException();
-            }
-
-            Class<?> toolClass = classLoader.loadClass(toolClassStr);
-            try {
-                toolObject = (Tool) toolClass.getDeclaredConstructor().newInstance();
-            } catch (InvocationTargetException ex) {
-                Logger.getLogger(Satellite.class.getName()).log(Level.SEVERE, null, ex);
-                System.err.println("[Satellite] getToolObject() - InvocationTargetException");
-            }
-            toolsCache.put(toolClassString, toolObject);
-        } 
-        
-        else 
-        {
-            System.out.println("Tool: \"" + toolClassString + "\" already in Cache");
-        }
-        
-        return toolObject;
-    }
+//    public Tool getToolObject(String toolClassString) throws UnknownToolException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+//
+//        Tool toolObject = null;
+//
+//        // ...
+//        if ((toolObject = (Tool)toolsCache.get(toolClassString)) == null) 
+//        {
+//            String toolClassStr = /*insert property handler obj*/.getProperty(toolClassString);
+//            System.out.println("\nTool's Class: " + toolClassStr);
+//            if (toolClassStr == null) 
+//            {
+//                throw new UnknownToolException();
+//            }
+//
+//            Class<?> toolClass = classLoader.loadClass(toolClassStr);
+//            try {
+//                toolObject = (Tool) toolClass.getDeclaredConstructor().newInstance();
+//            } catch (InvocationTargetException ex) {
+//                Logger.getLogger(Satellite.class.getName()).log(Level.SEVERE, null, ex);
+//                System.err.println("[Satellite] getToolObject() - InvocationTargetException");
+//            }
+//            toolsCache.put(toolClassString, toolObject);
+//        } 
+//        
+//        else 
+//        {
+//            System.out.println("Tool: \"" + toolClassString + "\" already in Cache");
+//        }
+//        
+//        return toolObject;
+//    }
 
     public static void main(String[] args) {
         // start the satellite
