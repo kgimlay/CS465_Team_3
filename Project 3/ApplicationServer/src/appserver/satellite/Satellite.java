@@ -142,6 +142,8 @@ public class Satellite extends Thread {
 
         @Override
         public void run() {
+            Tool tool = null;
+            
             System.out.println("[SatelliteThread.run]");
             // setting up object streams
             // -----------------------------------------------------------------
@@ -176,17 +178,29 @@ public class Satellite extends Thread {
                     // ---------------------------------------------------------
                     System.out.println("[SatelliteThread.run] Processing...");
                     
-//                    // get tool and calculate result
-//                    Tool tool = getToolObject("");
-//                    int result = (int)tool.go(message.getContent());
-//                    
-//                    // send result back to client
-//                    try {
-//                        this.writeToNet.writeObject(result);
-//                    } catch (IOException ioE) {
-//                        System.out.println("[SatelliteThread.run] An IO Exception has "
-//                        + "occured while writing the outgoing message.\n\n" + ioE);
-//                    }
+                    // get tool and calculate result
+                    try {
+                        tool = getToolObject("");
+                    } catch (UnknownToolException utE) {
+                        System.out.println("[SatelliteThread.run] UnknownToolException\n\n" + utE);
+                    } catch (ClassNotFoundException cnfE) {
+                        System.out.println("[SatelliteThread.run] ClassNotFoundException\n\n" + cnfE);
+                    } catch (InstantiationException iE) {
+                        System.out.println("[SatelliteThread.run] InstantiationException\n\n" + iE);
+                    } catch (IllegalAccessException iaE) {
+                        System.out.println("[SatelliteThread.run] IllegalAccessException\n\n" + iaE);
+                    } catch (NoSuchMethodException nsmE) {
+                        System.out.println("[SatelliteThread.run] NoSuchMethodException\n\n" + nsmE);
+                    }
+                    int result = (int)tool.go(message.getContent());
+                    
+                    // send result back to client
+                    try {
+                        this.writeToNet.writeObject(result);
+                    } catch (IOException ioE) {
+                        System.out.println("[SatelliteThread.run] An IO Exception has "
+                        + "occured while writing the outgoing message.\n\n" + ioE);
+                    }
                     break;
 
                 default:
@@ -207,40 +221,40 @@ public class Satellite extends Thread {
      * @throws java.lang.IllegalAccessException 
      * @throws java.lang.NoSuchMethodException 
      */
-//    public Tool getToolObject(String toolClassString) 
-//            throws UnknownToolException, ClassNotFoundException, 
-//            InstantiationException, IllegalAccessException, 
-//            NoSuchMethodException {
-//
-//        Tool toolObject = null;
-//
-//        // ...
-//        if ((toolObject = (Tool)toolsCache.get(toolClassString)) == null) 
-//        {
-//            String toolClassStr = "appserver.job.impl.PlusOne";
-//            System.out.println("\nTool's Class: " + toolClassStr);
-//            if (toolClassStr == null) 
-//            {
-//                throw new UnknownToolException();
-//            }
-//
-//            Class<?> toolClass = classLoader.loadClass(toolClassStr);
-//            try {
-//                toolObject = (Tool) toolClass.getDeclaredConstructor().newInstance();
-//            } catch (InvocationTargetException ex) {
-//                Logger.getLogger(Satellite.class.getName()).log(Level.SEVERE, null, ex);
-//                System.err.println("[Satellite] getToolObject() - InvocationTargetException");
-//            }
-//            toolsCache.put(toolClassString, toolObject);
-//        } 
-//        
-//        else 
-//        {
-//            System.out.println("Tool: \"" + toolClassString + "\" already in Cache");
-//        }
-//        
-//        return toolObject;
-//    }
+    public Tool getToolObject(String toolClassString) 
+            throws UnknownToolException, ClassNotFoundException, 
+            InstantiationException, IllegalAccessException, 
+            NoSuchMethodException {
+
+        Tool toolObject = null;
+
+        // ...
+        if ((toolObject = (Tool)toolsCache.get(toolClassString)) == null) 
+        {
+            String toolClassStr = "appserver.job.impl.PlusOne";
+            System.out.println("\nTool's Class: " + toolClassStr);
+            if (toolClassStr == null) 
+            {
+                throw new UnknownToolException();
+            }
+
+            Class<?> toolClass = classLoader.loadClass(toolClassStr);
+            try {
+                toolObject = (Tool) toolClass.getDeclaredConstructor().newInstance();
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(Satellite.class.getName()).log(Level.SEVERE, null, ex);
+                System.err.println("[Satellite] getToolObject() - InvocationTargetException");
+            }
+            toolsCache.put(toolClassString, toolObject);
+        } 
+        
+        else 
+        {
+            System.out.println("Tool: \"" + toolClassString + "\" already in Cache");
+        }
+        
+        return toolObject;
+    }
 
     public static void main(String[] args) {
         // start the satellite
