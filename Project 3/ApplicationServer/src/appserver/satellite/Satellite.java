@@ -119,7 +119,7 @@ public class Satellite extends Thread {
             try {
                 new Thread(new SatelliteThread(
                         serverSocket.accept(),
-                        this)).start(); // not sure if this is right?
+                        this)).start();
             } catch (IOException ioE) {
                 System.out.println("[Satellite.run] An IO Exception occured on "
                     + "on accepting an incomming connection\n\n" + ioE);
