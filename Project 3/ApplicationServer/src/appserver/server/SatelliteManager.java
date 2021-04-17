@@ -14,7 +14,8 @@ public class SatelliteManager {
     static private Hashtable<String, ConnectivityInfo> satellites = null;
 
     public SatelliteManager() {
-        // ..
+        // initialize hash table
+        satellites = new Hashtable<String, ConnectivityInfo>();
     }
 
     public void registerSatellite(ConnectivityInfo satelliteInfo) {
