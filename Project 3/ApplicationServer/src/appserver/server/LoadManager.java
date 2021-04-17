@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /**
  *
  * @author Dr.-Ing. Wolf-Dieter Otte
+ * @author Randy Duerinck, Kevin Imlay, Yasmin Vega
  */
 public class LoadManager {
 
@@ -13,11 +14,12 @@ public class LoadManager {
 
     public LoadManager() {
         satellites = new ArrayList<String>();
+        lastSatelliteIndex = 0;
     }
 
     public void satelliteAdded(String satelliteName) {
         // add satellite
-        // ...
+        satellites.add(satelliteName);
     }
 
 
@@ -25,12 +27,20 @@ public class LoadManager {
         
         int numberSatellites;
         
-        synchronized (satellites) {
+        synchronized (satellites) 
+        {
             // implement policy that returns the satellite name according to a round robin methodology
-            // ...
+            if( lastSatelliteIndex == satellites.size()-1 )
+            {
+                lastSatelliteIndex = 0;
+            }
+            else
+            {
+                lastSatelliteIndex ++;
+            }
         }
 
-        return // ... name of satellite who is supposed to take job
-        ;
+        return (String)satellites.get(lastSatelliteIndex); // ... name of satellite who is supposed to take job
+        
     }
 }
