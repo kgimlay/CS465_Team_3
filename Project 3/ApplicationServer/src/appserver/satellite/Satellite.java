@@ -21,6 +21,9 @@ import java.util.logging.Logger;
 import utils.PropertyHandler;
 import java.util.*;
 
+//if satellite manager is actually created here
+import appserver.server.SatelliteManager;
+
 /**
  * Class [Satellite] Instances of this class represent computing nodes that execute jobs by
  * calling the callback method of tool a implementation, loading the tool's code dynamically over a network
@@ -38,8 +41,11 @@ public class Satellite extends Thread {
     private PropertyHandler serverConfiguration = null;
     private PropertyHandler classLoaderConfiguration = null;
 
+    // im not sure if satellite manager is even created here
+    private SatelliteManager satelliteManager;
     public Satellite(String satellitePropertiesFile, String classLoaderPropertiesFile, String serverPropertiesFile) {
-
+        //instantiate satellite manager
+        satelliteManager = new SatelliteManager();
         // read this satellite's properties and populate satelliteInfo object,
         // which later on will be sent to the server
         try {
@@ -99,7 +105,7 @@ public class Satellite extends Thread {
 
         // register this satellite with the SatelliteManager on the server
         // ---------------------------------------------------------------
-        // ...
+        satelliteManager.registerSatellite(this.satelliteInfo);
 
 
         // create server socket
