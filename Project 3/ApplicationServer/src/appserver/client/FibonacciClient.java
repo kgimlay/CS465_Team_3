@@ -19,8 +19,10 @@ public class FibonacciClient extends Thread {
     private Properties properties;
     private int toFindSeqNum = 0;
     
-    /**
+    /** Obtain server information and the sequence number of Fibonacci to find.
      * 
+     * @param serverPropertiesFile file with the server's info
+     * @param fibSeqValToFind the sequence number of fibonacci to find
      */
     public FibonacciClient(String serverPropertiesFile, int fibSeqValToFind) {
         try {
@@ -34,6 +36,7 @@ public class FibonacciClient extends Thread {
             // set the sequence number of fib to find
             this.toFindSeqNum = fibSeqValToFind;
         } catch (Exception ex) {
+            System.err.println("[FibonacciClient.FibonacciClient] Error occurred");
             ex.printStackTrace();
         }
     }
@@ -46,8 +49,6 @@ public class FibonacciClient extends Thread {
     @Override
     public void run() {
         try {
-            System.out.println("[FibonacciClient]");
-            
             // connect to application server
             Socket server = new Socket(host, port);
             
@@ -83,9 +84,8 @@ public class FibonacciClient extends Thread {
         // find fib(i) starting at largest to ensure high load from start
         for (int i=46; i>0; i--) {
             (new FibonacciClient(args[0], i)).start();
-            System.out.println("started");
+            System.out.println("[FibonacciClient] started");
         }
-//        (new FibonacciClient(args[0], 1)).start();
     }
     
 }
