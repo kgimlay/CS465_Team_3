@@ -101,7 +101,6 @@ public class Satellite extends Thread {
 
         // register this satellite with the SatelliteManager on the server
         // ---------------------------------------------------------------
-        System.out.println("Here");
         try {
             Socket soc = new Socket(serverInfo.getHost(), serverInfo.getPort());
             ObjectOutputStream outStream = new ObjectOutputStream(soc.getOutputStream());
@@ -110,7 +109,6 @@ public class Satellite extends Thread {
         } catch (IOException ioE) {
             System.out.println("[Satellite.run]" + ioE);
         }
-        System.out.println("There");
 
 
         // create server socket
@@ -156,14 +154,14 @@ public class Satellite extends Thread {
         public void run() {
             Tool tool = null;
             
-            System.out.println("[SatelliteThread.run]");
+            System.out.println("[SatelliteThread.run] Running.");
             // setting up object streams
             // -----------------------------------------------------------------
             try {
-                readFromNet = new ObjectInputStream(
-                        this.jobRequest.getInputStream());
-                writeToNet = new ObjectOutputStream(
+                this.writeToNet = new ObjectOutputStream(
                         this.jobRequest.getOutputStream());
+                this.readFromNet = new ObjectInputStream(
+                        this.jobRequest.getInputStream());
             } catch (IOException ioE) {
                 System.out.println("[SatelliteThread.run] An IO Exception has "
                     + "occured while creating input and output streams.\n\n"
@@ -173,7 +171,7 @@ public class Satellite extends Thread {
             // reading message
             // -----------------------------------------------------------------
             try {
-                message = (Message)this.readFromNet.readObject();
+                this.message = (Message)this.readFromNet.readObject();
                 System.out.println(message);
             } catch (IOException ioE) {
                 System.out.println("[SatelliteThread.run] An IO Exception has "

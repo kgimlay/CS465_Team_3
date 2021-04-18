@@ -10,6 +10,8 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import utils.PropertyHandler;
 
 /**
@@ -106,29 +108,42 @@ public class Server {
                     System.err.println("\n[ServerThread.run] Received job request");
 
                     String satelliteName = null;
+                    ConnectivityInfo satConnInfo = null;
                     synchronized (Server.loadManager) {
                         // get next satellite from load manager
                         try {
-                            satelliteName = loadManager.nextSatellite();
+                            satelliteName = Server.loadManager.nextSatellite();
                         } catch (Exception e) {
                             System.out.println("[ServerThread.run] Exception. " + e);
                         }
                         
                         // get connectivity info for next satellite from satellite manager
-                        satelliteManager.getSatelliteForName(satelliteName);
+                        System.out.println(satelliteName);
+                        satConnInfo = Server.satelliteManager.getSatelliteForName(satelliteName);
+                    }
+                    
+                    try {
+                        // open object streams,
+                        Socket satelliteSoc = new Socket(satConnInfo.getHost(), satConnInfo.getPort());
+                        ObjectInputStream inSat = new ObjectInputStream(satelliteSoc.getInputStream());
+                        ObjectOutputStream outSat = new ObjectOutputStream(satelliteSoc.getOutputStream());
+                        
+                        // forward message (as is) to satellite,
+                        outSat.writeObject(message);
+                        
+                        // receive result from satellite and
+                        // write result back to client
+                        writeToNet.writeObject(inSat.readObject());
+                        
+                    } catch (IOException ioE) {
+                        System.out.println("[ServerThread.java] An IO Exception has occured!" + ioE);
+                    } catch (ClassNotFoundException cnfE) {
+                        System.out.println("[ServerThread.java] A Class Not Found Exception has occured " + cnfE);
                     }
 
-                    Socket satellite = null;
-                    // connect to satellite
-                    // ...
-
-                    // open object streams,
-                    // forward message (as is) to satellite,
-                    // receive result from satellite and
-                    // write result back to client
-                    // ...
-
                     break;
+
+
 
                 default:
                     System.err.println("[ServerThread.run] Warning: Message type not implemented");

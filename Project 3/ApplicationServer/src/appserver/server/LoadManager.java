@@ -14,12 +14,12 @@ public class LoadManager {
 
     public LoadManager() {
         satellites = new ArrayList<String>();
-        lastSatelliteIndex = 0;
     }
 
     public void satelliteAdded(String satelliteName) {
         // add satellite
         satellites.add(satelliteName);
+        System.out.println("[LoadManager.satelliteAdded] Added " + satelliteName);
     }
 
 
@@ -36,8 +36,8 @@ public class LoadManager {
                 lastSatelliteIndex ++;
             }
         }
-
-        return (String)satellites.get(lastSatelliteIndex); // ... name of satellite who is supposed to take job
+        
+        return (String)this.satellites.get(lastSatelliteIndex); // ... name of satellite who is supposed to take job
         
     }
 }

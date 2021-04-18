@@ -44,8 +44,10 @@ public class FibonacciClient extends Thread {
      * a response from the server.
      */
     @Override
-    public void start() {
+    public void run() {
         try {
+            System.out.println("[FibonacciClient]");
+            
             // connect to application server
             Socket server = new Socket(host, port);
             
@@ -79,10 +81,11 @@ public class FibonacciClient extends Thread {
     public static void main(String args[]) {
         // create threads and run them
         // find fib(i) starting at largest to ensure high load from start
-        for (int i=46; i>=45; i--) {
+        for (int i=46; i>0; i--) {
             (new FibonacciClient(args[0], i)).start();
+            System.out.println("started");
         }
-//        (new FibonacciClient(args[0], 46)).start();
+//        (new FibonacciClient(args[0], 1)).start();
     }
     
 }

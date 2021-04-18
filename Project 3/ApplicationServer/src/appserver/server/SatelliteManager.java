@@ -26,6 +26,6 @@ public class SatelliteManager {
 
     public ConnectivityInfo getSatelliteForName(String satelliteName) {
         // look for satellite's connectivity info based on satellite name
-        return satellites.get(satelliteName);
+        return this.satellites.get(satelliteName);
     }
 }
