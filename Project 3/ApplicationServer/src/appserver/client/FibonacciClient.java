@@ -27,9 +27,9 @@ public class FibonacciClient extends Thread {
             // get properties from properties file
             properties = new PropertyHandler(serverPropertiesFile);
             host = properties.getProperty("HOST");
-            System.out.println("[PlusOneClient.PlusOneClient] Host: " + host);
+            System.out.println("[FibonnaciClient.FibonacciClient] Host: " + host);
             port = Integer.parseInt(properties.getProperty("PORT"));
-            System.out.println("[PlusOneClient.PlusOneClient] Port: " + port);
+            System.out.println("[FibonnaciClient.FibonacciClient] Port: " + port);
             
             // set the sequence number of fib to find
             this.toFindSeqNum = fibSeqValToFind;
@@ -68,7 +68,7 @@ public class FibonacciClient extends Thread {
             Integer result = (Integer) readFromNet.readObject();
             System.out.println("Fibonacci of " + this.toFindSeqNum + ":" + result);
         } catch (Exception ex) {
-            System.err.println("[PlusOneClient.run] Error occurred");
+            System.err.println("[FibonacciClient.run] Error occurred");
             ex.printStackTrace();
         }
     }
