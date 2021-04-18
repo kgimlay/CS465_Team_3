@@ -23,7 +23,7 @@ public class SatelliteManager {
         // add the satellite's name and corresponding connectivity info to the
         // hash table
         satellites.put(satelliteInfo.getName(), satelliteInfo);
-        System.out.println("[SatelliteManager.registerSatellite] Satellited: "
+        System.out.println("[SatelliteManager.registerSatellite] Satellite: "
                              + satelliteInfo.getName() + " registered");
     }
 
