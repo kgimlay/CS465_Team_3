@@ -22,20 +22,36 @@ public class Server {
     static SatelliteManager satelliteManager = null;
     static LoadManager loadManager = null;
     static ServerSocket serverSocket = null;
+    static ConnectivityInfo serverInfo = new ConnectivityInfo();
 
     public Server(String serverPropertiesFile) {
 
         // create satellite manager and load manager
-        // ...
+        satelliteManager = new SatelliteManager();
+        loadManager = new LoadManager();
         
         // read server properties and create server socket
-        // ...
+        try {
+            PropertyHandler serverConfiguration = new PropertyHandler(serverPropertiesFile);
+            serverInfo.setName(serverConfiguration.getProperty("NAME"));
+            serverInfo.setPort(Integer.parseInt(serverConfiguration.getProperty("PORT")));
+            serverSocket = new ServerSocket(serverInfo.getPort());
+            System.out.println("Opened at " + serverSocket);
+        } catch (IOException ioE) {
+            System.out.println("[Server.java] An IO Exception has occured!" + ioE);
+        }
     }
 
     public void run() {
     // serve clients in server loop ...
     // when a request comes in, a ServerThread object is spawned
-    // ...
+        try {
+            while (true) {
+                (new ServerThread(serverSocket.accept())).start();
+            }
+        } catch (IOException ioE) {
+            System.out.println("[Server.java] An IO Exception has occured!" + ioE);
+        }
     }
 
     // objects of this helper class communicate with satellites or clients
@@ -45,6 +61,8 @@ public class Server {
         ObjectInputStream readFromNet = null;
         ObjectOutputStream writeToNet = null;
         Message message = null;
+        SatelliteManager satelliteManager = null;
+        LoadManager loadManager = null;
 
         private ServerThread(Socket client) {
             this.client = client;
@@ -53,23 +71,33 @@ public class Server {
         @Override
         public void run() {
             // set up object streams and read message
-            // ...
+            try {
+                readFromNet = new ObjectInputStream(this.client.getInputStream());
+                writeToNet = new ObjectOutputStream(this.client.getOutputStream());
+                message = (Message) readFromNet.readObject();
+            } catch (IOException ioE) {
+                System.out.println("[ServerThread.java] An IO Exception has occured!" + ioE);
+            } catch (ClassNotFoundException cnfE) {
+                System.out.println("[ServerThread.java] An Class Not Found Exception has occured!" + cnfE);
+            }
 
             
             // process message
             switch (message.getType()) {
                 case REGISTER_SATELLITE:
+                    System.err.println("\n[ServerThread.run] Received registration request");
+                    
                     // read satellite info
-                    // ...
+                    ConnectivityInfo satelliteInfo = (ConnectivityInfo)message.getContent();
                     
                     // register satellite
                     synchronized (Server.satelliteManager) {
-                        // ...
+                        Server.satelliteManager.registerSatellite(satelliteInfo);
                     }
 
                     // add satellite to loadManager
                     synchronized (Server.loadManager) {
-                        // ...
+                        Server.loadManager.satelliteAdded(satelliteInfo.getName());
                     }
 
                     break;
@@ -80,10 +108,14 @@ public class Server {
                     String satelliteName = null;
                     synchronized (Server.loadManager) {
                         // get next satellite from load manager
-                        // ...
+                        try {
+                            satelliteName = loadManager.nextSatellite();
+                        } catch (Exception e) {
+                            System.out.println("[ServerThread.run] Exception. " + e);
+                        }
                         
                         // get connectivity info for next satellite from satellite manager
-                        // ...
+                        satelliteManager.getSatelliteForName(satelliteName);
                     }
 
                     Socket satellite = null;

@@ -41,11 +41,7 @@ public class Satellite extends Thread {
     private PropertyHandler serverConfiguration = null;
     private PropertyHandler classLoaderConfiguration = null;
 
-    // im not sure if satellite manager is even created here
-    private SatelliteManager satelliteManager;
     public Satellite(String satellitePropertiesFile, String classLoaderPropertiesFile, String serverPropertiesFile) {
-        //instantiate satellite manager
-        satelliteManager = new SatelliteManager();
         // read this satellite's properties and populate satelliteInfo object,
         // which later on will be sent to the server
         try {
@@ -105,7 +101,16 @@ public class Satellite extends Thread {
 
         // register this satellite with the SatelliteManager on the server
         // ---------------------------------------------------------------
-        satelliteManager.registerSatellite(this.satelliteInfo);
+        System.out.println("Here");
+        try {
+            Socket soc = new Socket(serverInfo.getHost(), serverInfo.getPort());
+            ObjectOutputStream outStream = new ObjectOutputStream(soc.getOutputStream());
+            System.out.println(this.satelliteInfo);
+            outStream.writeObject(new Message(REGISTER_SATELLITE, this.satelliteInfo));
+        } catch (IOException ioE) {
+            System.out.println("[Satellite.run]" + ioE);
+        }
+        System.out.println("There");
 
 
         // create server socket
@@ -251,16 +256,15 @@ public class Satellite extends Thread {
         if ((toolObject = (Tool)toolsCache.get(toolClassString)) == null) 
         {
             // The class that is being accessed is PlusOne. Print that info.
-            String toolClassStr = "appserver.job.impl.PlusOne";
-            System.out.println("\nTool's Class: " + toolClassStr);
+            System.out.println("\nTool's Class: " + toolClassString);
             
-            if (toolClassStr == null) 
+            if (toolClassString == null) 
             {
                 throw new UnknownToolException();
             }
             
             // load the PlusOne class and store into toolClass
-            Class<?> toolClass = classLoader.loadClass(toolClassStr);
+            Class<?> toolClass = classLoader.loadClass(toolClassString);
             
             // attempt to create the tool object using the class loaded
             try {

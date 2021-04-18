@@ -64,7 +64,7 @@ public class FibonacciClient extends Thread {
             // for simplicity, the result is not encapsulated in a message
             ObjectInputStream readFromNet = new ObjectInputStream(server.getInputStream());
             Integer result = (Integer) readFromNet.readObject();
-            System.out.println("RESULT: " + result);
+            System.out.println("Fibonacci of " + this.toFindSeqNum + ":" + result);
         } catch (Exception ex) {
             System.err.println("[PlusOneClient.run] Error occurred");
             ex.printStackTrace();
@@ -79,9 +79,10 @@ public class FibonacciClient extends Thread {
     public static void main(String args[]) {
         // create threads and run them
         // find fib(i) starting at largest to ensure high load from start
-        for (int i=46; i>0; i--) {
+        for (int i=46; i>=45; i--) {
             (new FibonacciClient(args[0], i)).start();
         }
+//        (new FibonacciClient(args[0], 46)).start();
     }
     
 }

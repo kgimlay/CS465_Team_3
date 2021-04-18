@@ -5,14 +5,16 @@
  */
 package appserver.job.impl;
 
+import appserver.job.Tool;
 import java.lang.ClassCastException;
 
 /**
  *
  * @author matt
  */
-public class Fibonacci{
+public class Fibonacci implements Tool{
     
+    @Override
     public Object go( Object number)
     {
         try

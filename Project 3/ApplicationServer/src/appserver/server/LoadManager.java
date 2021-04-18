@@ -24,9 +24,6 @@ public class LoadManager {
 
 
     public String nextSatellite() throws Exception {
-        
-        int numberSatellites;
-        
         synchronized (satellites) 
         {
             // implement policy that returns the satellite name according to a round robin methodology
