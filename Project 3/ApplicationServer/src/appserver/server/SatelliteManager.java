@@ -7,6 +7,7 @@ import java.util.Hashtable;
 /**
  *
  * @author Dr.-Ing. Wolf-Dieter Otte
+ * @author Yasmin Vega
  */
 public class SatelliteManager {
 
@@ -25,7 +26,7 @@ public class SatelliteManager {
     }
 
     public ConnectivityInfo getSatelliteForName(String satelliteName) {
-        // look for satellite's connectivity info based on satellite name
+        // get satellite's connectivity info based on satellite name
         return this.satellites.get(satelliteName);
     }
 }
