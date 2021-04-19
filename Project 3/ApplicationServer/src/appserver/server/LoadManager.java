@@ -7,6 +7,8 @@ import java.util.ArrayList;
  * @author Dr.-Ing. Wolf-Dieter Otte
  * @author Randy Duerinck, Kevin Imlay, Yasmin Vega
  */
+//LoadManager will use a round-robin methodology to balance the server load on
+//several satellite servers: Earth, Venus, Mercury.
 public class LoadManager {
 
     // satellites array list will hold the names of the satellites
@@ -25,27 +27,22 @@ public class LoadManager {
         System.out.println("[LoadManager.satelliteAdded] Added " + satelliteName);
     }
 
-
     public String nextSatellite() throws Exception {
-        synchronized (satellites) 
-        {
+        synchronized (satellites) {
             // implement policy that returns the satellite name according to a round robin methodology
-            if( lastSatelliteIndex == satellites.size()-1 )
-            {
+            if (lastSatelliteIndex == satellites.size() - 1) {
                 // if we are at the end of the satellites array list, go back to
                 // the beginning of the array list
                 lastSatelliteIndex = 0;
-            }
-            else
-            {
+            } else {
                 // if we are not at the end of the array list, interate to the
                 // next satellite
-                lastSatelliteIndex ++;
+                lastSatelliteIndex++;
             }
         }
-        
+
         // return the name of the satellite who is supposed to take the job
-        return (String)this.satellites.get(lastSatelliteIndex);
-        
+        return (String) this.satellites.get(lastSatelliteIndex);
+
     }
 }

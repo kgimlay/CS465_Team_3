@@ -7,8 +7,10 @@ import java.util.Hashtable;
 /**
  *
  * @author Dr.-Ing. Wolf-Dieter Otte
- * @author Yasmin Vega
+ * @author Yasmin Vega, Randy Duerinck
  */
+
+// SatelliteManager registers satellites given all their connectivity information
 public class SatelliteManager {
 
     // (the one) hash table that contains the connectivity information of all satellite servers
@@ -26,7 +28,7 @@ public class SatelliteManager {
         System.out.println("[SatelliteManager.registerSatellite] Satellite: "
                              + satelliteInfo.getName() + " registered");
     }
-
+    
     public ConnectivityInfo getSatelliteForName(String satelliteName) {
         // get satellite's connectivity info based on satellite name
         return this.satellites.get(satelliteName);

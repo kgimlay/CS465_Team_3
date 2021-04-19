@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package appserver.job.impl;
 
 import appserver.job.Tool;
@@ -10,13 +5,14 @@ import java.lang.ClassCastException;
 
 /**
  * Fibonacci tool to recursively calculate nth Fibonacci number
+ *
  * @author matt
  */
 public class Fibonacci implements Tool {
 
     @Override
     public Object go(Object number) {
-//        attempt to calculate nth Fibonacci number
+//  attempt to calculate nth Fibonacci number
         try {
             return Fibonacci((Integer) number);
         } catch (ClassCastException castEx) {

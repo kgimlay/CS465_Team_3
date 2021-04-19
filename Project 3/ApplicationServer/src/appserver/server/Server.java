@@ -148,7 +148,6 @@ public class Server {
         }
     }
 
-    // main()
     public static void main(String[] args) {
         // start the application server
         Server server = null;
