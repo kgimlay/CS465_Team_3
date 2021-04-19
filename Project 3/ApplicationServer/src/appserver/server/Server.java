@@ -87,8 +87,8 @@ public class Server {
                 System.out.println("[ServerThread.java] An IO Exception has "
                         + "occurred!" + ioE);
             } catch (ClassNotFoundException cnfE) {
-                System.out.println("[ServerThread.java] An Class Not Found "
-                        + "Exception has occured!" + cnfE);
+                System.out.println("[ServerThread.java] A Class Not Found "
+                        + "Exception has occurred!" + cnfE);
             }
 
             // process message
@@ -155,7 +155,7 @@ public class Server {
                                 + " has occurred!" + ioE);
                     } catch (ClassNotFoundException cnfE) {
                         System.out.println("[ServerThread.java] A Class Not "
-                                + "Found Exception has occured " + cnfE);
+                                + "Found Exception has occurred " + cnfE);
                     }
 
                     break;
