@@ -13,7 +13,8 @@ import java.util.Hashtable;
 // SatelliteManager registers satellites given all their connectivity information
 public class SatelliteManager {
 
-    // (the one) hash table that contains the connectivity information of all satellite servers
+    // (the one) hash table that contains the connectivity information of 
+    // all satellite servers
     static private Hashtable<String, ConnectivityInfo> satellites = null;
 
     public SatelliteManager() {

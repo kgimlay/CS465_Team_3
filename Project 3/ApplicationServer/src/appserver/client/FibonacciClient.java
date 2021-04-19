@@ -24,21 +24,24 @@ public class FibonacciClient extends Thread {
      * Obtain server information and the sequence number of Fibonacci to find.
      *
      * @param serverPropertiesFile file with the server's info
-     * @param fibSeqValToFind the sequence number of fibonacci to find
+     * @param fibSeqValToFind the sequence number of Fibonacci to find
      */
     public FibonacciClient(String serverPropertiesFile, int fibSeqValToFind) {
         try {
             // get properties from properties file
             properties = new PropertyHandler(serverPropertiesFile);
             host = properties.getProperty("HOST");
-            System.out.println("[FibonnaciClient.FibonacciClient] Host: " + host);
+            System.out.println("[FibonnaciClient.FibonacciClient] Host: " 
+                    + host);
             port = Integer.parseInt(properties.getProperty("PORT"));
-            System.out.println("[FibonnaciClient.FibonacciClient] Port: " + port);
+            System.out.println("[FibonnaciClient.FibonacciClient] Port: " 
+                    + port);
 
             // set the sequence number of fib to find
             this.toFindSeqNum = fibSeqValToFind;
         } catch (Exception ex) {
-            System.err.println("[FibonacciClient.FibonacciClient] Error occurred");
+            System.err.println("[FibonacciClient.FibonacciClient] Error "
+                    + "occurred");
             ex.printStackTrace();
         }
     }
@@ -63,14 +66,17 @@ public class FibonacciClient extends Thread {
             Message message = new Message(JOB_REQUEST, job);
 
             // sending job out to the application server in a message
-            ObjectOutputStream writeToNet = new ObjectOutputStream(server.getOutputStream());
+            ObjectOutputStream writeToNet = new ObjectOutputStream(
+                    server.getOutputStream());
             writeToNet.writeObject(message);
 
             // reading result back in from application server
             // for simplicity, the result is not encapsulated in a message
-            ObjectInputStream readFromNet = new ObjectInputStream(server.getInputStream());
+            ObjectInputStream readFromNet = new ObjectInputStream(
+                    server.getInputStream());
             Integer result = (Integer) readFromNet.readObject();
-            System.out.println("Fibonacci of " + this.toFindSeqNum + ":" + result);
+            System.out.println("Fibonacci of " + this.toFindSeqNum + ":" 
+                    + result);
         } catch (Exception ex) {
             System.err.println("[FibonacciClient.run] Error occurred");
             ex.printStackTrace();

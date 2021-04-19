@@ -42,7 +42,8 @@ public class Satellite extends Thread {
     private PropertyHandler serverConfiguration = null;
     private PropertyHandler classLoaderConfiguration = null;
 
-    public Satellite(String satellitePropertiesFile, String classLoaderPropertiesFile, String serverPropertiesFile) {
+    public Satellite(String satellitePropertiesFile, String 
+            classLoaderPropertiesFile, String serverPropertiesFile) {
         // read this satellite's properties and populate satelliteInfo object,
         // which later on will be sent to the server
         try {
@@ -56,7 +57,8 @@ public class Satellite extends Thread {
         //Give satellite name and port information to the satelliteInfo object
         //from the given Satellite properties file
         satelliteInfo.setName(satelliteConfiguration.getProperty("NAME"));
-        satelliteInfo.setPort(Integer.parseInt(satelliteConfiguration.getProperty("PORT")));
+        satelliteInfo.setPort(
+                Integer.parseInt(satelliteConfiguration.getProperty("PORT")));
 
         // read properties of the application server and populate serverInfo object
         // other than satellites, the as doesn't have a human-readable name, so leave it out
@@ -71,7 +73,8 @@ public class Satellite extends Thread {
         //Give server host and port information to the serverInfo object
         //from the given Server properties file 
         serverInfo.setHost(serverConfiguration.getProperty("HOST"));
-        serverInfo.setPort(Integer.parseInt(serverConfiguration.getProperty("PORT")));
+        serverInfo.setPort(
+                Integer.parseInt(serverConfiguration.getProperty("PORT")));
 
         // read properties of the code server and create class loader      
         try {
@@ -85,11 +88,13 @@ public class Satellite extends Thread {
         //Get and store classLoader host and port information into respective 
         //variables from the given WebServer properties file
         String classLoaderHost = classLoaderConfiguration.getProperty("HOST");
-        int classLoaderPort = Integer.parseInt(classLoaderConfiguration.getProperty("PORT"));
+        int classLoaderPort = 
+                Integer.parseInt(classLoaderConfiguration.getProperty("PORT"));
 
         // create the class loader object using the host and port info obtained
         classLoader = new HTTPClassLoader(classLoaderHost, classLoaderPort);
-        System.out.println("Will connect to web server at: " + classLoaderHost + " : " + classLoaderPort);
+        System.out.println("Will connect to web server at: " + classLoaderHost 
+                + " : " + classLoaderPort);
 
         // create tools cache
         toolsCache = new Hashtable();
@@ -104,9 +109,11 @@ public class Satellite extends Thread {
         // ---------------------------------------------------------------
         try {
             Socket soc = new Socket(serverInfo.getHost(), serverInfo.getPort());
-            ObjectOutputStream outStream = new ObjectOutputStream(soc.getOutputStream());
+            ObjectOutputStream outStream = new ObjectOutputStream(
+                    soc.getOutputStream());
             System.out.println(this.satelliteInfo);
-            outStream.writeObject(new Message(REGISTER_SATELLITE, this.satelliteInfo));
+            outStream.writeObject(new Message(REGISTER_SATELLITE, 
+                    this.satelliteInfo));
         } catch (IOException ioE) {
             System.out.println("[Satellite.run]" + ioE);
         }
@@ -117,8 +124,8 @@ public class Satellite extends Thread {
             serverSocket = new ServerSocket(this.satelliteInfo.getPort());
             System.out.println("Port :" + this.satelliteInfo.getPort());
         } catch (IOException ioE) {
-            System.out.println("[Satellite.run] An IO Exception occured starting "
-                    + "the server socket\n\n" + ioE);
+            System.out.println("[Satellite.run] An IO Exception occured starting"
+                    + " the server socket\n\n" + ioE);
         }
 
         // start taking job requests in a server loop
@@ -135,7 +142,8 @@ public class Satellite extends Thread {
         }
     }
 
-    // inner helper class that is instantiated in above server loop and processes single job requests
+    // inner helper class that is instantiated in above server loop 
+    // and processes single job requests
     private class SatelliteThread extends Thread {
 
         Satellite satellite = null;
@@ -174,7 +182,8 @@ public class Satellite extends Thread {
                 System.out.println(message);
             } catch (IOException ioE) {
                 System.out.println("[SatelliteThread.run] An IO Exception has "
-                        + "occured while reading the incomming message.\n\n" + ioE);
+                        + "occured while reading the incomming message.\n\n" 
+                        + ioE);
             } catch (ClassNotFoundException cnfE) {
                 System.out.println("[SatelliteThread.run] A Call Not Found "
                         + "Exception has occured while reading the incomming "
@@ -196,19 +205,24 @@ public class Satellite extends Thread {
                     try {
                         tool = getToolObject(toolName);
                     } catch (UnknownToolException utE) {
-                        System.out.println("[SatelliteThread.run] UnknownToolException\n\n" + utE);
+                        System.out.println("[SatelliteThread.run] "
+                                + "UnknownToolException\n\n" + utE);
                         return;
                     } catch (ClassNotFoundException cnfE) {
-                        System.out.println("[SatelliteThread.run] ClassNotFoundException\n\n" + cnfE);
+                        System.out.println("[SatelliteThread.run] "
+                                + "ClassNotFoundException\n\n" + cnfE);
                         return;
                     } catch (InstantiationException iE) {
-                        System.out.println("[SatelliteThread.run] InstantiationException\n\n" + iE);
+                        System.out.println("[SatelliteThread.run] "
+                                + "InstantiationException\n\n" + iE);
                         return;
                     } catch (IllegalAccessException iaE) {
-                        System.out.println("[SatelliteThread.run] IllegalAccessException\n\n" + iaE);
+                        System.out.println("[SatelliteThread.run] "
+                                + "IllegalAccessException\n\n" + iaE);
                         return;
                     } catch (NoSuchMethodException nsmE) {
-                        System.out.println("[SatelliteThread.run] NoSuchMethodException\n\n" + nsmE);
+                        System.out.println("[SatelliteThread.run] "
+                                + "NoSuchMethodException\n\n" + nsmE);
                         return;
                     }
 
@@ -219,13 +233,15 @@ public class Satellite extends Thread {
                     try {
                         this.writeToNet.writeObject(result);
                     } catch (IOException ioE) {
-                        System.out.println("[SatelliteThread.run] An IO Exception has "
-                                + "occured while writing the outgoing message.\n\n" + ioE);
+                        System.out.println("[SatelliteThread.run] An IO "
+                                + "Exception has occured while writing the "
+                                + "outgoing message.\n\n" + ioE);
                     }
                     break;
 
                 default:
-                    System.err.println("[SatelliteThread.run] Warning: Message type not implemented");
+                    System.err.println("[SatelliteThread.run] Warning: Message "
+                            + "type not implemented");
             }
         }
     }
@@ -264,17 +280,19 @@ public class Satellite extends Thread {
 
             // attempt to create the tool object using the class loaded
             try {
-                toolObject = (Tool) toolClass.getDeclaredConstructor().newInstance();
+                toolObject = (Tool) toolClass.getDeclaredConstructor()
+                        .newInstance();
             } catch (InvocationTargetException ex) {
-                Logger.getLogger(Satellite.class.getName()).log(Level.SEVERE, null, ex);
-                System.err.println("[Satellite] getToolObject() - InvocationTargetException");
+                System.err.println("[Satellite] getToolObject() - "
+                        + "nvocationTargetException");
             }
             // store the tool object in the cache so class loading isn't necessary
             // on the next attempt to get the tool 
             toolsCache.put(toolClassString, toolObject);
         } // the tool is already stored in cache, so display info and return it
         else {
-            System.out.println("Tool: \"" + toolClassString + "\" already in Cache");
+            System.out.println("Tool: \"" + toolClassString 
+                    + "\" already in Cache");
         }
 
         return toolObject;

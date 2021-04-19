@@ -34,13 +34,16 @@ public class Server {
 
         // read server properties and create server socket
         try {
-            PropertyHandler serverConfiguration = new PropertyHandler(serverPropertiesFile);
+            PropertyHandler serverConfiguration = new PropertyHandler(
+                    serverPropertiesFile);
             serverInfo.setName(serverConfiguration.getProperty("NAME"));
-            serverInfo.setPort(Integer.parseInt(serverConfiguration.getProperty("PORT")));
+            serverInfo.setPort(Integer.parseInt(
+                    serverConfiguration.getProperty("PORT")));
             serverSocket = new ServerSocket(serverInfo.getPort());
             System.out.println("Opened at " + serverSocket);
         } catch (IOException ioE) {
-            System.out.println("[Server.java] An IO Exception has occured!" + ioE);
+            System.out.println("[Server.java] An IO Exception has occured!" 
+                    + ioE);
         }
     }
 
@@ -52,7 +55,8 @@ public class Server {
                 (new ServerThread(serverSocket.accept())).start();
             }
         } catch (IOException ioE) {
-            System.out.println("[Server.java] An IO Exception has occured!" + ioE);
+            System.out.println("[Server.java] An IO Exception has occured!" 
+                    + ioE);
         }
     }
 
@@ -74,22 +78,28 @@ public class Server {
         public void run() {
             // set up object streams and read message
             try {
-                readFromNet = new ObjectInputStream(this.client.getInputStream());
-                writeToNet = new ObjectOutputStream(this.client.getOutputStream());
+                readFromNet = new ObjectInputStream(
+                        this.client.getInputStream());
+                writeToNet = new ObjectOutputStream(
+                        this.client.getOutputStream());
                 message = (Message) readFromNet.readObject();
             } catch (IOException ioE) {
-                System.out.println("[ServerThread.java] An IO Exception has occured!" + ioE);
+                System.out.println("[ServerThread.java] An IO Exception has "
+                        + "occurred!" + ioE);
             } catch (ClassNotFoundException cnfE) {
-                System.out.println("[ServerThread.java] An Class Not Found Exception has occured!" + cnfE);
+                System.out.println("[ServerThread.java] An Class Not Found "
+                        + "Exception has occured!" + cnfE);
             }
 
             // process message
             switch (message.getType()) {
                 case REGISTER_SATELLITE:
-                    System.err.println("\n[ServerThread.run] Received registration request");
+                    System.err.println("\n[ServerThread.run] Received "
+                            + "registration request");
 
                     // read satellite info
-                    ConnectivityInfo satelliteInfo = (ConnectivityInfo) message.getContent();
+                    ConnectivityInfo satelliteInfo = 
+                            (ConnectivityInfo) message.getContent();
 
                     // register satellite
                     synchronized (Server.satelliteManager) {
@@ -104,7 +114,6 @@ public class Server {
                     break;
 
                 case JOB_REQUEST:
-                    System.err.println("\n[ServerThread.run] Received job request");
 
                     String satelliteName = null;
                     ConnectivityInfo satConnInfo = null;
@@ -113,19 +122,26 @@ public class Server {
                         try {
                             satelliteName = Server.loadManager.nextSatellite();
                         } catch (Exception e) {
-                            System.out.println("[ServerThread.run] Exception. " + e);
+                            System.out.println("[ServerThread.run] Exception. " 
+                                    + e);
                         }
 
-                        // get connectivity info for next satellite from satellite manager
-                        System.out.println(satelliteName);
-                        satConnInfo = Server.satelliteManager.getSatelliteForName(satelliteName);
+                        // get connectivity info for next satellite from 
+                        // satellite manager
+                        System.err.println("[ServerThread.run] Received job "
+                                + "request, forwarding to " + satelliteName);
+                        satConnInfo = Server.satelliteManager
+                                .getSatelliteForName(satelliteName);
                     }
 
                     try {
                         // open object streams,
-                        Socket satelliteSoc = new Socket(satConnInfo.getHost(), satConnInfo.getPort());
-                        ObjectInputStream inSat = new ObjectInputStream(satelliteSoc.getInputStream());
-                        ObjectOutputStream outSat = new ObjectOutputStream(satelliteSoc.getOutputStream());
+                        Socket satelliteSoc = new Socket(satConnInfo.getHost(), 
+                                satConnInfo.getPort());
+                        ObjectInputStream inSat = new ObjectInputStream(
+                                satelliteSoc.getInputStream());
+                        ObjectOutputStream outSat = new ObjectOutputStream(
+                                satelliteSoc.getOutputStream());
 
                         // forward message (as is) to satellite,
                         outSat.writeObject(message);
@@ -135,15 +151,18 @@ public class Server {
                         writeToNet.writeObject(inSat.readObject());
 
                     } catch (IOException ioE) {
-                        System.out.println("[ServerThread.java] An IO Exception has occured!" + ioE);
+                        System.out.println("[ServerThread.java] An IO Exception"
+                                + " has occurred!" + ioE);
                     } catch (ClassNotFoundException cnfE) {
-                        System.out.println("[ServerThread.java] A Class Not Found Exception has occured " + cnfE);
+                        System.out.println("[ServerThread.java] A Class Not "
+                                + "Found Exception has occured " + cnfE);
                     }
 
                     break;
 
                 default:
-                    System.err.println("[ServerThread.run] Warning: Message type not implemented");
+                    System.err.println("[ServerThread.run] Warning: Message "
+                            + "type not implemented");
             }
         }
     }

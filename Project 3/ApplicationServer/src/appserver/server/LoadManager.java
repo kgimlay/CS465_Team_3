@@ -29,7 +29,8 @@ public class LoadManager {
 
     public String nextSatellite() throws Exception {
         synchronized (satellites) {
-            // implement policy that returns the satellite name according to a round robin methodology
+            // implement policy that returns the satellite name according to a 
+            // round robin methodology
             if (lastSatelliteIndex == satellites.size() - 1) {
                 // if we are at the end of the satellites array list, go back to
                 // the beginning of the array list
